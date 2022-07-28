@@ -1,0 +1,396 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-24 12:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: aboutus/admin.py:13
+msgid "Member"
+msgstr "اعضا"
+
+#: aboutus/models.py:14
+msgid "firt_name"
+msgstr "نام"
+
+#: aboutus/models.py:15
+msgid "last_name"
+msgstr "نام خانوادگی"
+
+#: aboutus/models.py:16
+msgid "phone"
+msgstr "موبایل"
+
+#: aboutus/models.py:18
+msgid "instagram"
+msgstr "اینستاگرام"
+
+#: aboutus/models.py:19
+msgid "whatsapp"
+msgstr "واتس اپ"
+
+#: aboutus/models.py:20
+msgid "linkedin"
+msgstr "لینکدین"
+
+#: aboutus/models.py:21 aboutus/models.py:47 blog/forms.py:8
+#: contact/models.py:10
+msgid "content"
+msgstr "پیام"
+
+#: aboutus/models.py:25
+msgid "member"
+msgstr "عضو"
+
+#: aboutus/models.py:26
+msgid "members"
+msgstr "اعضای تیم"
+
+#: aboutus/models.py:36
+msgid "ُteam"
+msgstr "تیم"
+
+#: aboutus/models.py:37
+msgid "teams"
+msgstr "تیم ها"
+
+#: aboutus/models.py:44
+msgid "subtitle"
+msgstr "متن زیرین"
+
+#: aboutus/models.py:45
+msgid "summary"
+msgstr "خلاصه"
+
+#: aboutus/models.py:54 aboutus/models.py:55
+#, fuzzy
+#| msgid "about"
+msgid "About us"
+msgstr "درباره ما"
+
+#: accounts/models.py:45 contact/models.py:9
+msgid "email"
+msgstr "ایمیل"
+
+#: accounts/models.py:46
+msgid "mobile"
+msgstr "موبایل"
+
+#: accounts/models.py:54
+msgid "user"
+msgstr "کاربر"
+
+#: accounts/models.py:55
+msgid "users"
+msgstr "کاربران"
+
+#: blog/models.py:29
+msgid "پست"
+msgstr ""
+
+#: blog/models.py:30
+msgid "پستها"
+msgstr ""
+
+#: contact/models.py:8
+msgid "subject"
+msgstr "موضوع"
+
+#: contact/models.py:17
+msgid "تماس"
+msgstr ""
+
+#: contact/models.py:18
+msgid "تماسها"
+msgstr ""
+
+#: insurance/settings.py:170
+msgid "English"
+msgstr "انگلیسی"
+
+#: insurance/settings.py:171
+msgid "Iran"
+msgstr "فارسی"
+
+#: painless/models/mixins.py:20
+#, fuzzy
+#| msgid "title"
+msgid "title"
+msgstr "متن"
+
+#: painless/models/mixins.py:22
+msgid "slug"
+msgstr "اسلاگ"
+
+#: painless/models/mixins.py:23
+msgid "status"
+msgstr "وضعیت"
+
+#: tag/models.py:8
+msgid "Tag"
+msgstr "برچسب"
+
+#: tag/models.py:9
+msgid "Tags"
+msgstr "برچسبها"
+
+#: templates/admin/base.html:39
+msgid "Welcome,"
+msgstr "خوش آمدید"
+
+#: templates/admin/base.html:44
+msgid "View site"
+msgstr "تماشای وبسایت"
+
+#: templates/admin/base.html:49
+msgid "Documentation"
+msgstr "داکیومنت"
+
+#: templates/admin/base.html:53
+#: templates/backend/accounts/password_change_done.html:14
+#: templates/backend/accounts/password_reset_confirm.html:29
+msgid "Change password"
+msgstr "تغییر پسورد"
+
+#: templates/admin/base.html:55
+msgid "Log out"
+msgstr "خارج شدن"
+
+#: templates/admin/base.html:66
+msgid "Home"
+msgstr "خانه"
+
+#: templates/backend/accounts/login.html:3
+#: templates/backend/accounts/login.html:42
+#, fuzzy
+#| msgid "Sign IN"
+msgid "Sign In"
+msgstr "وارد شوید"
+
+#: templates/backend/accounts/login.html:19
+msgid "please sign in"
+msgstr "شما وارد صفحه لاگین شده اید"
+
+#: templates/backend/accounts/login.html:26
+msgid "SingIn"
+msgstr "ورود"
+
+#: templates/backend/accounts/login.html:33
+#: templates/backend/accounts/register.html:33
+msgid "Add your credentials"
+msgstr "مشخصات را وارد نمایید"
+
+#: templates/backend/accounts/login.html:45
+msgid "GOOGLE+"
+msgstr "گوگل +"
+
+#: templates/backend/accounts/login.html:54
+msgid "Not registered?"
+msgstr "ثبت نام نکرده اید؟"
+
+#: templates/backend/accounts/login.html:55
+msgid "Create account"
+msgstr "ثبت نام"
+
+#: templates/backend/accounts/login.html:60
+#: templates/backend/accounts/password_reset.html:25
+msgid "Forgot your password?"
+msgstr "رمز عبور را فراموش کرده اید؟"
+
+#: templates/backend/accounts/password_change.html:9
+#, fuzzy
+#| msgid "Change password"
+msgid "Change Password"
+msgstr "تغییر پسورد"
+
+#: templates/backend/accounts/password_change.html:14
+msgid "Save all"
+msgstr "ذخیره شود"
+
+#: templates/backend/accounts/password_change_done.html:16
+msgid "Success"
+msgstr "موفق"
+
+#: templates/backend/accounts/password_change_done.html:22
+msgid "Success!"
+msgstr "موفق!"
+
+#: templates/backend/accounts/password_change_done.html:22
+msgid "Your password has been changed!"
+msgstr "پسوردتان تغییر کرده است!"
+
+#: templates/backend/accounts/password_change_done.html:25
+#, fuzzy
+#| msgid "Return to log in"
+msgid "Return to home page"
+msgstr "برگشت به صفحه لاگین"
+
+#: templates/backend/accounts/password_reset.html:4
+#, fuzzy
+#| msgid "Forgot your password?"
+msgid "Forgot Password"
+msgstr "فراموشی رمز عبور"
+
+#: templates/backend/accounts/password_reset.html:20
+msgid "Back to log in"
+msgstr "برگشت به صفحه ورود"
+
+#: templates/backend/accounts/password_reset.html:26
+msgid ""
+"Don't fret! Just type in your email and we will send you a code to reset "
+"your password!"
+msgstr ""
+"بنویسید ایمیلتلن را و ما یه کد به شما خواهیم فرستاد برای ریست کردن پسوردتان"
+
+#: templates/backend/accounts/password_reset.html:31
+#, fuzzy
+#| msgid "Change password"
+msgid "Recover password"
+msgstr "بازیابی پسورد"
+
+#: templates/backend/accounts/password_reset_complete.html:17
+msgid "Password changed!"
+msgstr "پسورد تغییر کرده است"
+
+#: templates/backend/accounts/password_reset_complete.html:19
+msgid ""
+"You have successfully changed your password! You may now proceed to log in."
+msgstr "شما با موفقیت پسوردتان را تغییر داده اید!"
+
+#: templates/backend/accounts/password_reset_complete.html:22
+#: templates/backend/accounts/password_reset_done.html:25
+msgid "Return to log in"
+msgstr "برگشت به صفحه لاگین"
+
+#: templates/backend/accounts/password_reset_confirm.html:6
+#, fuzzy
+#| msgid "Change password"
+msgid "Change password for"
+msgstr "تغییر پسورد"
+
+#: templates/backend/accounts/password_reset_confirm.html:33
+#: templates/backend/accounts/password_reset_done.html:3
+#: templates/backend/accounts/password_reset_done.html:22
+#, fuzzy
+#| msgid "Forgot your password?"
+msgid "Reset your password"
+msgstr "رمز عبور را فراموش کرده اید؟"
+
+#: templates/backend/accounts/password_reset_confirm.html:35
+msgid ""
+" It looks like you clicked on an invalid password reset link. Please try "
+"again."
+msgstr ""
+"لینکی که شما کلیک کرده اید ظاهرا روی یک پسورد ریست لینک نامعتبر است دوباره "
+"سعی کنید!"
+
+#: templates/backend/accounts/password_reset_confirm.html:38
+msgid "Request a new password reset link"
+msgstr "درخواست یک پسورد ریست لینک جدید"
+
+#: templates/backend/accounts/password_reset_done.html:23
+msgid ""
+"Check your email for a link to reset your password. If it doesn't appear "
+"within a few minutes, check your spam folder."
+msgstr ""
+"چک کنید ایمیلتان را برای ریست کردن پسوردتان اگرآنرا پیدا نکرده اید ۱دقیقه "
+"صبر کنید و سپس اسپم خورد را چک کنید"
+
+#: templates/backend/accounts/register.html:4
+#: templates/backend/accounts/register.html:42
+#, fuzzy
+#| msgid "Sign IN"
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+#: templates/backend/accounts/register.html:18
+#, fuzzy
+#| msgid "Welcome Sign Up "
+msgid "Welcome Sign UP"
+msgstr "خوش آمدید به صفحه ثبت نام"
+
+#: templates/backend/accounts/register.html:25
+#, fuzzy
+#| msgid "Sign IN"
+msgid "Sign UP"
+msgstr "ثبت نام"
+
+#: templates/backend/accounts/register.html:47
+#, fuzzy
+#| msgid "Create account"
+msgid "Already have an account?"
+msgstr "قبلا ثبت نام کرده اید؟"
+
+#: templates/backend/accounts/register.html:48
+msgid "Sign IN"
+msgstr "وارد شوید"
+
+#: users/admin.py:40
+msgid "Personal info"
+msgstr "اطلاعات شخصی"
+
+#: users/admin.py:41
+msgid "Permissions"
+msgstr "مجوزها"
+
+#: users/admin.py:43
+msgid "Important dates"
+msgstr "داده های مهم"
+
+#: users/models.py:13
+msgid "Male"
+msgstr "مرد"
+
+#: users/models.py:14
+msgid "Female"
+msgstr "زن"
+
+#: users/models.py:17
+msgid "User"
+msgstr "کاربر"
+
+#: users/models.py:26
+msgid "about us"
+msgstr "درباره ما"
+
+#: users/models.py:30
+msgid "Profile"
+msgstr "پروفایل"
+
+#: users/models.py:31
+msgid "Profiles"
+msgstr "پروفایلها"
+
+#~ msgid "post"
+#~ msgstr "پست"
+
+#~ msgid "posts"
+#~ msgstr "پستها"
+
+#, fuzzy
+#~| msgid "content"
+#~ msgid "contact"
+#~ msgstr "تماس"
+
+#, fuzzy
+#~| msgid "content"
+#~ msgid "contacts"
+#~ msgstr "تماس ها "
+
+#, fuzzy
+#~| msgid "Sign IN"
+#~ msgid " Sign IN"
+#~ msgstr "وارد شوید"

@@ -1,0 +1,48 @@
+sudo service postgresql status
+sudo service postgresql start
+sudo service postgresql stop
+sudo -u postgres psql
+sudo -u postgres psql password
+sudo passwd postgres
+ALTER USER postgres WITH PASSWORD 'siyamak1981';
+psql -h 127.0.0.1 -p 5432 -U postgres
+
+
+##remove postgres
+sudo apt-get --purge remove postgresql postgresql-*
+
+##Docker
+
+docker container rm 2d8519db063d
+sudo service docker start
+sudo service --status-all | grep '+'
+sudo docker login
+##Docker postgres database
+docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
+sudo lsof -i :5432 #kill use posrt 5432
+kill -9 pid
+\c hello_django_dev
+\dt     ####list of relations
+   
+
+#redis
+sudo systemctl status redis-server
+sudo systemctl start redis-server
+sudo systemctl stop redis-server
+sudo service redis-server stop
+
+#github
+git remote add origin https://github.com/siyamak1981/Meeting-Django.git
+
+#timectl
+imedatectl set-time 03:13:01
+
+#elasticsearch
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable kibana.service
+sudo systemctl start elasticsearch.service
+
+
+sudo systemctl start kibana.service
+sudo systemctl stop kibana.service
+sudo systemctl start kibana

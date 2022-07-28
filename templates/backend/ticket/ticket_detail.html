@@ -1,0 +1,131 @@
+{% extends "backend/layouts/base.html" %}
+{% block title %}Tickets - All tickets{% endblock %}
+
+{% block stylesheets %}
+<style>.card > .list-group {
+    border-top: inherit;
+    border: 2px solid #10b981;
+    border-bottom: inherit;
+}</style>
+{% endblock stylesheets %} {% block content %}
+
+<div class="py-4">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                ticket tables
+            </li>
+        </ol>
+    </nav>
+</div>
+<div class="table-settings mb-4">
+    <div class="row align-items-center justify-content-between">
+        <div class="col col-md-6 col-lg-3 col-xl-4">
+            <div class="input-group me-2 me-lg-3 fmxw-400"><span class="input-group-text"><svg class="icon icon-xs"
+                        x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg> </span><input type="text" class="form-control" placeholder="Search orders"></div>
+        </div>
+
+        <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
+            <div class="dropdown"><button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg class="icon icon-md"
+                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                            clip-rule="evenodd"></path>
+                    </svg> <span class="visually-hidden">Toggle Dropdown</span></button>
+                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0" style=""><span
+                        class="small ps-3 fw-bold text-dark">Show</span> <a
+                        class="dropdown-item d-flex align-items-center fw-bold"
+                        href="{% url 'tickets:my-tickets' %}">MyTicket <svg class="icon icon-xxs ms-auto"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg></a><a class="dropdown-item fw-bold" href="{% url 'tickets:list' %}">Ticket List</a> <a
+                        class="dropdown-item fw-bold rounded-bottom" href="{% url 'tickets:ticket_create' %}">Ticket Create</a></div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-body border-0 shadow table-wrapper table-responsive ">
+    
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action border  border-success" aria-current="true">
+       <div>Status: {% if ticket.status == "TODO" %}<span class="badge bg-danger">TODO</span>{% elif ticket.status == "DONE" %}<span
+                class="badge bg-success">DONE</span>{% elif ticket.status == "WAITING" %}<span
+                class="badge bg-warning">WAITING</span>{% elif ticket.status == "IN PROGRESS" %}<span
+                class="badge bg-default">IN PROGRESS</span>{% endif %}</div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action border border-top-0 border-success">Assign To: {% if ticket.assigned_to %}{{ ticket.assigned_to.first_name }} 
+        {{ ticket.assigned_to.last_name }}{% else %}---{% endif %}</a>
+    <a href="#" class="list-group-item list-group-item-action border border-top-0 border-success">Owner : {{ ticket.owner.first_name }} {{ ticket.owner.last_name }}</a>
+    <a href="#" class="list-group-item list-group-item-action border border-top-0 border-success">Title : {{ ticket.title }}</a>
+    <a href="#" class="list-group-item list-group-item-action border border-top-0 border-success" tabindex="-1" aria-disabled="true">Description : 
+        {{ ticket.description}}</a>
+</div>
+<div class="col-md-4 mt-5">
+
+    {% if attachments %}
+    <strong>Attachments</strong>
+    <ul class="mt-4">Download :
+        {% for attachment in attachments %}
+        <li class="btn btn-primary text-success"><a href="{{ attachment.file.url }}"> {{ attachment.filename }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<strong>Followups</strong>
+{% if followups %}
+<table id="followups" class="table table-striped table-bordered mt-4" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th width="80">ID</th>
+            <th width="150px">User</th>
+            <th>Text</th>
+            <th width="100px">Modified</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for followup in followups %}
+        <tr>
+            <td>
+                <a href="{{ ticket.get_absolute_url }}"><img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAFaElEQVR4nO2cX0xbVRzHv+feUkpvuR0OBmEMhAQ0bjGZRmkK/tkeDAsR30zIYqLMGOOTifPPIy9GExd8M5osWdQMHnwawQ2UuD1AW+LG5p+YYFsXTTQmNZFRAi3QHh+41xVo6f0L5d7fJ+GBS3vOyefTe25b0gIEQRAEQRAEQRAE4SbYfi/gIDAzMFRbxfIfAXgRwD2Afdh95dJnVoxNAcrww3MvSZka8SqApwuPM/ALT175/G2z41OAXSglX8WKCBSgBOXkq5iNIBi9o5NJJpNB31uvfALGesvdloOdj73w8gdG5xKN3tGpJJPJIGNsUjx8qL/6xMOzmeh8C8rsFAzoffWhk7UXF+58o3c+ClBAMpkMcs4nAYQAQKiVWr0numYzsdvlIzCEjUSgAAqqfMZYqPC4IAdsjUAXYZSWX8jGn3/PLI5cDINzDddN9rrW1wmuvwjH43FZ3XY45yj1IzY39gbfPBcBY/myg3L+jtb5XR0gHo/LjLEpKHt+OTwtTdoiMC5rXYNrA+iVr6IpAsdXWsdzZYB4PC4DmOKc77rtlNyOju62HbHoOsR3ta7Fdc+CYvG47Ad0P/K3I8iBVu/xrtnsXOGzIxbla2t94a+/SGsdx1UBumPD8mT6l6s9vjavxLzNZsdjtVKr95GuSHbuTgvAYnxtrS907fKSnjFcE6A7NixvbLCpPHh4ejXR2Ot7cF4SzEcQ5EBrVXvLl9no/Fm98gGXvA5Q5aNg2xEh5Ebq++ePCIEnzIzNOY8IgnCms7NTt/zNdTicYvIBgIML364kmsK+tlsS8x41OLwp+YDDA5SSr8LBhenVRFNPTdutgP4IpuUDDg5QTr6KGiFcfUzPmRARRdG0fMChAbTKV+HgwnQm2RSubr0VEKrLRYhaJR9wYAC98lU0RoiKothnlXzAYQGMyldRIhzpqW676WdVLdv+HPV4PJbKBxwUwKx8FQ4uTmeSjb2+tpsS86oRbJEPOOR1gFXyCxEhrF+oOzPfIEh5u+QDDngzrjs2LOc22P//RrSKHPJV5xevZe/ZKB8APHYNvBfY8chXYUCUibnnQzbKV+Y5mNgtX/TwvrnQsK3ylbkOHk6Rr8x3sHCSfGXOg4PT5CvzHgycKF+Zu/Jxqnxl/srGyfKVNVQuTpevrKMycYN8ZS2Vh1vkAxUYwE3ygQoL4Db5QAUFcKN8oEICuFU+UAEB3Cwf2OcAbpcP7GMAkr/JvgQg+ffZ8wAkfyt7GoDk72TPApD84uxJAJJfGtsDkPzdsTUAyS+PbQFIvjZsCUDytWN5AJKvD0sDkHz9WBaA5BvDkgAk3zimA5B8c5gKQPLNYzgAybcGQx9R+vju9UM1eV8EJN80hgIMPfBY/8DhR49bvRi3yQcMBuCcPzPUGMbZBlNfNLIFN8oHjH9K8hQAWBXBrfIBAx/UTqVSzaIovq/+fjJwDDmex08rfxlagJvlAwbOAK/Xe3r7MaNngtvlAwYCcM6fLXZcbwSSv4mRa0DRAID2CCT/PrquARMTE4/7/f73/H5/yduUuyaQ/K3oOgPS6fRro6OjSKVSu96u1JlA8neiK8DS0tKplZUVjI2N6Y5A8oujawsKh8Mj2WxWWF9fx8LCAjo6OiBJUsnbq9vR3cw/P+fFjdMkfyea34wbHx8PRSKRaOExv9+PwcFBNDQ0FLvLrwBuMMZuXF78cfKNtqf+NblWR6L562qWl5fPbT+mbkdKhN8457OMsRnO+VRdXd3v1i7VmWgOkE6ntzz9DAaDufr6+j9kWb6eSCQ+7ezs/N765TkfzQFWV1fr29vbE7IsfydJ0qWBgYGYnQsjCIIgCIIgCIIgCMKJ/AeQV1c2d6dj6AAAAABJRU5ErkJggg==" /></a>
+            </td>
+            <td>{{ followup.user.first_name }} {{ followup.user.last_name }}</td>
+            <td>{{ followup.text }}</td>
+            <td>{{ followup.modified|date:"d.m.Y, G:i" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>no followup so far...</p>
+{% endif %}
+
+
+</div>
+
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}

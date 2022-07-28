@@ -1,0 +1,13 @@
+<form action = "" method = "GET">
+    <input type="text" id = "q" name = "q" placeholder = "Search...">
+</form>
+
+{% for item in posts %}
+{{ item.id}}
+{{ item.title }}
+{{ item.slug }}
+{{ item.image }}
+{{ item.content }}
+{% endfor %}
+
+

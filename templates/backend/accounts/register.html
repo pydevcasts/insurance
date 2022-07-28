@@ -1,0 +1,62 @@
+{% extends "backend/layouts/base-fullscreen.html" %}
+{% load i18n %}
+
+{% block title %} {% trans "Sign Up" %} {% endblock %} 
+
+{% block stylesheets %}<style>
+    .insurance-direction {
+      direction: rtl !important
+    }
+</style>{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        <section class="mt-5  bg-soft d-flex align-items-center">
+            <div class="container">
+                <p class="text-center">
+                    {% trans "Welcome Sign UP" %}
+                </p>
+                <div class="row justify-content-center form-bg-image" data-background-lg="/static/assets/backend/img/illustrations/signin.svg">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                  {% trans "Sign UP" %}
+                             
+                                </h1>
+                                <br />
+                                <p>
+                                    {% if msg %}
+                                        {{ msg | safe }}
+                                    {% else %}
+                                        {% trans "Add your credentials" %}
+                                    {% endif %}                                     
+                                </p> 
+                            </div>
+                            <form method="post" action="" class="mt-4" novalidate>
+                                {% csrf_token %} {% include 'backend/includes/form.html' %}
+                                <div class="g-recaptcha" data-sitekey="6LeEmKIUAAAAAKclnIuImbw4E_Y0iDAltG9bm5AZ"></div>
+
+                                <div class="d-grid mt-4">
+                                    <button type="submit" name="register" class="btn btn-gray-800">{% trans "Sign Up" %}</button>
+                                </div>
+                            </form>
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    {% trans "Already have an account?" %}
+                                    <a href="{% url 'login' %}" class="fw-bold">{% trans "Sign IN" %}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

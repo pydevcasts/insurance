@@ -1,0 +1,128 @@
+{% extends "backend/layouts/base.html" %} 
+{% block title %}List Post{% endblock%}
+
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {% for m in messages %}
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div {% if message.posts %} class="{{ message.post }}"{% endif %}>{{ m }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="py-4">
+  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+      <li class="breadcrumb-item">
+        <a href="#">
+          <svg
+            class="icon icon-xxs"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            ></path>
+          </svg>
+        </a>
+      </li>
+      <li class="breadcrumb-item"><a href="#">Tables</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Post tables
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card border-0 shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-0 rounded-start">#</th>
+            <th class="border-0">Image</th>
+            <th class="border-0">Title</th>
+            <th class="border-0">Slug</th>
+            <th class="border-0">Category</th>
+            <th class="border-0">Status</th>
+            <th class="border-0">Created</th>
+            <th class="border-0">Updated</th>
+            <th class="border-0">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          {% if user.is_superuser %}
+            <tr>
+            <td><a href="#" class="text-primary fw-bold">
+            {{ forloop.counter }}
+            </a>
+          </td>
+          {% if post.banner %}
+          <td><img src="..{{ post.banner.url }}" class = "rounded-circle" width=70 /></td>
+          {% endif %}
+          <td>{{ post.title}}</td>
+          <td>{{ post.slug}}</td>
+            <td>{{ post.subcategory.category }}</td>
+            <td>{% if post.status == 1 %} Published {% else %} Draft {% endif %}</td>
+            <td>{{ post.updated }}</td>
+            <td class="text-success">
+              <div class="d-flex align-items-center">
+                <svg
+                  class="icon icon-xs me-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="fw-bold">{{ post.created }}</span>
+              </div>
+            </td>
+            {% if request.user.is_authenticated%} 
+            <td>
+             <a href="{% url "blog:update" post.pk %}"><img src="https://img.icons8.com/bubbles/30/000000/edit.png"/></a> 
+              <form method = "POST" action="{% url "subcategory:list" %}">
+                {% csrf_token %}
+                <a href="{% url "blog:delete" post.pk %}"><img src="https://img.icons8.com/cute-clipart/25/000000/trash.png"/></a>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="{% url 'blog:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% else %}
+              <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+          {% endif %}
+          {% for i in paginator.page_range %}
+                  <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="{% url 'blog:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="{% url 'blog:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a></li>
+          {% else %}
+              <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+          {% endif %}
+  </div>
+  </div>
+</div>
+
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}

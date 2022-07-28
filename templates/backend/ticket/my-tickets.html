@@ -1,0 +1,178 @@
+{% extends "backend/layouts/base.html" %}
+{% block title %}Tickets - All tickets{% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {% for m in messages %}
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div {% if message.tickets %} class="{{ message.ticket }}" {% endif %}>{{ m }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="py-4">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                ticket tables
+            </li>
+        </ol>
+    </nav>
+</div>
+<div class="table-settings mb-4">
+    <div class="row align-items-center justify-content-between">
+        <div class="col col-md-6 col-lg-3 col-xl-4">
+            <div class="input-group me-2 me-lg-3 fmxw-400"><span class="input-group-text"><svg class="icon icon-xs"
+                        x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg> </span><input type="text" class="form-control" placeholder="Search orders"></div>
+        </div>
+
+        <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
+            <div class="dropdown"><button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg class="icon icon-md"
+                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                            clip-rule="evenodd"></path>
+                    </svg> <span class="visually-hidden">Toggle Dropdown</span></button>
+                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0" style=""><span
+                        class="small ps-3 fw-bold text-dark">Show</span> <a
+                        class="dropdown-item d-flex align-items-center fw-bold"
+                        href="{% url 'tickets:my-tickets' %}">MyTicket <svg class="icon icon-xxs ms-auto"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg></a><a class="dropdown-item fw-bold" href="{% url 'tickets:list' %}">Ticket List</a> <a
+                        class="dropdown-item fw-bold rounded-bottom" href="{% url 'tickets:ticket_create' %}">Ticket Create</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow mb-4">
+    <div class="card-body">
+        <!-- <a href="z"><button type="button" class="btn btn-primary"
+                style=" margin-right: 20px;">Create New Ticket</button></a> -->
+        
+        {% if tickets_waiting %}
+        
+        <div class="alert alert-danger" role="alert" style="margin-top: 20px;"><b>Collegues are waiting for your
+                input!</b><br /><br />
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="border-0 rounded-start">#</th>
+                            <th class="border-0">title</th>
+                            <th class="border-0">Assignment</th>
+                            <th class="border-0">Description</th>
+                            <th class="border-0">Owner</th>
+                            <th class="border-0">Status</th>
+                            <th class="border-0">Updated</th>
+                            <th class="border-0">Created</th>
+                            <th class="border-0">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets_waiting %}
+
+                        <tr>
+                            <td><a href="{% url 'tickets:ticket_detail' pk=ticket.id %}" class="text-primary fw-bold">
+                                    {{ forloop.counter }}
+                                </a>
+                            </td>
+                            <td>{{ ticket.title}}</td>
+                            <td>{% if ticket.assigned_to %}{{ ticket.assigned_to }}{% else %}---{% endif %}</td>
+                            <td>{{ ticket.description }}</td>
+                            <td>{{ ticket.owner }}</td>
+                            <td>{% if ticket.status == "TODO" %}
+                                <span class="badge bg-danger">TODO</span>
+                                {% elif ticket.status == "IN PROGRESS" %}
+                                <span class="badge bg-danger">IN PROGRESS</span>
+                                {% elif ticket.status == "WAITING" %}
+                                <span class="badge bg-warning">WAITING</span>
+                                {% elif ticket.status == "DONE" %}
+                                <span class="badge bg-success">DONE</span>
+                                {% else %}
+                                {{ ticket.status }}
+                                {% endif %}
+                            <td>{{ ticket.updated }}</td>
+                            <td class="text-success">
+                                <div class="d-flex align-items-center">
+                                    <svg class="icon icon-xs me-1" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="fw-bold">{{ ticket.created }}</span>
+                                </div>
+                            </td>
+                            {% if request.user.is_authenticated %}
+                            <td>
+                                <a title = "Edit Ticket" href="{% url 'tickets:ticket_edit' pk=ticket.pk %}"><img
+                                        src="https://img.icons8.com/bubbles/30/000000/edit.png" /></a>
+                                <a title = "Detail Ticket" href="{{ ticket.get_absolute_url }}"><img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAADHklEQVRIicWWW0hUURSG/3XOHI8z03jLEkkhU4oiKujmjS5go0WGL0IU9FCo9GJRhBVd5qFSC3rqpetDEVgEhXZhpDSIvFD50A2y1EKzmkozmWku5+zVS4naUWcczf9xr/Ovb++1OHttYIpEowU3HmuY5ZUVFQAi9YDv9qHMj5MKzqts2MFM2xlol4g9ACCYLESUCsGXnAcyLkw42F7ZUEAs5fu8v0oeOtZqg2NrHPUmNTLyHBNX15Zl3goHLBnspUglbfdwKAA8dKzVVNJ3AVQUDtQQTAI3q8uy+0cyVJdl9xPDEi54XMqtaKwPN4dBqf+PCADWVzYl2awRV5kxIxiTP6DHRCjyDyJ87Xf7t94rS+8KFWwCALNqKlm9ePaqlMSYULyJHZ965z9o6SgGcCRUsAQARGRTTKFXXTHJIFBUyEZMYY9NY33Q5/YBBERb1JCTrz/5OJU1zBQK2mr3ZbmCBvd7fLjifA4iYFvuItiChOeVN85WzcqNWJt1liVSVXt+un0Fp1vq9J+iqMaxzDMmGABAgEQEiUadJwNa46ifZrGodelL5qZEWc0D651fvhe+au2MB5ALjNFjm0XFvOTpSEuKg9UcERQ4Njrq6IK05KTBUABITpiuxMfZlq070ZgFBHHixakJQQEHRJyTGB+jGIWSEuLjvn3rWwfg8ZjgmbHW0MCS9EsXArL8bzE1XWNNwA1Mwu+k+8Xlts7P/wwZBtDW+cUV0AI3B4FZHz9qqLd679Kz77tdLzq6XB7+uxldoOVV+w+v13/ReSDzHfCnxz6v/9r9Z+2FilF9RlFA14U7IKqGLBJxn6N+9ZuO7uNvP3zaLJEUqwndFRDi0J09y6tGSDXxGmmETu2Vaa9ozCegdJw5zjv3Z1wfF7h2f0YNgJpQzfbypqVEvAWAITin4mk0IWD4jAqr1LK15yWAdIeDDfPIpG0C86MJB98r3eAj5lsN5qbDw2M55U/mgLnYpuKMkTe4m380MZO9ovm4RLyQwVUM6gVhhcS8ShLyzrsHV7ZODviP7KeaU6CLPIl5GpP82uf1OI3e5lOu30m/HcZaaNaVAAAAAElFTkSuQmCC" /></a>
+                                <form method="post" action="#">
+                                    {% csrf_token %}
+                                    <a title = "Trash" href="#"><img src="https://img.icons8.com/cute-clipart/25/000000/trash.png" /></a>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-body">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link"
+                            href="{% url 'tickets:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                    <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link"
+                            href="{% url 'tickets:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{
+                            i }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link"
+                            href="{% url 'tickets:list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}

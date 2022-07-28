@@ -1,0 +1,168 @@
+{% extends 'frontend/shared/home.html' %} {% block body %}
+{% load i18n %}
+
+  <div id="main">
+    <div class="section pt-11 pb-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="box-icon style-14">
+              <div class="content-wrap">
+                <div class="content">
+                  <div class="box-header">
+                    <div class="icon">
+                      <i class="ion-map"></i>
+                    </div>
+                    <h4 class="heading">آدرس</h4>
+                  </div>
+                  <div class="text">خیابان ازادی کوچه دوم پلاک 9</div>
+                </div>
+              </div>
+            </div>
+            <div class="box-icon style-14">
+              <div class="content-wrap">
+                <div class="content">
+                  <div class="box-header">
+                    <div class="icon">
+                      <i class="ion-iphone"></i>
+                    </div>
+                    <h4 class="heading">تلفن</h4>
+                  </div>
+                  <div class="text">موبایل: (+88) 090 1900 - 6886<br />خط تلفن: 1800 6886</div>
+                </div>
+              </div>
+            </div>
+            <div class="box-icon style-14">
+              <div class="content-wrap">
+                <div class="content">
+                  <div class="box-header">
+                    <div class="icon">
+                      <i class="ion-email"></i>
+                    </div>
+                    <h4 class="heading">ایمیل</h4>
+                  </div>
+                  <div class="text">support@atomlab.com<br />contact@atomlab.com</div>
+                </div>
+              </div>
+            </div>
+            <ul class="social-networks mb-5">
+              <li class="item">
+                <a href="#" target="_blank" aria-label="توییتر" class="link">
+                  <i class="ion-social-twitter link-icon"></i>
+                </a>
+              </li>
+              <li class="item">
+                <a href="#" target="_blank" aria-label="فیسبوک" class="link">
+                  <i class="ion-social-facebook link-icon"></i>
+                </a>
+              </li>
+              <li class="item">
+                <a href="#" target="_blank" aria-label="گوگل+" class="link">
+                  <i class="ion-social-googleplus link-icon"></i>
+                </a>
+              </li>
+              <li class="item">
+                <a href="#" target="_blank" aria-label="لینکداین" class="link">
+                  <i class="ion-social-linkedin link-icon"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="col-lg-8 offset-lg-1">
+          <h3 class="heading fz-56 mb-5"> در تماس باشید</h3>
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% for m in messages %}
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div>{{ m }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {% for error in form.non_field_errors %}
+              <button
+                type="button"
+                class="btn-close btn-sm"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+              <div {% if message.posts %} class="{{ message.post }}" {% endif %}>
+                {{ error }}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <form
+            id="post_form"
+            method="POST"
+            action=""
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <label for="{{ form.subject.id_for_label }}"
+                    >موضوع</label
+                  >
+                  <input
+                    class="form-control"
+                    name="subject"
+                    placeholder="موضوع"
+                    id="subject"
+                  />
+                  {% for error in form.errors.subject %}
+                  <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+           
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <label>ایمیل</label>
+                  <input
+                  class="form-control"
+                  name="email"
+                  placeholder="ایمیل آدرس"
+                  />
+                  {% for error in form.errors.email %}
+                  <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <label>پیام</label>
+                  <textarea name="content" id="content"  cols="40" rows="10" class="form-control mb-2" placeholder="پیام"></textarea>
+        
+                  {% for error in form.errors.content %}
+                  <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="row">
+                <button type="submit" class="form-submit button style-flat btn-block ">
+                  ارسال
+                </button>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+    
+            {% include "frontend/location/map.html" %}
+            <a href="#" class="btn-view-full-map">در تماس باشید <i class="ion-arrow-right-a btn-icon"></i></a>
+        
+    </div>
+  </div>
+
+{% endblock %}
