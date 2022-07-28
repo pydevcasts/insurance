@@ -183,12 +183,11 @@
                     </li>
                   </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link {% if view.page_name == 'contact' %}active{% endif %}"
+                <li class="nav-item ">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'create' %}active{% endif %}"
                     href="{% url 'contact:create' %}">تماس با ما</a>
                 </li>
               </ul>
-
               <div class="others-option">
                 <div class="option-item">
                   <i class="search-btn bx bx-search"></i>
@@ -219,12 +218,111 @@
                   </a>
                 </div>
               </div>
-
             </div>
           </div>
         </nav>
       </div>
     </div>
   </div>
-
 </header>
+
+
+<div class="sidebar-modal">
+  <div class="modal right fade" id="myModal2">
+          <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                          <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal"
+                                          aria-label="Close">
+                                          <span aria-hidden="true">
+                                                  <i class="bx bx-x"></i>
+                                          </span>
+                                  </button>
+                                  <h2 class="modal-title">
+                                          <a href="index.html">
+                                                  <img src="{% static 'assets/frontend/img/logo.png' %}" alt="Logo">
+                                          </a>
+                                  </h2>
+                          </div>
+                          <div class="modal-body">
+                                  <div class="sidebar-modal-widget">
+                                          <h3 class="title">درباره ما</h3>
+                                          <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم
+                                                  استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و متن را
+                                                  در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم
+                                                  ایپسوم ساختار چاپ و متن را در بر می گیرد.</p>
+                                  </div>
+                                  <div class="sidebar-modal-widget">
+                                          <h3 class="title">پیوندهای اضافی</h3>
+                                          <ul>
+                                                  <li>
+                                                          <a href="log-in.html">وارد شوید</a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="sign-in.html">ثبت نام</a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="faq.html">سوالات متداول</a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="#">خروج</a>
+                                                  </li>
+                                          </ul>
+                                  </div>
+                                  <div class="sidebar-modal-widget">
+                                          <h3 class="title">اطلاعات مشتری</h3>
+                                          <ul class="contact-info">
+                                                  <li>
+                                                          <i class="bx bx-location-plus"></i>
+                                                          آدرس
+                                                          <span>ایران ، استان تهران ، میدان آزادی ، خیابان
+                                                                  9 شرقی</span>
+                                                  </li>
+                                                  <li>
+                                                          <i class="bx bx-envelope"></i>
+                                                          ایمیل
+                                                          <a
+                                                                  href="siyamak1981@gmail.com">siyamak1981@gmail.com</a>
+                                                  </li>
+                                                  <li>
+                                                          <i class="bx bxs-phone-call"></i>
+                                                          تلفن
+                                                          <a href="tel:+822456974">01132259923</a>
+                                                  </li>
+                                          </ul>
+                                  </div>
+                                  <div class="sidebar-modal-widget">
+                                          <h3 class="title">با ما در ارتباط باشید</h3>
+                                          <ul class="social-list">
+                                                  <li>
+                                                          <a href="#">
+                                                                  <i class='bx bxl-twitter'></i>
+                                                          </a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="#">
+                                                                  <i class='bx bxl-facebook'></i>
+                                                          </a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="#">
+                                                                  <i class='bx bxl-instagram'></i>
+                                                          </a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="#">
+                                                                  <i class='bx bxl-linkedin'></i>
+                                                          </a>
+                                                  </li>
+                                                  <li>
+                                                          <a href="#">
+                                                                  <i class='bx bxl-youtube'></i>
+                                                          </a>
+                                                  </li>
+                                          </ul>
+                                  </div>
+                          </div>
+                  </div>
+          </div>
+  </div>
+</div>

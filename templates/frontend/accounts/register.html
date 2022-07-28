@@ -1,0 +1,59 @@
+{% extends "frontend/shared/home.html" %}
+{% block title %} ثبت نام {% endblock %}
+{% block body %}
+
+<div class="page-title-area bg-4">
+    <div class="container">
+        <div class="page-title-content">
+            <h2>ثبت نام</h2>
+            <ul>
+                <li>
+                    <a href="{% url 'frontend:post_and_subcategory' %}"
+                        class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'post_and_subcategory' %}active{%endif%}">
+                        خانه
+                    </a>
+                </li>
+                <li>صفحات</li>
+                <li>کاربر</li>
+                <li>ثبت نام</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="user-area-all-style sign-up-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-action">
+                    <div class="form-heading text-center">
+                        <h3 class="form-title">ایجاد حساب کاربری!</h3>
+                        <p class="form-desc">یا با شبکه اجتماعی وارد شوید.</p>
+                    </div>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form method="post" action="" novalidate>
+                                    {% csrf_token %} {% include 'backend/includes/form.html' %}
+                                    <div class="g-recaptcha" data-sitekey="6LeEmKIUAAAAAKclnIuImbw4E_Y0iDAltG9bm5AZ">
+                                    </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="default-btn btn-block" type="submit">
+                                    ثبت نام
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <p class="account-desc">
+                                    حساب کاربری داری؟
+                                    <a href="{% url 'login' %}"> ورود</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

@@ -1,168 +1,212 @@
-{% extends 'frontend/shared/home.html' %} {% block body %}
-{% load i18n %}
+{% extends 'frontend/shared/home.html' %}
+{% block title %}تماس با ما{% endblock %}
+{% block body %}
 
-  <div id="main">
-    <div class="section pt-11 pb-12">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="box-icon style-14">
-              <div class="content-wrap">
-                <div class="content">
-                  <div class="box-header">
-                    <div class="icon">
-                      <i class="ion-map"></i>
-                    </div>
-                    <h4 class="heading">آدرس</h4>
-                  </div>
-                  <div class="text">خیابان ازادی کوچه دوم پلاک 9</div>
-                </div>
-              </div>
-            </div>
-            <div class="box-icon style-14">
-              <div class="content-wrap">
-                <div class="content">
-                  <div class="box-header">
-                    <div class="icon">
-                      <i class="ion-iphone"></i>
-                    </div>
-                    <h4 class="heading">تلفن</h4>
-                  </div>
-                  <div class="text">موبایل: (+88) 090 1900 - 6886<br />خط تلفن: 1800 6886</div>
-                </div>
-              </div>
-            </div>
-            <div class="box-icon style-14">
-              <div class="content-wrap">
-                <div class="content">
-                  <div class="box-header">
-                    <div class="icon">
-                      <i class="ion-email"></i>
-                    </div>
-                    <h4 class="heading">ایمیل</h4>
-                  </div>
-                  <div class="text">support@atomlab.com<br />contact@atomlab.com</div>
-                </div>
-              </div>
-            </div>
-            <ul class="social-networks mb-5">
-              <li class="item">
-                <a href="#" target="_blank" aria-label="توییتر" class="link">
-                  <i class="ion-social-twitter link-icon"></i>
+<div class="sidebar-modal">
+  <div class="modal right fade" id="myModal2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="bx bx-x"></i>
+            </span>
+          </button>
+          <h2 class="modal-title">
+            <a href="index.html">
+              <img src="assets/img/logo.png" alt="Logo">
+            </a>
+          </h2>
+        </div>
+        <div class="modal-body">
+          <div class="sidebar-modal-widget">
+            <h3 class="title">درباره ما</h3>
+            <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم
+              استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و متن را
+              در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم
+              ایپسوم ساختار چاپ و متن را در بر می گیرد.</p>
+          </div>
+          <div class="sidebar-modal-widget">
+            <h3 class="title">پیوندهای اضافی</h3>
+            <ul>
+              <li>
+                <a href="log-in.html">وارد شوید</a>
+              </li>
+              <li>
+                <a href="sign-in.html">ثبت نام</a>
+              </li>
+              <li>
+                <a href="faq.html">سوالات متداول</a>
+              </li>
+              <li>
+                <a href="#">خروج</a>
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar-modal-widget">
+            <h3 class="title">اطلاعات مشتری</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="bx bx-location-plus"></i>
+                آدرس
+                <span>ایران ، استان تهران ، میدان آزادی ، خیابان
+                  9 شرقی</span>
+              </li>
+              <li>
+                <i class="bx bx-envelope"></i>
+                ایمیل
+                <a href="mailto:hello@surety.com">hello@surety.com</a>
+              </li>
+              <li>
+                <i class="bx bxs-phone-call"></i>
+                تلفن
+                <a href="tel:+822456974">02112345678</a>
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar-modal-widget">
+            <h3 class="title">با ما در ارتباط باشید</h3>
+            <ul class="social-list">
+              <li>
+                <a href="#">
+                  <i class='bx bxl-twitter'></i>
                 </a>
               </li>
-              <li class="item">
-                <a href="#" target="_blank" aria-label="فیسبوک" class="link">
-                  <i class="ion-social-facebook link-icon"></i>
+              <li>
+                <a href="#">
+                  <i class='bx bxl-facebook'></i>
                 </a>
               </li>
-              <li class="item">
-                <a href="#" target="_blank" aria-label="گوگل+" class="link">
-                  <i class="ion-social-googleplus link-icon"></i>
+              <li>
+                <a href="#">
+                  <i class='bx bxl-instagram'></i>
                 </a>
               </li>
-              <li class="item">
-                <a href="#" target="_blank" aria-label="لینکداین" class="link">
-                  <i class="ion-social-linkedin link-icon"></i>
+              <li>
+                <a href="#">
+                  <i class='bx bxl-linkedin'></i>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class='bx bxl-youtube'></i>
                 </a>
               </li>
             </ul>
           </div>
-          
-          <div class="col-lg-8 offset-lg-1">
-          <h3 class="heading fz-56 mb-5"> در تماس باشید</h3>
-            {% if messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {% for m in messages %}
-                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-                <div>{{ m }}</div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% if form.non_field_errors %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              {% for error in form.non_field_errors %}
-              <button
-                type="button"
-                class="btn-close btn-sm"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-              <div {% if message.posts %} class="{{ message.post }}" {% endif %}>
-                {{ error }}
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-            <form
-            id="post_form"
-            method="POST"
-            action=""
-            enctype="multipart/form-data"
-          >
-            {% csrf_token %}
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-12">
-                  <label for="{{ form.subject.id_for_label }}"
-                    >موضوع</label
-                  >
-                  <input
-                    class="form-control"
-                    name="subject"
-                    placeholder="موضوع"
-                    id="subject"
-                  />
-                  {% for error in form.errors.subject %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
-                </div>
-           
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-lg-12">
-                  <label>ایمیل</label>
-                  <input
-                  class="form-control"
-                  name="email"
-                  placeholder="ایمیل آدرس"
-                  />
-                  {% for error in form.errors.email %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
-                </div>
-              </div>
-              
-              <br>
-              <div class="row">
-                <div class="col-lg-12">
-                  <label>پیام</label>
-                  <textarea name="content" id="content"  cols="40" rows="10" class="form-control mb-2" placeholder="پیام"></textarea>
-        
-                  {% for error in form.errors.content %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
-                </div>
-              </div>
-
-              <div class="row">
-                <button type="submit" class="form-submit button style-flat btn-block ">
-                  ارسال
-                </button>
-              </div>
-            </div>
-          </form>
-          </div>
         </div>
       </div>
     </div>
-    <div class="section">
-    
-            {% include "frontend/location/map.html" %}
-            <a href="#" class="btn-view-full-map">در تماس باشید <i class="ion-arrow-right-a btn-icon"></i></a>
-        
+  </div>
+</div>
+
+<div class="page-title-area bg-14">
+  <div class="container">
+    <div class="page-title-content">
+      <h2>تماس با ما</h2>
+      <ul>
+        <li>
+          <a href="index.html">
+            خانه
+          </a>
+        </li>
+        <li>تماس با ما</li>
+      </ul>
     </div>
   </div>
+</div>
 
+<section class="contact-area ptb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="contact-wrap">
+          <div class="contact-form">
+            <div class="section-title">
+              <h2>برای هرگونه سوال پیامی برای ما ارسال کنید</h2>
+            </div>
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {% for m in messages %}
+              <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+              <div>{{ m }}</div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <form id="post_form" method="POST" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" required placeholder="ایمیل شما">
+                    {% for error in form.errors.subject %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" name="subject" id="subject" class="form-control" required
+                      data-error="لطفا موضوع خود را وارد کنید" placeholder="موضوع شما">
+                    {% for error in form.errors.subject %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                    <textarea name="content" class="form-control" id="content" cols="30" rows="5" required
+                      data-error="پیام خود را بنویسید" placeholder="پیام شما"></textarea>
+                    {% for error in form.errors.subject %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <button type="submit" class="default-btn btn-block page-btn">
+                    ارسال پیام
+                  </button>
+                  <div id="msgSubmit" class="h3 text-center hidden">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="quick-contact">
+          <h3>تماس سریع </h3>
+          <ul>
+            <li>
+              <i class="flaticon-maps-and-flags"></i>
+              موقعیت:
+              <span> ایران ، استان تهران ، میدان آزادی ، خیابان 9 شرقی
+              </span>
+            </li>
+            <li>
+              <i class="flaticon-call"></i>
+              تماس با ما:
+              <a href="tel:+0(321)984754">02112345678 <br>
+                02187654321</a>
+            </li>
+            <li>
+              <i class="flaticon-email"></i>
+              ایمیل ما:
+              <a href="mailto:hello@surety.com">hello@surety.com</a>
+              <a href="mailto:hello@surety.com">hello@surety.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  {% include "frontend/location/map.html" %}
+</div>
 {% endblock %}
