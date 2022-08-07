@@ -1,120 +1,9 @@
-{% extends 'frontend/shared/home.html' %}
-{% block title %}تماس با ما{% endblock %}
+{% extends "frontend/shared/home.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
 {% block body %}
-
-<div class="sidebar-modal">
-  <div class="modal right fade" id="myModal2">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">
-              <i class="bx bx-x"></i>
-            </span>
-          </button>
-          <h2 class="modal-title">
-            <a href="index.html">
-              <img src="assets/img/logo.png" alt="Logo">
-            </a>
-          </h2>
-        </div>
-        <div class="modal-body">
-          <div class="sidebar-modal-widget">
-            <h3 class="title">درباره ما</h3>
-            <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم
-              استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و متن را
-              در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم
-              ایپسوم ساختار چاپ و متن را در بر می گیرد.</p>
-          </div>
-          <div class="sidebar-modal-widget">
-            <h3 class="title">پیوندهای اضافی</h3>
-            <ul>
-              <li>
-                <a href="log-in.html">وارد شوید</a>
-              </li>
-              <li>
-                <a href="sign-in.html">ثبت نام</a>
-              </li>
-              <li>
-                <a href="faq.html">سوالات متداول</a>
-              </li>
-              <li>
-                <a href="#">خروج</a>
-              </li>
-            </ul>
-          </div>
-          <div class="sidebar-modal-widget">
-            <h3 class="title">اطلاعات مشتری</h3>
-            <ul class="contact-info">
-              <li>
-                <i class="bx bx-location-plus"></i>
-                آدرس
-                <span>ایران ، استان تهران ، میدان آزادی ، خیابان
-                  9 شرقی</span>
-              </li>
-              <li>
-                <i class="bx bx-envelope"></i>
-                ایمیل
-                <a href="mailto:hello@surety.com">hello@surety.com</a>
-              </li>
-              <li>
-                <i class="bx bxs-phone-call"></i>
-                تلفن
-                <a href="tel:+822456974">02112345678</a>
-              </li>
-            </ul>
-          </div>
-          <div class="sidebar-modal-widget">
-            <h3 class="title">با ما در ارتباط باشید</h3>
-            <ul class="social-list">
-              <li>
-                <a href="#">
-                  <i class='bx bxl-twitter'></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class='bx bxl-facebook'></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class='bx bxl-instagram'></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class='bx bxl-linkedin'></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class='bx bxl-youtube'></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="page-title-area bg-14">
-  <div class="container">
-    <div class="page-title-content">
-      <h2>تماس با ما</h2>
-      <ul>
-        <li>
-          <a href="index.html">
-            خانه
-          </a>
-        </li>
-        <li>تماس با ما</li>
-      </ul>
-    </div>
-  </div>
-</div>
+{% include 'frontend/partials/_head.html' %}
 
 <section class="contact-area ptb-100">
   <div class="container">
@@ -158,7 +47,7 @@
                   <div class="form-group">
                     <textarea name="content" class="form-control" id="content" cols="30" rows="5" required
                       data-error="پیام خود را بنویسید" placeholder="پیام شما"></textarea>
-                    {% for error in form.errors.subject %}
+                    {% for error in form.errors.content %}
                     <p class="text-danger">{{ error }}</p>
                     {% endfor %}
                   </div>
@@ -183,20 +72,20 @@
             <li>
               <i class="flaticon-maps-and-flags"></i>
               موقعیت:
-              <span> ایران ، استان تهران ، میدان آزادی ، خیابان 9 شرقی
+              <span> {{ user.profile.address}}
               </span>
             </li>
             <li>
               <i class="flaticon-call"></i>
               تماس با ما:
-              <a href="tel:+0(321)984754">02112345678 <br>
-                02187654321</a>
+              <a href="#">{{ user.profile.phone }}</a>
+              <a href="#">{{ user.mobile }}</a>
             </li>
             <li>
               <i class="flaticon-email"></i>
               ایمیل ما:
-              <a href="mailto:hello@surety.com">hello@surety.com</a>
-              <a href="mailto:hello@surety.com">hello@surety.com
+              <a href="٫">{{ user.email }}</a>
+           
               </a>
             </li>
           </ul>
@@ -207,6 +96,14 @@
 </section>
 
 <div class="section">
-  {% include "frontend/location/map.html" %}
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+            {{ map|safe}}
+          </div>
+      </div>
+    </div>
+  </section>
 </div>
 {% endblock %}

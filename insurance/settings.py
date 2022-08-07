@@ -50,9 +50,12 @@ INSTALLED_APPS = [
     'search.apps.SearchConfig',
     'django_elasticsearch_dsl',
 
-    'location',
     'tickets',
-    'aboutus'
+    'aboutus',
+    'team',
+    'slider',
+    'faq',
+    'newsletters'
     ]
 
     
@@ -71,10 +74,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # 'insurance.middleware.language.LanguageMiddleware',
+    # "insurance.middleware.newsletters.NewsLettersMiddleware"
+
 ]
 
 ROOT_URLCONF = 'insurance.urls'
+
 
 TEMPLATES = [
     {
@@ -87,6 +92,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'settings.context_processors.context_processors.posts_view_context_processor',
+             
             ],
         },
     },
@@ -167,9 +174,9 @@ USE_TZ = True
 
 
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+# LOCALE_PATHS = (
+#     os.path.join(BASE_DIR, 'locale'),
+# )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -194,10 +201,17 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 
 
+#Django’s Debug Toolbar Showing Inside Docker
 INTERNAL_IPS = [
     "127.0.0.1",
-    'localhost'
+    'localhost',
+ 
 ]
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
+
+
 
 DEBUG_TOOLBAR_CONFIG = {
     'RESULTS_CACHE_SIZE': 3,
@@ -245,7 +259,4 @@ ELASTICSEARCH_DSL = {
 }
 
 GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY')
-
-
-
 

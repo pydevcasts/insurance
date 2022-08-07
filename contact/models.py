@@ -21,3 +21,15 @@ class Contact(models.Model):
     def __str__(self):
         return self.subject
 
+
+
+
+class Location(models.Model):
+    address = models.CharField(_('آدرس'),max_length=200, null = True)
+    date = models.DateTimeField(auto_now_add = True)
+    class Meta:
+        verbose_name = _('نقشه')
+        verbose_name_plural = _('نقشه')
+
+    def __str__(self):
+        return self.address

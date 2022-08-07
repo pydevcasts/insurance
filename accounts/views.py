@@ -16,7 +16,7 @@ def signup(request):
             return redirect('dashboard:home')
     else:
         form = SignUpForm()
-    return render(request, 'frontend/accounts/register.html', {'form': form})
+    return render(request, 'frontend/accounts/register.html', {'form': form, 'title':"ثبت نام"})
 
 
 

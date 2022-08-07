@@ -2,11 +2,9 @@ from django.shortcuts import get_object_or_404, render
 from blog.models import Post
 from category.models import Category,SubCategory
 from django import template
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.views.generic import ListView
 
 
 def post_subcategory_list(request, slug=None):

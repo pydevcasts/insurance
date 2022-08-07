@@ -1,0 +1,140 @@
+{% extends "frontend/shared/home.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+
+
+<section class="faq-area faq-page pt-100">
+    <div class="container">
+        <div class="faq-accordion">
+            <h2>تک تک پاسخ ها را دریافت کنید</h2>
+            <ul class="accordion">
+                {% for question in questions %}
+                <li class="accordion-item">
+                    {% if forloop.first %}
+                    <a class="accordion-title active" href="javascript:void(0)">
+                        <i class="bx bx-plus"></i>
+                        {{ question.title }}
+                    </a>
+                    <div class="accordion-content show">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <p>{{ question.question.answer|striptags }}</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <img src="{{ question.question.banner.url }}" alt="{{ question.question.alt }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a class="accordion-title" href="javascript:void(1)">
+                        <i class="bx bx-plus"></i>
+                        {{ question.title }}
+                    </a>
+                    <div class="accordion-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <p>{{ question.question.answer|striptags }}</p>
+                            </div>
+                            {% if question.question.banner %}
+                            <div class="col-lg-6">
+                                <img src="{{ question.question.banner.url }}" alt="{{ question.question.alt }}">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<section class="contact-area mt-0 ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact-wrap">
+                    <div class="contact-form">
+                        <div class="section-title">
+                            <h2>سوال بپرس</h2>
+                        </div>
+                        {% if messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          {% for m in messages %}
+                          <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                          <div>{{ m }}</div>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <form id="post_form" method="POST" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="name" id="name" class="form-control" 
+                                            data-error="لطفا نام خود را وارد کنید" placeholder="نام شما">
+                                            {% for error in form.errors.name %}
+                                            <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="email" name="email" id="email" class="form-control" 
+                                            data-error="لطفا ایمیل خود را وارد کنید" placeholder="ایمیل شما">
+                                            {% for error in form.errors.email %}
+                                            <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="phone" id="phone" 
+                                            data-error="لطفا تلفن خود را وارد کنید" class="form-control"
+                                            placeholder="تلفن شما">
+                                            {% for error in form.errors.phone %}
+                                            <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="subject" id="subject" class="form-control"
+                                             data-error="لطفا موضوع خود را وارد کنید" placeholder="موضوع شما">
+                                            {% for error in form.errors.subject %}
+                                            <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <textarea name="content" class="form-control" id="message" cols="30" rows="8"
+                                             data-error="پیام خود را بنویسید" placeholder="پیام شما"></textarea>
+                                            {% for error in form.errors.content %}
+                                            <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <button type="submit" class="default-btn btn-block page-btn">
+                                        ارسال پیام
+                                    </button>
+                                    <div id="msgSubmit" class="h3 text-center hidden">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -6,23 +6,27 @@
       <div class="row align-items-center">
         <div class="col-lg-6">
           <div class="header-content-left">
-            <p>به بیمه سورتی خوش آمدید!</p>
+            <p>به بیمه آسیا خوش آمدید!</p>
           </div>
         </div>
         <div class="col-lg-6">
           <ul class="header-content-right">
+            {% for user in users %}
+            {% if user.is_superuser %}
             <li>
-              <a href="tel:+822456974">
+              <a href="#">
                 <i class="bx bx-phone-call"></i>
-                تماس بگیرید: 02112345678
+                تماس بگیرید: {{ user.mobile }}
               </a>
             </li>
             <li>
-              <a href="mailto:hello@surety.com">
+              <a href="#">
                 <i class="bx bx-envelope"></i>
-                ایمیل: hello@surety.com
+                ایمیل: {{ user.email }}
               </a>
             </li>
+            {% endif %}
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -53,7 +57,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="about.html" class="nav-link">درباره ما</a>
+                  <a href="{% url 'about:about-insurance' %}"  
+                  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'about-insurance' %}active{%endif%}">درباره ما</a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link dropdown-toggle">
@@ -68,10 +73,10 @@
                       <a href="search-result.html" class="nav-link">جستجوی نتایج</a>
                     </li>
                     <li class="nav-item">
-                      <a href="team.html" class="nav-link">تیم ما</a>
+                      <a href="{% url 'team:team-insurance' %}" class="nav-link {% if request.resolver_match.url_name == 'team-insurance' %}active{%endif%}">تیم ما</a>
                     </li>
                     <li class="nav-item">
-                      <a href="faq.html" class="nav-link">سوالات متداول</a>
+                      <a href="{% url 'faq:faq-insurance'  %}" class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات متداول</a>
                     </li>
                     <li class="nav-item">
                       <a href="terms-conditions.html" class="nav-link">قوانین و ضوابط</a>
@@ -85,16 +90,15 @@
                         <i class="bx bx-plus"></i>
                       </a>
                       <ul class="dropdown-menu">
-                        {% if user.is_authenticated %}{% if user.is_superuer %}
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                           <a href="/admin" class="nav-link">ورود ادمین</a>
                         </li>
-                        {% endif %}
-                        <li class="nav-item">
-                          <a href="{% url 'logout' %}" class="nav-link">خروج</a>
-                        </li>
                         <li class="nav-item">
                           <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'logout' %}" class="nav-link">خروج</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
@@ -226,103 +230,4 @@
   </div>
 </header>
 
-
-<div class="sidebar-modal">
-  <div class="modal right fade" id="myModal2">
-          <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                          <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal"
-                                          aria-label="Close">
-                                          <span aria-hidden="true">
-                                                  <i class="bx bx-x"></i>
-                                          </span>
-                                  </button>
-                                  <h2 class="modal-title">
-                                          <a href="index.html">
-                                                  <img src="{% static 'assets/frontend/img/logo.png' %}" alt="Logo">
-                                          </a>
-                                  </h2>
-                          </div>
-                          <div class="modal-body">
-                                  <div class="sidebar-modal-widget">
-                                          <h3 class="title">درباره ما</h3>
-                                          <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم
-                                                  استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و متن را
-                                                  در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم
-                                                  ایپسوم ساختار چاپ و متن را در بر می گیرد.</p>
-                                  </div>
-                                  <div class="sidebar-modal-widget">
-                                          <h3 class="title">پیوندهای اضافی</h3>
-                                          <ul>
-                                                  <li>
-                                                          <a href="log-in.html">وارد شوید</a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="sign-in.html">ثبت نام</a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="faq.html">سوالات متداول</a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="#">خروج</a>
-                                                  </li>
-                                          </ul>
-                                  </div>
-                                  <div class="sidebar-modal-widget">
-                                          <h3 class="title">اطلاعات مشتری</h3>
-                                          <ul class="contact-info">
-                                                  <li>
-                                                          <i class="bx bx-location-plus"></i>
-                                                          آدرس
-                                                          <span>ایران ، استان تهران ، میدان آزادی ، خیابان
-                                                                  9 شرقی</span>
-                                                  </li>
-                                                  <li>
-                                                          <i class="bx bx-envelope"></i>
-                                                          ایمیل
-                                                          <a
-                                                                  href="siyamak1981@gmail.com">siyamak1981@gmail.com</a>
-                                                  </li>
-                                                  <li>
-                                                          <i class="bx bxs-phone-call"></i>
-                                                          تلفن
-                                                          <a href="tel:+822456974">01132259923</a>
-                                                  </li>
-                                          </ul>
-                                  </div>
-                                  <div class="sidebar-modal-widget">
-                                          <h3 class="title">با ما در ارتباط باشید</h3>
-                                          <ul class="social-list">
-                                                  <li>
-                                                          <a href="#">
-                                                                  <i class='bx bxl-twitter'></i>
-                                                          </a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="#">
-                                                                  <i class='bx bxl-facebook'></i>
-                                                          </a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="#">
-                                                                  <i class='bx bxl-instagram'></i>
-                                                          </a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="#">
-                                                                  <i class='bx bxl-linkedin'></i>
-                                                          </a>
-                                                  </li>
-                                                  <li>
-                                                          <a href="#">
-                                                                  <i class='bx bxl-youtube'></i>
-                                                          </a>
-                                                  </li>
-                                          </ul>
-                                  </div>
-                          </div>
-                  </div>
-          </div>
-  </div>
-</div>
+{% include 'frontend/partials/_sidebar.html' %}

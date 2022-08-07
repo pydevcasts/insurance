@@ -1,13 +1,12 @@
 
 from django.contrib import admin
 from django.urls import re_path, include
-from insurance import views
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
 from dj_rest_auth.views import PasswordResetConfirmView
-from django.conf.urls.i18n import i18n_patterns
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
+from frontend import views
 
 
 
@@ -18,13 +17,16 @@ urlpatterns = [
     re_path(r'^', include('accounts.urls',namespace='accounts')),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^blog/', include('blog.urls')),
-    re_path(r'^location/', include('location.urls')),
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
     re_path(r'^tag/', include('tag.urls')),
     re_path(r'^ticket/', include('tickets.urls')),
+    re_path(r'^about/', include('aboutus.urls')),
+    re_path(r'^settings/', include('aboutus.urls')),
+    re_path(r'^team/', include('team.urls')),
     re_path(r'^category/', include('category.urls')),
     re_path(r'^contact/', include('contact.urls')),
+    re_path(r'^faq/', include('faq.urls')),
     re_path(r'^user/', include('users.urls')),
     re_path(r'^', include('frontend.urls',namespace='frontend')),
     re_path(r'^subcategory/', include('category.subcaturls')),
@@ -53,7 +55,7 @@ urlpatterns = [
     re_path(r'^settings/password/done/$',
         auth_views.PasswordChangeDoneView.as_view(template_name='frontend/accounts/password_change_done.html'),
         name='password_change_done'),
-    # re_path(r'^.*\.*', views.pages, name='pages'),   
+    re_path(r'^.*\.*', views.pages, name='pages'),   
 
     #######################
         ### DRF ###

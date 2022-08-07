@@ -1,0 +1,55 @@
+{% extends "frontend/shared/home.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<section class="team-section ptb-100">
+    <div class="container">
+        {% for member in members %}
+        <div class="section-title">
+            <span> {{ member.team.title }}</span>
+            <h2>{{ member.team.summary }}</h2>
+            <p>{{ member.team.content | striptags }}</p>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-team">
+                    <div class="image">
+                        <img src="{{ member.banner.url }}" alt="image">
+                        <ul class="social">
+                            <li>
+                                <a href="{{ member.facebook }}" target="_blank">
+                                    <i class="bx bxl-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ member.twitter }}" target="_blank">
+                                    <i class="bx bxl-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ member.linkedin }}" target="_blank">
+                                    <i class="bx bxl-linkedin"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ member.instagram }}" target="_blank">
+                                    <i class="bx bxl-instagram"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content">
+                        <h3>{{ member.first_name }} {{ member.last_name }}</h3>
+                        <span> {{ member.role }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

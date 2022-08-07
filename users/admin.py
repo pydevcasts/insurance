@@ -16,7 +16,7 @@ class ProfileInline(admin.StackedInline):
     
     fieldsets = [
         ('I. Personal Information', {
-            'fields': ['number', 'phone', 'address'],
+            'fields': ['phone', 'address'],
             'classes': ['collapse']
         }),
         ('II. Personal Information', {
@@ -25,6 +25,10 @@ class ProfileInline(admin.StackedInline):
         }),
         ('III. Personal Information', {
             'fields': ['avatar', 'zip'],
+            'classes': ['collapse']
+        }),
+        ('IV. Personal Information', {
+            'fields': ['linkedin', 'instagram', 'whatsapp'],
             'classes': ['collapse']
         })
     ]   
@@ -37,7 +41,7 @@ class ProfileInline(admin.StackedInline):
 class UserAdmin(DjangoUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'mobile')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),

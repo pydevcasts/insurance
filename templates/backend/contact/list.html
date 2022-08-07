@@ -57,7 +57,7 @@
         </thead>
         <tbody>
           {% for contact in contacts %}
-          {% if user.is_superuser%}
+          {% if user.is_superuser %}
             <tr>
             <td><a href="#" class="text-primary fw-bold">{{ forloop.counter }}</a></td>
      

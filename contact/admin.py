@@ -14,6 +14,10 @@ class ContactAdmin(admin.ModelAdmin):
     
     def created_at(self, obj):
         return jd(obj.created)
-    
-  
 
+
+
+@admin.register(models.Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ['address','date']
+    list_filter = ['address',]

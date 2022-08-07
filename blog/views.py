@@ -14,11 +14,10 @@ from tag.models import Tag
 from blog.forms import PostForm
 from django.utils import timezone
 from category.models import Category, SubCategory
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
-from django.http.response import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django import template
+# from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator
+
+
 
 
 User = get_user_model()
@@ -49,7 +48,7 @@ class PostListView(LoginRequiredMixin, ListView):
         return context
 
 
-class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     context_object_name = "form"

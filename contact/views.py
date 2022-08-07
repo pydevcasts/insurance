@@ -7,10 +7,10 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView,UpdateView
-from contact.models import Contact
+from contact.models import Contact, Location
 from contact.forms import ContactForm
 from contact.tasks import my_first_task
-from location.models import Location
+
 
 
 class ListContactView(LoginRequiredMixin, ListView):
@@ -54,7 +54,7 @@ class CreateContactView(SuccessMessageMixin , CreateView):
             else:
                 form = ContactForm()
             return render(request, 'frontend/contact/create.html',
-                        {'form': form } 
+                        {'form': form , "title":"تماس با ما"} 
                     )
 
 
@@ -69,7 +69,7 @@ class CreateContactView(SuccessMessageMixin , CreateView):
         folium.Marker([lat,lng],tooltip="click for more",popup = country).add_to(map)
         map = map._repr_html_()
         return render(request, 'frontend/contact/create.html',
-                        {'map':map}
+                        {'map':map, 'title': 'تماس با ما'}
                         )
 
 

@@ -42,8 +42,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
-    email = models.EmailField(_('email'),unique=True, validators = [validate_email])
-    mobile = models.CharField(_('mobile'),max_length = 12)
+    email = models.EmailField(_('ایمیل'),unique=True, validators = [validate_email])
+    mobile = models.CharField(_('موبایل'),max_length = 12)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -51,8 +51,8 @@ class User(AbstractUser):
     objects = UserManager()
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('کاربر')
+        verbose_name_plural = _('کاربران')
 
     def get_full_name(self):
         return self.email

@@ -81,7 +81,7 @@
                 <span class="fw-bold">{{tag.created}}</span>
               </div>
             </td>
-            {% if request.user.is_authenticated%} 
+            {% if request.user.is_authenticated %} 
             <td>
              <a href="{% url "tag:update" slug=tag.slug %}"><img src="https://img.icons8.com/bubbles/30/000000/edit.png"/></a> 
               <form method = "POST" action="{% url "tag:list" %}">
