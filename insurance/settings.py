@@ -1,9 +1,9 @@
 
 
-import os
+import os, socket
 from pathlib import Path
 from decouple import config
-from django.utils.translation import gettext_lazy as _
+from django.contrib.messages import constants as messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'api.apps.ApiConfig',
     'category.apps.CategoryConfig',
+    'django.contrib.sites',
     'tag.apps.TagConfig',
     'contact',
     'dashboard.apps.DashboardConfig',
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
 
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'team',
     'slider',
     'faq',
-    'newsletters'
+    'newsletters',
+    # 'django_celery_beat'
     ]
 
     
@@ -74,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "insurance.middleware.newsletters.NewsLettersMiddleware"
+
 
 ]
 
@@ -173,11 +174,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-# LOCALE_PATHS = (
-#     os.path.join(BASE_DIR, 'locale'),
-# )
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
@@ -191,15 +187,18 @@ STATICFILES_DIRS = (
 )
 
 
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+# EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
-
-
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'siyamak1981@gmail.com'
+EMAIL_HOST_PASSWORD = "hkgttjourdfnhwcm"
 
 #Django’s Debug Toolbar Showing Inside Docker
 INTERNAL_IPS = [
@@ -207,7 +206,7 @@ INTERNAL_IPS = [
     'localhost',
  
 ]
-import socket
+
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
@@ -233,6 +232,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '549418161873-vunmslj02haoovb8r9imscaoa2kad4sc.apps.googleusercontent.com' # Google Consumer Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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' # Google Consumer Secret
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
@@ -248,7 +248,7 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-
+CELERY_TIMEZONE = "Asia/Tehran"
 
 
 
@@ -260,3 +260,12 @@ ELASTICSEARCH_DSL = {
 
 GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY')
 
+
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }

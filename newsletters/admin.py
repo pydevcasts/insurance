@@ -1,5 +1,5 @@
 from django.contrib import admin
-from newsletters.models import NewsLetters
+from newsletters.models import NewsLetter, ScheduleMail
 from painless.models.actions import PostableMixin,ExportMixin
 from khayyam import JalaliDate as jd
 from django.utils.translation import gettext_lazy as _
@@ -7,16 +7,16 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-@admin.register(NewsLetters)
-class FAQAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['email', 'published']
+@admin.register(NewsLetter)
+class NewsLetterdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
+    list_display = ['email', 'published', 'status']
     list_filter = ['email']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   
     fieldsets = [
         ('main', { 
             'fields': ( 
-                    ('email',), 
+                    ('email','status'), 
                 ),
             }
         ),
@@ -40,3 +40,4 @@ class FAQAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         return []
 
 
+admin.site.register(ScheduleMail)

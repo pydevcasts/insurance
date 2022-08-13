@@ -21,7 +21,7 @@ class OrganizedMixin(TimeStampedMixin):
         max_length=128, unique_for_month='published_at', help_text='متن منحصر به فرد باید باشد')
     slug = models.CharField(_("اسلاگ"),max_length=128, unique_for_month='published_at',)
     status = models.PositiveSmallIntegerField(_("وضعیت"),
-        choices=status.get_status(), default=status.DRAFT)
+        choices=status.get_status(), default=status.PUBLISHED)
 
     class Meta:
         abstract = True

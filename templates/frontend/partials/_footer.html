@@ -110,12 +110,8 @@
           <h3>خبرنامه</h3>
           <p class="newsletter-p">لورم ایپسوم ساختار چاپ و متن را در بر می گیرد.</p>
           <div class="subscribe-wrap">
-            <form class="newsletter-form" data-toggle="validator" novalidate="true">
-              <input type="email" class="form-control" placeholder="آدرس ایمیل شما" name="EMAIL" required=""
-                autocomplete="off">
-              <button class="default-btn disabled" type="submit" style="pointer-events: all; cursor: pointer;">
-                مشترک شدن
-              </button>
+            {% include 'frontend/partials/_subscribe.html' %}
+            
               <div id="validator-newsletter" class="form-result"></div>
             </form>
           </div>

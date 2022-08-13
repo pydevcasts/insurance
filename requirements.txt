@@ -56,4 +56,5 @@ geocoder==1.38.1
 Jinja2==3.0.3
 MarkupSafe==2.1.1
 ratelim==0.1.6
-
+markdown2==2.4.3
+django-celery-beat==2.3.0

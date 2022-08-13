@@ -278,11 +278,11 @@ margin-right: 30px;
 }
 
 .default-btn.btn-five::before {
-  background-color: #204066;
+  background-color: #151449;
 }
 
 .default-btn.btn-five::after {
-  background-color: #204066;
+  background-color: #151449;
 }
 
 .default-btn.btn-six {
@@ -1698,15 +1698,15 @@ right: 35%;
 }
 
 .business-contact-area .business-content .default-btn::before {
-  background-color: #ffffff !important;
+  background-color: #151449 !important;
 }
 
 .business-contact-area .business-content .default-btn::after {
-  background-color: #ffffff !important;
+  background-color: #151449 !important;
 }
 
 .business-contact-area .business-content .default-btn:hover {
-  color: #007bff;
+  color: #ffffff;
 }
 
 /*

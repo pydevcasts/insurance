@@ -1,12 +1,16 @@
-from rest_framework import generics
 from blog.models import Post
-from rest_framework import routers, serializers, viewsets
-from rest_framework.permissions import IsAdminUser
+import newsletters
+from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from api.serializers import UserSerializer,PostSerializer,TagSerializer,CategorySerializer, SubCategorySerializer,ProfileSerializer
 from tag.models import Tag
 from category.models import Category, SubCategory
 from users.models import Profile
+from rest_framework.response import Response
+from api.serializers import NewsLetterSerializer
+from newsletters.models import NewsLetter, decrypt_email
+from rest_framework.views import APIView
+
 from .permissions import (
 	IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly,UserIsOwnerOrReadOnly,IsActiveOrReadOnly
 )
@@ -73,3 +77,28 @@ class APITagViewSet(viewsets.ModelViewSet):
 
 
 
+class NewsLetterView(APIView):
+    def post(self, request):
+        serializer = NewsLetterSerializer(data = request.data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = 201)
+        return Response(serializer.errors, status = 401)
+
+
+class UnsubscribeView(APIView):
+    def get(self, request, unsubscribe_token, *args, **kwargs):
+        email = decrypt_email(unsubscribe_token)
+        try :
+            email_obj = NewsLetter.objects.get(email = email)
+        except NewsLetter.DoesNotExist:
+            return Response({
+                "error": "ایمیل وجود ندارد"
+            }, status = 404
+            )
+
+        email_obj.delete()
+        return Response({
+            "message":"unsubscribed."
+        }, status = 204)

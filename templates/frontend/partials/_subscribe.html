@@ -1,0 +1,22 @@
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+<form action="#" method="post">
+    <div class="form-group">
+        {% csrf_token %}
+        {% include 'backend/includes/form.html' %}
+        <button class="default-btn">مشترک شدن</button>
+    </div>
+</form>
+<style>
+
+    label{
+      display:none
+    }
+  </style>

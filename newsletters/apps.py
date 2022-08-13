@@ -6,3 +6,5 @@ class NewslettersConfig(AppConfig):
     name = 'newsletters'
     verbose_name = "خبر نامه"
        
+    def ready(self):
+        import newsletters.signals

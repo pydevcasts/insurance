@@ -510,46 +510,35 @@
                         </div>
                 </div>
         </section>
-
-
-        <div class="business-contact-area-five ptb-100">
+        <section class="business-contact-area ptb-100">
                 <div class="container">
-                        <div class="business-contact-bg">
-                                <div class="row">
-                                        <div class="col-lg-6 col-md-6">
-                                                <div class="business-contact">
-                                                        <p>امروز تماس بگیرید</p>
+                        <div class="row align-items-center">
+                                <div class="col-lg-6 p-0">
+                                        <div class="business-img">
+                                                <img src="{% static 'assets/frontend/img/business-img-2.jpg' %}"
+                                                        alt="Image">
+                                        </div>
+                                </div>
+                                <div class="col-lg-6 p-0">
+                                        <div class="business-content">
+                                                <h3>با خرید آنلاین بیمه مشاغل کوچک ، تا 30٪ پس انداز کنید</h3>
+                                                <a href="contact.html" class="default-btn">
+                                                        تماس با ما
+                                                </a>
+                                                <p>امروز تماس بگیرید: <br>
                                                         {% for user in users %}
                                                         {% if user.profile.phone %}
-                                 
-                                                        <a class="one" href="tel:+981132259004"> {{ user.profile.phone }}</a>
-                                                        {% else %}
-                                  
-                                                        <a class="one" href="tel:+981132259004">01132259004</a>
-                                                        {% endif %}
 
-                                                        <a href="tel:+989198859723"> {{ user.mobile }}</a>
+                                                        {{ user.profile.phone }} - {{ user.mobile }}
+
+                                                        {% endif %}
                                                         {% endfor %}
-                                                        <span>یا</span>
-                                                </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                                <div class="business-content-email">
-                                                        <p>برای ایمیل ثبت نام کنید</p>
-                                                        <form action="#" method="post">
-                                                                <div class="form-group">
-                                                                        {% csrf_token %}
-                                                                        <input type="email" class="form-control" name = "email"
-                                                                                placeholder="ایمیل شما">
-                                                                        <button class="default-btn">ارسال</button>
-                                                                </div>
-                                                        </form>
-                                                </div>
+                                                </p>
                                         </div>
                                 </div>
                         </div>
                 </div>
-        </div>
+        </section>
 
 
         <section class="get-quat-area get-quat-area-three get-quat-area-five get-quat-area-six ptb-100 jarallax"

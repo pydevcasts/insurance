@@ -15,6 +15,4 @@ def debug_task(self):
     print(f'Request: {self.request!r}')
 
 
-
-# https://coderedirect.com/questions/571813/django-celery-send-register-email-do-not-work
-# https://www.merixstudio.com/blog/boost-your-django-project-celery/
+ 

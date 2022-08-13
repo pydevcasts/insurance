@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+from newsletters.models import NewsLetter
 from blog.models import Post
 from tag.models import Tag
 from category.models import Category, SubCategory
@@ -103,3 +105,9 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.save()
         return user
+
+
+class NewsLetterSerializer(ModelSerializer):
+    class Meta:
+        model = NewsLetter
+        fields = '__all__'
