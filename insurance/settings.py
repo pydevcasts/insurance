@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'search.apps.SearchConfig',
     'django_elasticsearch_dsl',
 
-    'tickets',
     'aboutus',
     'team',
     'slider',
@@ -75,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "settings.middleware.middleware_search.SearchMiddleware"
 
 
 ]
@@ -267,5 +267,7 @@ MESSAGE_TAGS = {
         messages.INFO: 'alert-info',
         messages.SUCCESS: 'alert-success',
         messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
+        messages.ERROR: 'alert-error',
  }
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"

@@ -1,13 +1,46 @@
-<form action = "" method = "GET">
-    <input type="text" id = "q" name = "q" placeholder = "Search...">
-</form>
-
-{% for item in posts %}
-{{ item.id}}
-{{ item.title }}
-{{ item.slug }}
-{{ item.image }}
-{{ item.content }}
-{% endfor %}
 
 
+
+
+{% extends "frontend/shared/home.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+
+
+<section class="blog-details-area ptb-100">
+    <div class="container">
+        <div class="row">
+            {% for item in searchs %}
+            <div class="col-lg-8 col-md-12">
+                                <div class="blog-details-desc">
+                                        <div class="article-image">
+                                                <img src="{{ item.banner }}" alt="image">
+                                        </div>
+                                        <div class="article-content">
+                                                <div class="entry-meta">
+                                                        <ul>
+                                                                <li><span>ارسال در:</span> <a href="#">{{ item.created|date:"D" }} {{ item.created|date:"m" }} {{ item.created|date:"Y" }}</a>
+                                                                </li>
+                                                                <li><span>توسط:</span> <a href="#">{{ item.author.first_name }}</a></li>
+                                                        </ul>
+                                                </div>
+                                                <h3>{{ item.title }}</h3>
+                                                <blockquote class="flaticon-quote">
+                                                        <p>{{ item.summary }}</p>
+                                                </blockquote>
+                                                <p>{{ item.content | striptags |safe }}</p>
+                                        </div>
+                                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

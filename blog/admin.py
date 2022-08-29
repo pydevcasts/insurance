@@ -10,7 +10,7 @@ from khayyam import JalaliDate as jd
 class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
     list_display = ['title', 'slug', 'is_published', 'published', 'subcategory', 'get_tags']
     list_editable = ['subcategory']
-    filter_horizontal = ['tag']
+    filter_horizontal = ['tags']
     list_filter = ['status', 'published_at', 'subcategory__title']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   
@@ -27,7 +27,7 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
 
         ('Advanced_options', { 
             'fields': (
-                    'tag',
+                    'tags',
                     'banner',
                     'summary',
                     'content',
@@ -43,7 +43,7 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         return jd(obj.published_at)
 
     def get_tags(self, obj):
-        return ", ".join([t.title for t in obj.tag.all()])
+        return ", ".join([t.title for t in obj.tags.all()])
 
     def is_published(self, obj):
         published = 1

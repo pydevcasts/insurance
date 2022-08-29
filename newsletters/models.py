@@ -14,13 +14,13 @@ from django.contrib.sites.models import Site
 class NewsLetter(OrganizedMixin):
     title, slug = None, None
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    email = models.EmailField(_("ایمیل"),max_length = 128, unique = True, validators = [validate_email])
+    subscriber = models.EmailField(_("ایمیل"),max_length = 128, unique = True, validators = [validate_email])
     
 
     objects = models.Manager()
 
     class Meta:
-        ordering = ['email']
+        ordering = ['subscriber']
         verbose_name = _('خبر نامه')
         verbose_name_plural = _('خبر نامه ها')
 

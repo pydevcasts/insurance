@@ -1,31 +1,38 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TemplateMo">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<link rel="shortcut icon" href="images/favicon.ico"/>
-    <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet"/>
-    <title>{% block title %}{% endblock title %}</title>
 
-  {% include 'frontend/partials/_style.html' %} 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="TemplateMo">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <link rel="shortcut icon" href="images/favicon.ico" />
+  <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+    rel="stylesheet" />
+  <title>{% block title %}{% endblock title %}</title>
+
+  {% include 'frontend/partials/_style.html' %}
   {% include "frontend/partials/_header.html" %}
-  {% block styles %} {% endblock %}
+  {% block styles %}
+  {% endblock %}
 
 </head>
+
 <body>
 
-{% block body %}
-<a id="backtotop" class="fa fa-angle-up circle" href="javascript:void(0)"></a>
-{% endblock %}
-{% include 'frontend/partials/_footer.html' %} 
-{% include 'frontend/partials/_script.html' %} 
-{% block scripts %} 
-{% endblock %}
+  {% block body %}
+  <a id="backtotop" class="fa fa-angle-up circle" href="javascript:void(0)"></a>
+
+  {% endblock %}
+  {% include 'frontend/partials/_footer.html' %}
+  {% include 'frontend/partials/_script.html' %}
+  {% block scripts %}
+  {% endblock %}
+  {% include 'frontend/partials/_messages.html' %}
 
 </body>
+
 </html>

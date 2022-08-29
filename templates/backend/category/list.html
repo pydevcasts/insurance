@@ -4,12 +4,12 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %} {% block content %}
 {% if messages %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {% for m in messages %}
-    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-    <div {% if message.categoryies %} class="{{ message.categoryies }}"{% endif %}>{{ m }}</div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+{% endfor %}
 {% endif %}
 <div class="py-4">
   <nav aria-label="breadcrumb" class="d-none d-md-inline-block">

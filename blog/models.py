@@ -17,8 +17,8 @@ class Post(OrganizedMixin):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = 'posts', on_delete = models.CASCADE)
     summary = models.CharField(max_length = 128)
     banner = models.ImageField(upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'posts')
-    tag = models.ManyToManyField(Tag, related_name = 'post',  blank = True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'subcategory')
+    tags = models.ManyToManyField(Tag, related_name = 'tags',  blank = True)
     content = RichTextField(blank=True,null=True)
 
     objects = models.Manager()
@@ -32,8 +32,8 @@ class Post(OrganizedMixin):
 
     def __str__(self):
         return self.title
-
+        
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"slug": self.slug})
+        return reverse("frontend:detail", kwargs={"slug": self.slug})
     
     

@@ -1,7 +1,7 @@
 from logging import Logger
 from celery.app import shared_task
 from celery.utils.log import get_task_logger
-from celery.utils.log import get_task_logger
+
 
 from insurance.settings import EMAIL_HOST_USER
 from .mail import send_mail_to

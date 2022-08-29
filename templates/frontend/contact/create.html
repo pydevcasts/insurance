@@ -14,20 +14,15 @@
             <div class="section-title">
               <h2>برای هرگونه سوال پیامی برای ما ارسال کنید</h2>
             </div>
-            {% if messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {% for m in messages %}
-              <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-              <div>{{ m }}</div>
-              {% endfor %}
-            </div>
-            {% endif %}
-            <form id="post_form" method="POST" action="" enctype="multipart/form-data">
+          
+         
+      
+            <form id="post_form" method="POST" action="{% url 'contact:create' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row">
                 <div class="col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="email" name="email" id="email" class="form-control" required placeholder="ایمیل شما">
+                    <input type="email" name="email" id="email" class="form-control"  placeholder="ایمیل شما">
                     {% for error in form.errors.subject %}
                     <p class="text-danger">{{ error }}</p>
                     {% endfor %}
@@ -69,6 +64,7 @@
         <div class="quick-contact">
           <h3>تماس سریع </h3>
           <ul>
+            {% for user in users %}
             <li>
               <i class="flaticon-maps-and-flags"></i>
               موقعیت:
@@ -84,10 +80,11 @@
             <li>
               <i class="flaticon-email"></i>
               ایمیل ما:
-              <a href="٫">{{ user.email }}</a>
+              <a href="#">{{ user.email }}</a>
            
               </a>
             </li>
+            {% endfor %}
           </ul>
         </div>
       </div>

@@ -64,14 +64,7 @@
                         <div class="section-title">
                             <h2>سوال بپرس</h2>
                         </div>
-                        {% if messages %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                          {% for m in messages %}
-                          <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-                          <div>{{ m }}</div>
-                          {% endfor %}
-                        </div>
-                        {% endif %}
+                   
                         <form id="post_form" method="POST" action="" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">

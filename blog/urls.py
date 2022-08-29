@@ -1,5 +1,5 @@
 from .import views
-from django.urls import re_path, path
+from django.urls import re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap 
@@ -16,7 +16,6 @@ urlpatterns = [
     re_path(r'^create/$', views.PostCreateView.as_view(), name = 'create'), 
     re_path(r'^(?P<pk>[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12})/delete/$', views.PostDeleteView.as_view(), name = 'delete'),
     re_path(r'^(?P<pk>[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12})/edit/$', views.PostUpdateView.as_view(), name='update'),
-    re_path(r'^(?P<slug>[-\w]+)/detail/$', views.PostDetailView.as_view(), name = 'detail'),
     re_path(r'^sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 if settings.DEBUG:

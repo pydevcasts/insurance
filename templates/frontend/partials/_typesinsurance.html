@@ -1,0 +1,25 @@
+<section class="services-area-three services-area-five pt-100 pb-70">
+    <div class="container">
+            <div class="section-title section-title-five">
+                    <span>خدمات ما</span>
+                    <h2>انواع بیمه ضمانت</h2>
+                    <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم
+                            ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+            </div>
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-lg-4 col-sm-6">
+                            <div class="single-choose">
+                                    <span class="{{ post.subcategory.category.icon }}"></span>
+
+                                    <h3>{{ post.subcategory.category.title }}</h3>
+                                    <p>{{ post.content| striptags |safe| truncatewords:40 }}</p>
+                                    <a href="{{ post.get_absolute_url }}">
+                                            <i class="flaticon-left"></i>
+                                    </a>
+                            </div>
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+</section>

@@ -31,7 +31,7 @@ class SubCategoryDocument(Document):
     id = fields.IntegerField()
     category = fields.ObjectField(properties={
         'title': fields.TextField(),
-        'content': fields.TextField(),
+        # 'content': fields.TextField(),
     })
     class Index:
         name = 'subcategories'
@@ -44,13 +44,13 @@ class SubCategoryDocument(Document):
         model = SubCategory
         fields = [
             'title',
-            'content',
+            # 'content',
         ]
         related_models = [Category]
-        def get_queryset(self):
-            return super(CarDocument, self).get_queryset().select_related(
-            'category'
-        )
+        # def get_queryset(self):
+        #     return super().get_queryset().select_related(
+        #     'subcats'
+        # )
         # def get_instances_from_related(self, related_instance):
         #     """If related_models is set, define how to retrieve the SubCategory instance(s) from the related model.
         #     The related_models option should be used with caution because it can lead in the index
@@ -74,6 +74,8 @@ class PostDocument(Document):
         'id': fields.IntegerField(),
         'title': fields.TextField(),
         'content': fields.TextField(),
+      
+        'banner' : fields.FileField("banner"),
     })
 
     content = fields.TextField(fields= {
@@ -81,13 +83,23 @@ class PostDocument(Document):
             "type":"keyword"
         }
     })
-
     class Index:
         name = 'posts'
         settings = {
             'number_of_shards': 1,
             'number_of_replicas': 0,
         }
+        related_models = [SubCategory, User]
+        
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+        'subcategory'
+    )
+    def get_instances_from_related(self, related_instance):
+        if isinstance(related_instance, User):
+            return related_instance.posts.all()
+        elif isinstance(related_instance, SubCategory):
+            return related_instance.post
 
     class Django:
         model = Post
@@ -95,7 +107,7 @@ class PostDocument(Document):
             'title',
             'summary',
             'slug',
-            # 'content',
+            'banner',
             'created',
             'updated',
         ]

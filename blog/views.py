@@ -1,4 +1,5 @@
 
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models.query_utils import Q
@@ -7,7 +8,6 @@ from django.urls.base import reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from blog.models import Post
 from tag.models import Tag
@@ -16,11 +16,9 @@ from django.utils import timezone
 from category.models import Category, SubCategory
 # from django.views.decorators.cache import cache_page
 # from django.utils.decorators import method_decorator
-
-
-
-
 User = get_user_model()
+
+
 
 # @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class PostListView(LoginRequiredMixin, ListView):
@@ -65,7 +63,7 @@ class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredM
     def get(self, request, *args, **kwargs):
         categories = Category.objects.filter(status = "1")
         tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('post')
+            "-created").prefetch_related('tags')
         users = User.objects.all()
         categories_list = []
         for category in categories:
@@ -109,7 +107,7 @@ class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         post_id = kwargs['pk']
         categories = Category.objects.all()
         tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('post')
+            "-created").prefetch_related('tags')
         posts = Post.objects.all()
         users = User.objects.all()
         post = Post.objects.get(pk=post_id)
@@ -138,14 +136,4 @@ class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return render(request, 'backend/blog/edit.html',
                       {'form': form}
                       )
-
-
-class PostDetailView(DetailView):
-    template_name = 'frontend/landing/detail.html'
-    context_object_name = "post"
-    model = Post
-
-    def get_object(self, queryset=None):
-        post = Post.objects.get(slug=self.kwargs.get("slug"))
-        return post
 

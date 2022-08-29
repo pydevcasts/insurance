@@ -20,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
     fields = [
         ('title','status', ),
         ('banner'),
-        ('content',)
+        ('content','icon')
     
     ]
     def created_at(self, obj):

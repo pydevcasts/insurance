@@ -57,8 +57,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'about:about-insurance' %}"  
-                  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'about-insurance' %}active{%endif%}">درباره ما</a>
+                  <a href="{% url 'about:about-insurance' %}"
+                    class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'about-insurance' %}active{%endif%}">درباره
+                    ما</a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link dropdown-toggle">
@@ -73,10 +74,14 @@
                       <a href="search-result.html" class="nav-link">جستجوی نتایج</a>
                     </li>
                     <li class="nav-item">
-                      <a href="{% url 'team:team-insurance' %}" class="nav-link {% if request.resolver_match.url_name == 'team-insurance' %}active{%endif%}">تیم ما</a>
+                      <a href="{% url 'team:team-insurance' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'team-insurance' %}active{%endif%}">تیم
+                        ما</a>
                     </li>
                     <li class="nav-item">
-                      <a href="{% url 'faq:faq-insurance'  %}" class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات متداول</a>
+                      <a href="{% url 'faq:faq-insurance'  %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات
+                        متداول</a>
                     </li>
                     <li class="nav-item">
                       <a href="terms-conditions.html" class="nav-link">قوانین و ضوابط</a>
@@ -92,7 +97,7 @@
                       <ul class="dropdown-menu">
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                          <a href="/admin" class="nav-link">ورود ادمین</a>
+                          <a href="/admin/" class="nav-link">ورود ادمین</a>
                         </li>
                         <li class="nav-item">
                           <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
@@ -108,7 +113,7 @@
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a href="coming-soon.html" class="nav-link">به زودی</a>
+                      <a href="#" class="nav-link">به زودی</a>
                     </li>
                     <li class="nav-item">
                       <a href="404.html" class="nav-link">خطای 404</a>
@@ -121,23 +126,26 @@
                     <i class="bx bx-plus"></i>
                   </a>
                   <ul class="dropdown-menu">
+                    {% for category in categories %}
                     <li class="nav-item">
-                      <a href="travel-insurance.html" class="nav-link">بیمه مسافرتی</a>
+                      <a href="#" class="nav-link dropdown-toggle">
+                        {{ category.title }}
+                        <i class="bx bx-plus"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        {% for sub in category.subcats.all %}
+                        {% for post in sub.subcategory.all %}
+                        <li class="nav-item">
+                          <a href="{{ post.get_absolute_url }}" class="nav-link">{{ sub }}</a>
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+                      </ul>
                     </li>
-                    <li class="nav-item">
-                      <a href="business-insurance.html" class="nav-link">بیمه تجاری</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="home-insurance.html" class="nav-link">بیمه سلامت</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="car-insurance.html" class="nav-link">بیمه ماشین</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="insurance-details.html" class="nav-link">جزئیات بیمه</a>
-                    </li>
+                    {% endfor %}
                   </ul>
                 </li>
+
                 <li class="nav-item">
                   <a href="#" class="nav-link dropdown-toggle">
                     نمونه کارها
@@ -199,7 +207,7 @@
                   <div class="search-overlay search-popup">
                     <div class="search-box">
                       <form class="search-form">
-                        <input class="search-input" name="search" placeholder="جستجو" type="text">
+                        <input class="search-input" name="q" id = "q" placeholder="جستجو" type="text">
                         <button class="search-button" type="submit"><i class="bx bx-search"></i></button>
                       </form>
                     </div>

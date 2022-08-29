@@ -20,7 +20,6 @@ urlpatterns = [
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
     re_path(r'^tag/', include('tag.urls')),
-    re_path(r'^ticket/', include('tickets.urls')),
     re_path(r'^about/', include('aboutus.urls')),
     re_path(r'^settings/', include('aboutus.urls')),
     re_path(r'^team/', include('team.urls')),
@@ -60,13 +59,13 @@ urlpatterns = [
     #######################
         ### DRF ###
     ####################### 
-    re_path(r'^api/', include('api.urls')),
-    re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^api/v1/rest-auth/', include('dj_rest_auth.urls')),
-    re_path(r'^api/v1/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    re_path(r'^api/v1/rest-auth/account-confirm-email/(?P<key>[-:\w]+)/$',  ConfirmEmailView.as_view(), name='account_confirm_email'),
-    re_path(r'^api/v1/rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
-    re_path(r'^api/v1/rest-auth/password/reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    # re_path(r'^api/', include('api.urls')),
+    # re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # re_path(r'^api/v1/rest-auth/', include('dj_rest_auth.urls')),
+    # re_path(r'^api/v1/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    # re_path(r'^api/v1/rest-auth/account-confirm-email/(?P<key>[-:\w]+)/$',  ConfirmEmailView.as_view(), name='account_confirm_email'),
+    # re_path(r'^api/v1/rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
+    # re_path(r'^api/v1/rest-auth/password/reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
    
     
 ]

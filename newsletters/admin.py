@@ -9,22 +9,22 @@ from django.utils.translation import gettext_lazy as _
 
 @admin.register(NewsLetter)
 class NewsLetterdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['email', 'published', 'status']
-    list_filter = ['email']
+    list_display = ['subscriber', 'published', 'status']
+    list_filter = ['subscriber']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   
     fieldsets = [
         ('main', { 
             'fields': ( 
-                    ('email','status'), 
+                    ('subscriber','status'), 
                 ),
             }
         ),
 
     ]
 
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('subscriber',)
+    ordering = ('subscriber',)
 
     def published(self, obj):
         return jd(obj.published_at)

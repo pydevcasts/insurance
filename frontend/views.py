@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from blog.models import Post
-from category.models import Category,SubCategory
+from category.models import SubCategory
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -8,48 +8,59 @@ from django.urls import reverse
 from django.contrib import messages
 from newsletters.forms import NewsLettersForm
 from django.shortcuts import redirect, render
-
+from django.views.generic.detail import DetailView
 from newsletters.models import NewsLetter, decrypt_email
+from tag.models import Tag
+
+
 
 def post_subcategory_list(request, slug=None):
-    category = None
-    categories = Category.objects.all()
-    posts = Post.objects.all()
-    postlists = Post.objects.filter(status = "1")
+    posts = Post.objects.filter(status = "1").select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    postlists = posts[:5]
  
     if slug:
         subcategory = get_object_or_404(SubCategory, slug=slug)
         posts = posts.filter(subcategory=subcategory)
+        
     if request.method == 'POST':
-        form = NewsLettersForm(request.POST or None)
-        if form.is_valid():
-            form = form.save(commit=False)
-            
-            if NewsLetter.objects.filter(email=form.email).exists():
+            form = NewsLetter(subscriber=request.POST['subscriber'])
+            if NewsLetter.objects.filter(subscriber=form.subscriber).exists():
                 messages.error(request,"این ایمیل قبلا ثبت شده است")
-                messages.error(request, form.errors)
-                print("این ایمیل قبلا ثبت شده است")
             else:
                 form.save()
                 messages.success(request,
-                                "اشتراک شمابا موفقیت ثبت گردید !")
-                return redirect("frontend:post_and_subcategory")
-    else:
-        form = NewsLettersForm()
+                                    "اشتراک شمابا موفقیت ثبت گردید !")
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+         
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'),
+                        {'form': NewsLettersForm() } 
+                    )
+
     return render(request, "frontend/landing/home.html", {
-                                                        "categories": categories,
                                                         "posts": posts,
-                                                        "category": category,
                                                         "postlists":postlists,
-                                                        "form":form
                                                         })
+
+
+
+class PostDetailView(DetailView):
+    template_name = 'frontend/landing/detail.html'
+    model = Post
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["post"] = Post.objects.get(slug=self.kwargs.get("slug"))
+        context["title"] = Post.objects.get(slug=self.kwargs.get("slug"))
+        return context
+
+
 
 def unsubscrib_redirect_view(request, token, *args, **kwargs):
         print("token:", token)
         email = decrypt_email(token)
-        print("email:", email)
+  
         try :
-            email_obj = NewsLetter.objects.get(email = email)
+            email_obj = NewsLetter.objects.get(subscriber = email)
             email_obj.delete()
             messages.success(request,"شما با موفقیت اشتراک خود را حذف نمودید")
         except NewsLetter.DoesNotExist:

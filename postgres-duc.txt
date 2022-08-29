@@ -31,11 +31,8 @@ sudo systemctl start redis-server
 sudo systemctl stop redis-server
 sudo service redis-server stop
 
-#github
-git remote add origin https://github.com/siyamak1981/Meeting-Django.git
 
-#timectl
-imedatectl set-time 03:13:01
+
 
 #elasticsearch
 sudo /bin/systemctl daemon-reload
@@ -46,3 +43,10 @@ sudo systemctl start elasticsearch.service
 sudo systemctl start kibana.service
 sudo systemctl stop kibana.service
 sudo systemctl start kibana
+
+
+
+#icone bx
+https://coderthemes.com/minton/layouts/default/icons-boxicons.html
+
+
