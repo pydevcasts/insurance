@@ -14,11 +14,8 @@
                                         <div class="article-content">
                                                 <div class="entry-meta">
                                                         <ul>
-                                                                <li><span>ارسال در:</span> <a href="#">{{
-                                                                                post.published_at|date:"M" }}{{
-                                                                                post.published_at|date:"d" }}</a></li>
-                                                                <li><span>توسط:</span> <a href="#">{{
-                                                                                post.author.first_name }}</a></li>
+                                                                <li><span>ارسال در:</span> <a href="#">{{ post.published_at|date:"M" }}{{ post.published_at|date:"d" }}</a></li>
+                                                                <li><span>توسط:</span> <a href="#">{{ post.author.first_name }}</a></li>
                                                         </ul>
                                                 </div>
                                                 <h3>{{ post.title }}</h3>
@@ -58,18 +55,7 @@
                                                         </ul>
                                                 </div>
                                         </div>
-                                        <div class="post-navigation">
-                                                <div class="navigation-links">
-                                                        <div class="nav-previous">
-                                                                <a href="#"><i class='bx bx-right-arrow-alt'></i>
-                                                                        پست قبلی</a>
-                                                        </div>
-                                                        <div class="nav-next">
-                                                                <a href="#">پست بعدی <i
-                                                                                class='bx bx-left-arrow-alt'></i></a>
-                                                        </div>
-                                                </div>
-                                        </div>
+                                   
                                         <div class="comments-area">
                                                 <h3 class="comments-title">2 نظر:</h3>
                                                 <ol class="comment-list">
@@ -377,8 +363,7 @@
 
                                                         <ul>
                                                                 <li>
-                                                                        <a href="{{ post.get_absolute_url }}">{{
-                                                                                post.subcategory.category.title }}
+                                                                        <a href="{{ post.get_absolute_url }}">{{post.subcategory.category.title }}
                                                                         </a>
                                                                 </li>
 

@@ -27,6 +27,7 @@ urlpatterns = [
     re_path(r'^contact/', include('contact.urls')),
     re_path(r'^faq/', include('faq.urls')),
     re_path(r'^user/', include('users.urls')),
+    re_path(r'^frontend/', include('renewal.urls')),
     re_path(r'^', include('frontend.urls',namespace='frontend')),
     re_path(r'^subcategory/', include('category.subcaturls')),
     re_path(r'^social-auth/', include('social_django.urls', namespace='social')),

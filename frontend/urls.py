@@ -5,9 +5,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
+
 app_name = "frontend"
+
 urlpatterns = [
 
+ 
     re_path(r'^insurance/', views.post_subcategory_list, name="post_and_subcategory"),
     re_path(r'^insurance/(?P<slug>[-\w]+)/$', views.post_subcategory_list, name='detail_by_subcategory_slug'),
     re_path(r'^insurance/.*\.*', views.pages, name='pages'),

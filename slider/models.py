@@ -8,7 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 class Slider(OrganizedMixin):
     summary = models.CharField(_('خلاصه'),max_length = 128)
-    banner = models.ImageField(upload_to = 'about/%Y/%m/%d', null = True, blank = True)
     content = RichTextField(_('پیام'),blank=True,null=True)
     
     objects = models.Manager()

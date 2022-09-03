@@ -10,7 +10,6 @@ from newsletters.forms import NewsLettersForm
 from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
 from newsletters.models import NewsLetter, decrypt_email
-from tag.models import Tag
 
 
 
@@ -35,7 +34,7 @@ def post_subcategory_list(request, slug=None):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'),
                         {'form': NewsLettersForm() } 
                     )
-
+            
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
                                                         "postlists":postlists,

@@ -68,12 +68,6 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li class="nav-item">
-                      <a href="testimonials.html" class="nav-link">بازخورد مشتریان</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="search-result.html" class="nav-link">جستجوی نتایج</a>
-                    </li>
-                    <li class="nav-item">
                       <a href="{% url 'team:team-insurance' %}"
                         class="nav-link {% if request.resolver_match.url_name == 'team-insurance' %}active{%endif%}">تیم
                         ما</a>
@@ -82,12 +76,6 @@
                       <a href="{% url 'faq:faq-insurance'  %}"
                         class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات
                         متداول</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="terms-conditions.html" class="nav-link">قوانین و ضوابط</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="privacy-policy.html" class="nav-link">حریم خصوصی</a>
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link dropdown-toggle">
@@ -112,12 +100,7 @@
                         {% endif %}
                       </ul>
                     </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">به زودی</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="404.html" class="nav-link">خطای 404</a>
-                    </li>
+             
                   </ul>
                 </li>
                 <li class="nav-item">
@@ -206,7 +189,7 @@
                   <i class="close-btn bx bx-x"></i>
                   <div class="search-overlay search-popup">
                     <div class="search-box">
-                      <form class="search-form">
+                      <form class="search-form" method="GET" action="/search/">
                         <input class="search-input" name="q" id = "q" placeholder="جستجو" type="text">
                         <button class="search-button" type="submit"><i class="bx bx-search"></i></button>
                       </form>

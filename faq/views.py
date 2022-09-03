@@ -1,17 +1,16 @@
-from email import message
+
 from django.shortcuts import render
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView
 from django.shortcuts import  render
 from faq.forms import FaqForm
-from faq.models import FAQ, Answer, Question
-from django.urls.base import reverse_lazy
+from faq.models import  Answer, Question
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 class CreateFAQView(SuccessMessageMixin, CreateView):
-    # model = FAQ
+
     form_class = FaqForm
     template_name: 'frontend/faq/index.html'
 

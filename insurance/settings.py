@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'slider',
     'faq',
     'newsletters',
+    'renewal'
     # 'django_celery_beat'
     ]
 
@@ -74,8 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "settings.middleware.middleware_search.SearchMiddleware"
-
+    # "settings.middleware.middleware_renewal.RenewalMiddleware"
 
 ]
 

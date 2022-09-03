@@ -1,7 +1,8 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from blog.models import  Post
-from category.models import Category, SubCategory
+from tag.models import Tag
+from category.models import  SubCategory
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -46,7 +47,7 @@ class SubCategoryDocument(Document):
             'title',
             # 'content',
         ]
-        related_models = [Category]
+        # related_models = [Category]
         # def get_queryset(self):
         #     return super().get_queryset().select_related(
         #     'subcats'
@@ -70,18 +71,23 @@ class PostDocument(Document):
         'last_name': fields.TextField(),
         'email': fields.TextField(),
     })
-    subcategories = fields.ObjectField(properties={
+    subcategory = fields.ObjectField(properties={
         'id': fields.IntegerField(),
         'title': fields.TextField(),
         'content': fields.TextField(),
       
-        'banner' : fields.FileField("banner"),
+   
     })
 
     content = fields.TextField(fields= {
         "row": {
             "type":"keyword"
         }
+    })
+    tags = fields.ObjectField(properties={
+        'id': fields.IntegerField(),
+        'title': fields.TextField(),
+      
     })
     class Index:
         name = 'posts'
@@ -99,11 +105,12 @@ class PostDocument(Document):
         if isinstance(related_instance, User):
             return related_instance.posts.all()
         elif isinstance(related_instance, SubCategory):
-            return related_instance.post
+            return related_instance.posts.all()
 
     class Django:
         model = Post
         fields = [
+        
             'title',
             'summary',
             'slug',

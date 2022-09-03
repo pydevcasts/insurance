@@ -1,7 +1,3 @@
-
-
-
-
 {% extends "frontend/shared/home.html" %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -11,36 +7,40 @@
 
 
 
-<section class="blog-details-area ptb-100">
-    <div class="container">
-        <div class="row">
-            {% for item in searchs %}
-            <div class="col-lg-8 col-md-12">
-                                <div class="blog-details-desc">
-                                        <div class="article-image">
-                                                <img src="{{ item.banner }}" alt="image">
-                                        </div>
-                                        <div class="article-content">
-                                                <div class="entry-meta">
-                                                        <ul>
-                                                                <li><span>ارسال در:</span> <a href="#">{{ item.created|date:"D" }} {{ item.created|date:"m" }} {{ item.created|date:"Y" }}</a>
-                                                                </li>
-                                                                <li><span>توسط:</span> <a href="#">{{ item.author.first_name }}</a></li>
-                                                        </ul>
-                                                </div>
-                                                <h3>{{ item.title }}</h3>
-                                                <blockquote class="flaticon-quote">
-                                                        <p>{{ item.summary }}</p>
-                                                </blockquote>
-                                                <p>{{ item.content | striptags |safe }}</p>
+ <section class="blog-area blog-area-two-columns ptb-100">
+        <div class="container">
+                <div class="section-title">
+                        <h2>جستجوی نتایج شما</h2>
+                        <p>ما {{ searchs.count }} مقاله برای شما پیدا کردیم</p>
+                        </div>
+               
+                <div class="row">
+                        {% for item in searchs %}
+                        <div class="col-lg-6 col-md-6">
+                                <div class="single-blog wow fadeInUp" data-wow-delay=".2s"
+                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                        <a href="blog-details.html">
+                                                <img src="{{ item.banner }}" alt="ّبیمه">
+                                        </a>
+                                        <div class="blog-content">
+                                                <ul>
+                                                        <li><span>ارسال در:</span> <a
+                                                                href="#">{{ item.created|date:"D" }}
+                                                                {{ item.created|date:"m"  }}
+                                                                {{ item.created|date:"Y"  }}</a>
+                                                </li>
+                                                </ul>
+                                                <a href="#">
+                                                        <h3>{{ item.title }}</h3>
+                                                </a>
+                                                <p>{{ item.content| striptags |safe }}</p>
                                         </div>
                                 </div>
-            </div>
-            {% endfor %}
-
+                        </div>
+                        {% endfor %}
+                     
+                </div>
         </div>
-    </div>
-</section>
-
+</section> 
 
 {% endblock %}
