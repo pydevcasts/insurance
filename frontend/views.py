@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from blog.models import Post
+from blog.forms import CommentForm
+from blog.models import Comment, Post
 from category.models import SubCategory
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,11 +11,14 @@ from newsletters.forms import NewsLettersForm
 from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
 from newsletters.models import NewsLetter, decrypt_email
+from django.views.generic.edit import FormMixin
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
 def post_subcategory_list(request, slug=None):
-    posts = Post.objects.filter(status = "1").select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    posts = Post.condition.published().select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    
     postlists = posts[:5]
  
     if slug:
@@ -38,19 +42,105 @@ def post_subcategory_list(request, slug=None):
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
                                                         "postlists":postlists,
+                                                 
                                                         })
 
+def all_post_view(request):
+    title = "همه پست ها"
+    all_post = Post.objects.all().filter(status= 1).select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(all_post, 15)
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, "frontend/posts/index.html", {"all_post":all_post, "title":title, 'page_obj': page_obj})
 
 
-class PostDetailView(DetailView):
+
+class PostDetailView(FormMixin, DetailView):
     template_name = 'frontend/landing/detail.html'
     model = Post
+    slug_field = 'slug'
+    form_class = CommentForm
+    obj = None
+ 
+    def get_initial(self):
+        instance = self.get_object()
+       
+        return {
+            'content_type':instance.get_content_type,
+            'object_id':instance.uid
+        }
+    
+    def get_success_url(self):
+        return reverse("detail", kwargs={"slug": self.object.slug})
+  
+    
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["post"] = Post.objects.get(slug=self.kwargs.get("slug"))
-        context["title"] = Post.objects.get(slug=self.kwargs.get("slug"))
+        # context["post"] = Post.objects.get(slug=self.kwargs.get("slug"))
+        # content_type = ContentType.objects.get_for_model(Post)
+        # context['comments'] = Comment.objects.filter(content_type=content_type, object_id=Post.objects.get(slug=self.kwargs.get("slug")))
+        post = get_object_or_404(Post, slug = self.kwargs['slug'])
+        comments = Comment.objects.filter_by_instance(post)
+        context['comments'] = comments
+        context['form'] = self.get_form_class()
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            self.object = self.get_object()
+            form = self.get_form_class()
+            form = CommentForm(instance=self.obj, data=request.POST)
+
+            if form.is_valid():
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+       
+
+    def form_valid(self, form):
+        if not self.request.user.is_authenticated:
+                messages.info(self.request,"برای ارسال پیام نیازبه ثبت نام دارید !")
+                return HttpResponseRedirect("/signup/")
+
+        user = self.request.user
+        comment_content = form.cleaned_data['content']
+        reply_id = self.request.POST.get('comment_id') #reply-section
+        print(reply_id)
+        comment_qs = None
+        
+        if reply_id:
+            comment_qs = Comment.objects.get(id = reply_id)
+            Comment.objects.create(
+                content_object=comment_qs,
+                content=comment_content,
+                user=user,
+            )
+    
+            messages.success(self.request, "پیامتان با موفقیت ارسال شد!")
+            return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+
+        Comment.objects.create(
+                content_object=Post.objects.get(slug=self.kwargs.get("slug")),
+                content=comment_content,
+                user=user,
+                
+            )
+        messages.success(self.request, "پیامتان با موفقیت ارسال شد!")
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+        
+
+    def form_invalid(self, form) -> HttpResponse:
+        messages.error(self.request, "پیامتان با مشکل مواجه شد!")
+        return super().form_invalid(form)
+
+
 
 
 
@@ -70,6 +160,9 @@ def unsubscrib_redirect_view(request, token, *args, **kwargs):
             return HttpResponse(html_template.render({"title":" شما قبلا اشتراک خود را لغو نمودید"}, request))
 
         return redirect("frontend:post_and_subcategory")
+
+
+
 
 
 def pages(request):

@@ -14,15 +14,15 @@
             <div class="section-title">
               <h2>برای هرگونه سوال پیامی برای ما ارسال کنید</h2>
             </div>
-          
-         
-      
+
+
+
             <form id="post_form" method="POST" action="{% url 'contact:create' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row">
                 <div class="col-lg-6 col-sm-6">
                   <div class="form-group">
-                    <input type="email" name="email" id="email" class="form-control"  placeholder="ایمیل شما">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="ایمیل شما">
                     {% for error in form.errors.subject %}
                     <p class="text-danger">{{ error }}</p>
                     {% endfor %}
@@ -81,7 +81,7 @@
               <i class="flaticon-email"></i>
               ایمیل ما:
               <a href="#">{{ user.email }}</a>
-           
+
               </a>
             </li>
             {% endfor %}
@@ -97,8 +97,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-            {{ map|safe}}
-          </div>
+          {{ map|safe}}
+        </div>
       </div>
     </div>
   </section>

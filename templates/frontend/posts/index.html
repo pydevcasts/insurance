@@ -1,0 +1,77 @@
+{% extends "frontend/shared/home.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block styles %}
+<style>
+    .paginate-blog {
+        text-align: center;
+        font-size: large;
+
+    }
+</style>
+{% endblock %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<div class="service-area-two pt-100 pb-70">
+    <section class="">
+        <div class="container">
+            <div class="section-title">
+                <span>خدمات ما</span>
+                <h2>انواع بیمه ضمانت</h2>
+                <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم
+                    ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+            </div>
+            <div class="row">
+                {% for post in page_obj %}
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-service wow fadeInLeft" data-wow-delay=".3s"
+                        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                        <img src="{{ post.subcategory.category.banner.url }}" alt="Image">
+                        <div class="service-content">
+                            <i class="icon-style {{ post.subcategory.category.icon }}"></i>
+                            <h3>{{ post.subcategory.category.title }}</h3>
+                            <p>{{ post.content| striptags |safe| truncatewords:20 }}</p>
+                            <a href="{{ post.get_absolute_url }}">
+                                <i class="bx bx-chevrons-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <div class="paginate-blog">
+        {% if page_obj %}
+        {% if page_obj.has_other_pages %}
+        <div class="btn-group" role="group" aria-label="Item pagination">
+            {% if items_page.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
+            {% endif %}
+
+            {% for page_number in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_number %}
+            <button class="btn btn-outline-primary active">
+                <span>{{ page_number }} <span class="sr-only">(current)</span></span>
+            </button>
+            {% else %}
+            <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+                {{ page_number }}
+            </a>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <p>No items found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

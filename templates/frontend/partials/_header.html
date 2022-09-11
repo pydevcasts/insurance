@@ -131,53 +131,16 @@
 
                 <li class="nav-item">
                   <a href="#" class="nav-link dropdown-toggle">
-                    نمونه کارها
-                    <i class="bx bx-plus"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                      <a href="portfolio-columns-two.html" class="nav-link">نمونه کار ستونی 2</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="portfolio-columns-three.html" class="nav-link">نمونه کار ستونی 3</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="portfolio-columns-four.html" class="nav-link">نمونه کار ستونی 4</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="portfolio-light-box.html" class="nav-link">نمونه کار لایت باکس</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="portfolio-masonry.html" class="nav-link">نمونه کار ماسونری</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="portfolio-details.html" class="nav-link">جزئیات نمونه کار</a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link dropdown-toggle">
                     وبلاگ
                     <i class="bx bx-plus"></i>
                   </a>
                   <ul class="dropdown-menu">
                     <li class="nav-item">
-                      <a href="blog-grid.html" class="nav-link">وبلاگ شبکه ای</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="blog-columns-two.html" class="nav-link">وبلاگ ستونی 2</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="blog-left-sidebar.html" class="nav-link">وبلاگ سایدبار 1</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="blog-right-sidebar.html" class="nav-link">وبلاگ سایدبار 2</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="blog-details.html" class="nav-link">جزئیات وبلاگ</a>
+                      <a href="{% url 'frontend:all_post' %}" class="nav-link">پست ها</a>
                     </li>
                   </ul>
                 </li>
+              
                 <li class="nav-item ">
                   <a class="nav-link {% if request.resolver_match.url_name == 'create' %}active{% endif %}"
                     href="{% url 'contact:create' %}">تماس با ما</a>

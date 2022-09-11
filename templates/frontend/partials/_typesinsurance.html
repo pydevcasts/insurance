@@ -7,19 +7,21 @@
                             ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
             </div>
             <div class="row">
-                {% for post in posts %}
+     
+                {% for post in posts|slice:":6" %}
                     <div class="col-lg-4 col-sm-6">
                             <div class="single-choose">
                                     <span class="{{ post.subcategory.category.icon }}"></span>
 
-                                    <h3>{{ post.subcategory.category.title }}</h3>
-                                    <p>{{ post.content| striptags |safe| truncatewords:40 }}</p>
+                                    <h3>{{ post.subcategory.category.title  }}</h3>
+                                    <p>{{ post.content| striptags |safe|truncatewords:10 }}</p>
                                     <a href="{{ post.get_absolute_url }}">
                                             <i class="flaticon-left"></i>
                                     </a>
                             </div>
                     </div>
                 {% endfor %}
+    
             </div>
     </div>
 </section>

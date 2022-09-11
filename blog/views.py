@@ -11,7 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from blog.models import Post
 from tag.models import Tag
-from blog.forms import PostForm
+from blog.forms import CommentForm, PostForm
 from django.utils import timezone
 from category.models import Category, SubCategory
 # from django.views.decorators.cache import cache_page

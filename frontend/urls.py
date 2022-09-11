@@ -13,6 +13,7 @@ urlpatterns = [
  
     re_path(r'^insurance/', views.post_subcategory_list, name="post_and_subcategory"),
     re_path(r'^insurance/(?P<slug>[-\w]+)/$', views.post_subcategory_list, name='detail_by_subcategory_slug'),
+    re_path(r'^all_post/', views.all_post_view, name = "all_post"),
     re_path(r'^insurance/.*\.*', views.pages, name='pages'),
     path('mail/newsletter/unsubscribe/<str:token>', views.unsubscrib_redirect_view, name = "unsubscribe_redirect"),
     re_path(r'^(?P<slug>[-\w]+)/detail/$', views.PostDetailView.as_view(), name = 'detail'),

@@ -15,7 +15,7 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=insurance
+      - POSTGRES_DB=hoshmand
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=siyamak1981
      

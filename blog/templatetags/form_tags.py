@@ -1,5 +1,8 @@
 from django import template
+import datetime, time
 
+from django import template
+import khayyam
 register = template.Library()
 
 @register.filter
@@ -15,3 +18,15 @@ def input_class(bound_field):
         elif field_type(bound_field) != 'PasswordInput':
             css_class = 'is-valid'
     return 'form-control {}'.format(css_class)
+
+
+
+
+@register.filter
+def jalali_date(date):
+    """Converts Date into JalaliDate"""
+    timestamp = time.mktime(datetime.datetime.timetuple(date))
+    jalali_date = khayyam.JalaliDate.fromtimestamp(timestamp)
+    return str(jalali_date)
+
+register.filter('jalali_date', jalali_date)

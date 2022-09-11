@@ -55,11 +55,13 @@ INSTALLED_APPS = [
     'slider',
     'faq',
     'newsletters',
-    'renewal'
+    'renewal',
+    
     # 'django_celery_beat'
     ]
 
-    
+
+
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
