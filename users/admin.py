@@ -15,19 +15,19 @@ class ProfileInline(admin.StackedInline):
     
     
     fieldsets = [
-        ('I. Personal Information', {
+        ('I. تلفن -آدرس', {
             'fields': ['phone', 'address'],
             'classes': ['collapse']
         }),
-        ('II. Personal Information', {
-            'fields':[ 'gender', 'birthday', 'about'],
+        ('II. کد ملی-تاریخ تولد-درباره', {
+            'fields':[ 'code', 'birthday', 'about'],
             'classes': ['collapse']
         }),
-        ('III. Personal Information', {
+        ('III. عکس -کد پستی', {
             'fields': ['avatar', 'zip'],
             'classes': ['collapse']
         }),
-        ('IV. Personal Information', {
+        ('IV. شبکه اجتماعی', {
             'fields': ['linkedin', 'instagram', 'whatsapp'],
             'classes': ['collapse']
         })

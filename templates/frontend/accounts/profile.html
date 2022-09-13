@@ -1,0 +1,105 @@
+{% extends "frontend/shared/home.html" %}
+{% block title %} {{ title }}{% endblock %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<section class="user-area-all-style sign-up-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-action">
+                    <div class="form-heading text-center">
+                        <h3 class="form-title"> اطلاعات شخصی!</h3>
+                    </div>
+                
+                    <form method="post" action="{% url 'user:update_profile' user.pk %}" novalidate  enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control {% if form.errors.first_name %} border-danger
+                                {% endif %}" type="text" name="first_name"
+                                    value="{{ obj.first_name }}" placeholder="نام">
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="last_name" value="{{ obj.last_name }}" placeholder="نام خانوادگی">
+                            </div>
+                            {% for error in form.errors.last_name %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control" type="email" name="email" value="{{ obj.email }}" placeholder="آدرس ایمیل" readonly>
+                            </div>
+                            {% for error in form.errors.email %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="address" value="{{ obj.profile.address }}" placeholder="آدرس ..">
+                            </div>
+                            {% for error in form.errors.address %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="phone" value="{{ obj.profile.phone }}" placeholder="تلفن">
+                            </div>
+                            {% for error in form.errors.phone %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="city" value="{{ obj.profile.city }}" placeholder="شهر ..">
+                            </div>
+                            {% for error in form.errors.city %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="date" name="birthday" value="{{ obj.profile.birthday }}" placeholder="تاریخ تولد">
+                            </div>
+                            {% for error in form.errors.birthday %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="zip" value="{{ obj.profile.zip }}" placeholder="کد پستی">
+                            </div>
+                            {% for error in form.errors.zip %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div> -->
+                        {% include 'backend/includes/form.html' %}
+                        
+                        <div class="col-12">
+                            <button class="default-btn btn-block btn-two" type="submit">
+                               ویرایش
+                            </button>
+                        </div>
+
+        
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

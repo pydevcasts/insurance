@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import validate_email
+from painless.models.validations import validate_phone_number
 
 
 
@@ -43,7 +44,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('ایمیل'),unique=True, validators = [validate_email])
-    mobile = models.CharField(_('موبایل'),max_length = 12)
+    mobile = models.CharField(_('موبایل'),max_length = 12, validators= [validate_phone_number])
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

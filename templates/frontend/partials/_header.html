@@ -84,11 +84,19 @@
                       </a>
                       <ul class="dropdown-menu">
                         {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
                         <li class="nav-item">
                           <a href="/admin/" class="nav-link">ورود ادمین</a>
                         </li>
                         <li class="nav-item">
                           <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
+                        </li>
+                       {% endif %}
+                        <li class="nav-item">
+                          <a href="{% url 'user:update_profile' user.pk %}" class="nav-link">پروفایل</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'user:password_change' %}" class="nav-link">تغییر گذر واژه</a>
                         </li>
                         <li class="nav-item">
                           <a href="{% url 'logout' %}" class="nav-link">خروج</a>
@@ -136,7 +144,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li class="nav-item">
-                      <a href="{% url 'frontend:all_post' %}" class="nav-link">پست ها</a>
+                      <a href="{% url 'frontend:all_post' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'all_post' %}active{%endif%}">پست ها</a>
                     </li>
                   </ul>
                 </li>

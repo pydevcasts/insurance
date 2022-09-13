@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls.base import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView,UpdateView
 from django.views.generic.edit import  DeleteView
 from users.forms import ProfileForm
 from users.models import Profile
@@ -10,17 +10,16 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
-from users.models import Profile
 from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
-
 from django.contrib import messages
 from django.views.generic.edit import FormView
-from django.shortcuts import redirect
 from .forms import GenerateRandomUserForm
+from django.contrib.auth.views import PasswordChangeView
 from .tasks import create_random_user_accounts
-
 User = get_user_model()
+
+
+
 
 
 # @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
@@ -56,7 +55,7 @@ class DeleteUserView(SuccessMessageMixin,PermissionRequiredMixin, DeleteView):
     
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+# @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProfileView(View, PermissionRequiredMixin):
     permission_required = "user.create_user"
     profile = None
@@ -82,12 +81,48 @@ class ProfileView(View, PermissionRequiredMixin):
                 messages.success(request, 'Profile saved successfully')
                 return redirect('user:list')
             else:
-                return render(request,'backend/user/create.html', {"form":form})
+                return render(request,'backend/user/create.html', {"form":form, })
             
         else:
             form = ProfileForm(request.FILES,)
         return redirect('user:list')
             
+
+
+
+
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class ProfileUpdateView(SuccessMessageMixin,LoginRequiredMixin, UpdateView):
+
+    form_class = ProfileForm
+    model = User
+    template_name= 'frontend/accounts/profile.html'
+    pk_url_kwarg = 'pk'
+
+    def form_valid(self, form):
+        user = form.save(commit = False)
+        user.first_name = form.cleaned_data['first_name']
+        user.last_name = form.cleaned_data['last_name']
+        user.email = form.cleaned_data['email']
+        user.profile.phone = form.cleaned_data['phone']
+        user.profile.code = form.cleaned_data['code']
+        user.profile.address = form.cleaned_data['address']
+        user.profile.city = form.cleaned_data['city']
+        user.profile.zip = form.cleaned_data['zip']
+        user.profile.avatar = form.cleaned_data['avatar']
+        user.save()
+        messages.success(self.request, 'پروفایل با موفقیت آپدیت شد!')
+        return redirect('user:update_profile', pk=user.pk,)
+        
+
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'frontend/accounts/password_change.html'
+    success_message = "پسوردتان با موفقیت تغیرر یافت"
+    success_url = reverse_lazy('user:password_change')
+
 
 
 class GenerateRandomUserView(FormView):
@@ -99,3 +134,4 @@ class GenerateRandomUserView(FormView):
         create_random_user_accounts.delay(total)
         messages.success(self.request, 'We are generating your random users! Wait a moment and refresh this page.')
         return redirect('user:list')
+

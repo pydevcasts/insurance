@@ -18,7 +18,7 @@ class SliderAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         ('main', { 
             'fields': ( 
                     ('title','summary',), 
-                    ('status', 'banner'),
+                    ('status'),
                     ('content')
                 ),
             }

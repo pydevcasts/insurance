@@ -10,7 +10,6 @@ class Slider(OrganizedMixin):
     summary = models.CharField(_('خلاصه'),max_length = 128)
     content = RichTextField(_('پیام'),blank=True,null=True)
     
-    objects = models.Manager()
     condition = PostPublishedManager()
 
     class Meta:

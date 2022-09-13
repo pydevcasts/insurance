@@ -55,6 +55,7 @@ urlpatterns = [
     re_path(r'^settings/password/done/$',
         auth_views.PasswordChangeDoneView.as_view(template_name='frontend/accounts/password_change_done.html'),
         name='password_change_done'),
+    
     re_path(r'^.*\.*', views.pages, name='pages'),   
 
     #######################

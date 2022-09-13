@@ -2,46 +2,60 @@ import datetime
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from users.models import Profile
-
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+import string
 
 
 class ProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=16)
-    last_name = forms.CharField(max_length=255)
-    email = forms.EmailField()
+    first_name = forms.CharField(label="نام", max_length=16)
+    last_name = forms.CharField(label="نام خانوادگی", max_length=255)
+    email = forms.EmailField(label="ایمیل")
 
     class Meta:
         model = Profile
         fields = '__all__'
-        exclude = ['user']
+        exclude = [ 'user', 'published_at','instagram','whatsapp', 'linkedin', 'birthday', 'about']
+        widgets = {
+            'birthday': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+        }
+
+
 
     def clean_first_name(self):
+
+        letters = set(string.punctuation)
+        digits = set(string.digits)
         data = self.cleaned_data.get('first_name')
-        if len(data) < 5:
-            raise forms.ValidationError("length of firstname is less than Five!")
+        v = set(data)
+        if not v.isdisjoint(letters) or not v.isdisjoint(digits):
+            raise forms.ValidationError('نام تنها باید از کاراکتر تشکیل شده باشد.')
+        if len(data) < 3:
+            raise forms.ValidationError("طول کاراکتر نمیتواند کمتر از ۳ حرف باشد")
         return data
+
+
 
     def clean_last_name(self):
+
+        letters = set(string.punctuation)
+        digits = set(string.digits)
         data = self.cleaned_data.get('last_name')
-        if len(data) < 5:
-            raise forms.ValidationError("length of lastname is less than Five!")
+        v = set(data)
+        if not v.isdisjoint(letters) or not v.isdisjoint(digits):
+            raise forms.ValidationError('نام تنها باید از کاراکتر تشکیل شده باشد.')
+        if len(data) < 3:
+            raise forms.ValidationError("طول کاراکتر نمیتواند کمتر از ۳ حرف باشد")
         return data
 
-    def clean_password(self):
-        data = self.cleaned_data.get('password')
-        if len(data) < 8:
-            raise forms.ValidationError("length of title is less than eight!")
-        return data
+ 
 
     def clean_birthday(self):
         data = self.cleaned_data.get('birthday')
         if data != None and data > datetime.date.today():
             raise forms.ValidationError(
                     """
-                    \'to\' date cannot be later than today.
+                    \'to\' تاریخ تولد نمیتواند کمتر از امروز باشد.
                     """)
 
 
