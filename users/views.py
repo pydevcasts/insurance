@@ -22,7 +22,7 @@ User = get_user_model()
 
 
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class UserListView(ListView):
 
     model = get_user_model()
@@ -55,7 +55,7 @@ class DeleteUserView(SuccessMessageMixin,PermissionRequiredMixin, DeleteView):
     
 
 
-# @method_decorator(login_required(login_url='login'), name='dispatch')
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class ProfileView(View, PermissionRequiredMixin):
     permission_required = "user.create_user"
     profile = None
@@ -87,8 +87,6 @@ class ProfileView(View, PermissionRequiredMixin):
             form = ProfileForm(request.FILES,)
         return redirect('user:list')
             
-
-
 
 
 

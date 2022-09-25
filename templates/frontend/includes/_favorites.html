@@ -1,0 +1,21 @@
+<section class="widget widget-peru-posts-thumb">
+    <h3 class="widget-title">پست های محبوب</h3>
+    <div class="post-wrap">
+            {% for fav in favorites %}
+            <article class="item">
+                    <a href="{{ fav.get_absolute_url }}" class="thumb">
+                            <img src="{{ fav.banner.url }}" alt="Image">
+                    </a>
+                    <div class="info">
+                            <time datetime="2020-06-30"></time>
+                            <h4 class="title usmall">
+                                    <a href="{{ fav.get_absolute_url }}">
+                                          {{ fav.summary }}
+                                    </a>
+                            </h4>
+                    </div>
+                    <div class="clear"></div>
+            </article>
+            {% endfor %}
+    </div>
+</section>

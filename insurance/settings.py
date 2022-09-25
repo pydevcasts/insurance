@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'faq',
     'newsletters',
     'renewal',
+    'news'
     
     # 'django_celery_beat'
     ]

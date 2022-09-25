@@ -1,17 +1,13 @@
 {% extends 'frontend/shared/home.html' %}
+{% load form_tags %}
 {% load static %}
-
-
 {% block styles %}
 {% endblock %}
 {% block title %}بیمه آسیا
 {% endblock title %}
 {% block body %}
 
-
-
 {% include 'frontend/slider/index.html' %}
-
 <section class="get-quat-area-six pb-100">
         <div class="container">
                 <div class="tab get-quat-list-tab">
@@ -325,80 +321,33 @@
                                 است.</p>
                 </div>
                 <div class="row">
+                        {% for new in news|slice:":3" %}
                         <div class="col-lg-4 col-md-6">
                                 <div class="single-blog">
                                         <a href="blog-details.html">
-                                                <img src="{% static 'assets/frontend/img/blog/1.jpg' %}" alt="Image">
+                                                <img src="{{ new.banner.url }}" alt="Image">
                                         </a>
                                         <div class="blog-content">
                                                 <ul>
                                                         <li>
-                                                                10 دی 1399
+                                                                {{ new.published_at|jalali_date }}
                                                         </li>
                                                         <li>
-                                                                <a href="#">توسط مدیر</a>
+                                                                <a href="#">{{ new.author.first_name }}-{{ new.author.last_name }}</a>
                                                         </li>
                                                 </ul>
                                                 <a href="blog-details.html">
-                                                        <h3>روندهای بیمه 1399 و چالش احتمالی</h3>
+                                                        <h3>{{ new.summary }}</h3>
                                                 </a>
-                                                <a href="blog-details.html" class="read-more">
+                                                <a href="{{ new.get_absolute_url }}" class="read-more">
                                                         ادامه خواندن
                                                         <i class="bx bx-plus"></i>
                                                 </a>
                                         </div>
                                 </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                                <div class="single-blog">
-                                        <a href="blog-details.html">
-                                                <img src="{% static 'assets/frontend/img/blog/2.jpg' %}" alt="Image">
-                                        </a>
-                                        <div class="blog-content">
-                                                <ul>
-                                                        <li>
-                                                                10 دی 1399
-                                                        </li>
-                                                        <li>
-                                                                <a href="#">توسط مدیر</a>
-                                                        </li>
-                                                </ul>
-                                                <a href="blog-details.html">
-                                                        <h3>روندهای بیمه 1399 و چالش احتمالی</h3>
-                                                </a>
-                                                <a href="blog-details.html" class="read-more">
-                                                        ادامه خواندن
-                                                        <i class="bx bx-plus"></i>
-                                                </a>
-                                        </div>
-                                </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-                                <div class="single-blog">
-                                        <a href="blog-details.html">
-                                                <img src="{% static 'assets/frontend/img/blog/3.jpg' %}" alt="Image">
-                                        </a>
-                                        <div class="blog-content">
-                                                <ul>
-                                                        <li>
-                                                                10 دی 1399
-                                                        </li>
-                                                        <li>
-                                                                <a href="#">توسط مدیر</a>
-                                                        </li>
-                                                </ul>
-                                                <a href="blog-details.html">
-                                                        <h3>روندهای بیمه 1399 و چالش احتمالی</h3>
-                                                </a>
-                                                <a href="blog-details.html" class="read-more">
-                                                        ادامه خواندن
-                                                        <i class="bx bx-plus"></i>
-                                                </a>
-                                        </div>
-                                </div>
-                        </div>
+                        {% endfor %}
                 </div>
         </div>
 </section>
-
 {% endblock %}

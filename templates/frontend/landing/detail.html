@@ -16,12 +16,9 @@
                                         <div class="article-content">
                                                 <div class="entry-meta">
                                                         <ul>
-                                                                <li><span>ارسال در:</span> <a href="#">{{
-                                                                                post.published_at|date:"Y" }}/{{
-                                                                                post.published_at|date:"m" }}/{{
-                                                                                post.published_at|date:"d" }}</a></li>
-                                                                <li><span>توسط:</span> <a href="#">{{
-                                                                                post.author.first_name }}</a></li>
+                                                                <li><span>ارسال در:</span> <a href="#">{{ post.published_at|jalali_date }}</a></li>
+                                                                <li><span>توسط:</span> <a href="#">{{post.author.first_name }}</a></li>
+                                                                                
                                                         </ul>
                                                 </div>
                                                 <h3>{{ post.title }}</h3>
@@ -270,126 +267,9 @@
 
                                                 </div>
                                         </div>
-
-
-                                        <section class="widget widget-peru-posts-thumb">
-                                                <h3 class="widget-title">پست های محبوب</h3>
-                                                <div class="post-wrap">
-                                                        <article class="item">
-                                                                <a href="blog-details.html" class="thumb">
-                                                                        <span class="fullimage cover bg1"
-                                                                                role="img"></span>
-                                                                </a>
-                                                                <div class="info">
-                                                                        <time datetime="2020-06-30">20 دی
-                                                                                1399</time>
-                                                                        <h4 class="title usmall">
-                                                                                <a href="blog-details.html">
-                                                                                        امروز کجا و چگونه می
-                                                                                        توان جریان مستقیم را
-                                                                                        تماشا کرد
-                                                                                </a>
-                                                                        </h4>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                        </article>
-                                                        <article class="item">
-                                                                <a href="blog-details.html" class="thumb">
-                                                                        <span class="fullimage cover bg2"
-                                                                                role="img"></span>
-                                                                </a>
-                                                                <div class="info">
-                                                                        <time datetime="2020-06-30">20 دی
-                                                                                1399</time>
-                                                                        <h4 class="title usmall">
-                                                                                <a href="blog-details.html">
-                                                                                        امروز کجا و چگونه می
-                                                                                        توان جریان مستقیم را
-                                                                                        تماشا کرد
-                                                                                </a>
-                                                                        </h4>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                        </article>
-                                                        <article class="item">
-                                                                <a href="blog-details.html" class="thumb">
-                                                                        <span class="fullimage cover bg3"
-                                                                                role="img"></span>
-                                                                </a>
-                                                                <div class="info">
-                                                                        <time datetime="2020-06-30">20 دی
-                                                                                1399</time>
-                                                                        <h4 class="title usmall">
-                                                                                <a href="blog-details.html">
-                                                                                        امروز کجا و چگونه می
-                                                                                        توان جریان مستقیم را
-                                                                                        تماشا کرد
-                                                                                </a>
-                                                                        </h4>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                        </article>
-                                                        <article class="item">
-                                                                <a href="blog-details.html" class="thumb">
-                                                                        <span class="fullimage cover bg4"
-                                                                                role="img"></span>
-                                                                </a>
-                                                                <div class="info">
-                                                                        <time datetime="2020-06-30">20 دی
-                                                                                1399</time>
-                                                                        <h4 class="title usmall">
-                                                                                <a href="blog-details.html">
-                                                                                        امروز کجا و چگونه می
-                                                                                        توان جریان مستقیم را
-                                                                                        تماشا کرد
-                                                                                </a>
-                                                                        </h4>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                        </article>
-                                                </div>
-                                        </section>
-                                        <section class="widget widget_categories">
-                                                <h3 class="widget-title">بایگانی ها</h3>
-                                                <div class="post-wrap">
-                                                        <ul>
-                                                                <li>
-                                                                        <a href="#">مهر <span>1399</span></a>
-                                                                </li>
-                                                                <li>
-                                                                        <a href="#">آبان <span>1399</span></a>
-                                                                </li>
-                                                                <li>
-                                                                        <a href="#">آذر <span>1399</span></a>
-                                                                </li>
-                                                                <li>
-                                                                        <a href="#">دی <span>1399</span></a>
-                                                                </li>
-                                                                <li>
-                                                                        <a href="#">بهمن <span>1399</span></a>
-                                                                </li>
-                                                                <li>
-                                                                        <a href="#">اسفند <span>1399</span></a>
-                                                                </li>
-                                                        </ul>
-                                                </div>
-                                        </section>
-                                        <section class="widget widget_categories">
-                                                <h3 class="widget-title">دسته بندی ها</h3>
-                                                <div class="post-wrap">
-
-                                                        <ul>
-                                                                <li>
-                                                                        <a href="{{ post.get_absolute_url }}">{{post.subcategory.category.title
-                                                                                }}
-                                                                        </a>
-                                                                </li>
-
-
-                                                        </ul>
-                                                </div>
-                                        </section>
-
+                                        {% include 'frontend/includes/_favorites.html' %}
+                                        {% include 'frontend/includes/_archives.html' %}
+                                        {% include 'frontend/includes/_categories.html' %}
                                         <section class="widget widget_tag_cloud">
                                                 <h3 class="widget-title">برچسب ها</h3>
                                                 <div class="post-wrap">

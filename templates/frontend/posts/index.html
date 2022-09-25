@@ -43,35 +43,7 @@
             </div>
         </div>
     </section>
-    <div class="paginate-blog">
-        {% if page_obj %}
-        {% if page_obj.has_other_pages %}
-        <div class="btn-group" role="group" aria-label="Item pagination">
-            {% if items_page.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
-            {% endif %}
-
-            {% for page_number in page_obj.paginator.page_range %}
-            {% if page_obj.number == page_number %}
-            <button class="btn btn-outline-primary active">
-                <span>{{ page_number }} <span class="sr-only">(current)</span></span>
-            </button>
-            {% else %}
-            <a href="?page={{ page_number }}" class="btn btn-outline-primary">
-                {{ page_number }}
-            </a>
-            {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
-            {% endif %}
-        </div>
-        {% endif %}
-        {% else %}
-        <p>No items found.</p>
-        {% endif %}
-    </div>
+    {% include 'frontend/includes/_pagination.html' %}
 </div>
 
 {% endblock %}

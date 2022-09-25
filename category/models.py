@@ -20,8 +20,11 @@ class Category(OrganizedMixin):
     def __str__(self):
         return self.title
 
+
     def get_absolute_url(self):
         return reverse('frontend:detail_by_subcategory_slug', kwargs={"slug": self.slug})
+
+
 
 
 

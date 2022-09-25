@@ -1,6 +1,5 @@
 
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect
 from django.urls.base import  reverse_lazy
 from django.views.generic import ListView
@@ -15,7 +14,7 @@ from django.utils.decorators import method_decorator
 from tag.tasks import create_random_tag
 
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class TagListView(LoginRequiredMixin, ListView):
     model = Tag
     context_object_name = 'tags'

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 from painless.models.actions import PostableMixin,ExportMixin
-from khayyam import JalaliDate as jd
+
 
 
 
@@ -38,15 +38,11 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         ),
     ]
 
-    def published(self, obj):
-        return jd(obj.published_at)
+
 
     def get_tags(self, obj):
         return ", ".join([t.title for t in obj.tags.all()])
 
-    def is_published(self, obj):
-        published = 1
-        return obj.status == published
     
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -57,21 +53,16 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
             return ('published_at',)
         return []
 
-    is_published.boolean = True
 
 
 
 @admin.register(models.Comment)
 class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ('__str__',  'content_type', 'user','published')
+    list_display = ('__str__',  'content_type', 'user','published',)
     search_fields = ('content',)
     list_editable = ['content_type']
     list_filter = ['user', 'published_at']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
-
-
-    def published(self, obj):
-        return jd(obj.published_at)
 
     
     def has_delete_permission(self, request, obj=None):

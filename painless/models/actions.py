@@ -1,8 +1,7 @@
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 import csv
 
-# Register your actions here.
 
 class ExportMixin:
     def export_as_json(self, request, queryset):

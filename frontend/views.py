@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.contrib import messages
+from news.models import New
 from newsletters.forms import NewsLettersForm
 from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
@@ -18,7 +19,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def post_subcategory_list(request, slug=None):
     posts = Post.condition.published().select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
-    
+    news = New.objects.filter(status = 1).order_by('-published_at')
     postlists = posts[:5]
  
     if slug:
@@ -42,7 +43,7 @@ def post_subcategory_list(request, slug=None):
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
                                                         "postlists":postlists,
-                                                 
+                                                        'news':news
                                                         })
 
 def all_post_view(request):

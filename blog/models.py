@@ -22,7 +22,7 @@ class CommentManager(models.Manager):
     def filter_by_instance(self, instance):
         content_type = ContentType.objects.get_for_model(instance.__class__)
         object_id = instance.uid
-        qs = super(CommentManager, self).filter(content_type=content_type, object_id=object_id)
+        qs = super().filter(content_type=content_type, object_id=object_id)
         return qs
     
 
@@ -47,6 +47,7 @@ class Comment(TimeStampedMixin):
         get_latest_by = ['-published_at']
 
 
+
 class Post(OrganizedMixin):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = '+', on_delete = models.CASCADE)
@@ -63,13 +64,17 @@ class Post(OrganizedMixin):
 
 
 
-
-
     class Meta:
         ordering = ['-published_at', 'title']
         verbose_name = _('پست')
         verbose_name_plural = _('پستها')
         get_latest_by = ['-published_at']
+    
+
+    
+  
+   
+
 
     def __str__(self):
         return self.title

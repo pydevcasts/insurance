@@ -2,7 +2,7 @@ from django.db import models
 from painless.models.choices import PostStatus
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
+from khayyam import JalaliDate as jd
 
 status = PostStatus(is_charfield=False)
 
@@ -14,6 +14,13 @@ class TimeStampedMixin(models.Model):
     
     class Meta:
         abstract = True
+    
+    @property
+    def published(self):
+        return jd(self.published_at)
+        
+
+
 
 
 class OrganizedMixin(TimeStampedMixin):
@@ -25,3 +32,7 @@ class OrganizedMixin(TimeStampedMixin):
 
     class Meta:
         abstract = True
+    
+    def is_published(self):
+        return self.status 
+    is_published.boolean = True

@@ -1,0 +1,42 @@
+
+<div class="col-lg-12">
+    <div class="page-navigation-area">
+        {% if page_obj %}
+        {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link page-links" href="?page={{ page_obj.previous_page_number }}">
+                        <i class="bx bx-chevrons-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+                {% for page_number in page_obj.paginator.page_range %}
+                {% if page_obj.number == page_number %}
+                <li class="page-item active">
+                    <a class="page-link" href="#">{{ page_number }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active">
+                    <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+                        {{ page_number }}
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        <i class="bx bx-chevrons-left"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <p>No items found.</p>
+        {% endif %}
+    </div>
+</div>

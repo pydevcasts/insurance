@@ -11,16 +11,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from blog.models import Post
 from tag.models import Tag
-from blog.forms import CommentForm, PostForm
+from blog.forms import PostForm
 from django.utils import timezone
 from category.models import Category, SubCategory
-# from django.views.decorators.cache import cache_page
-# from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 User = get_user_model()
 
 
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     context_object_name = 'posts'
@@ -37,6 +37,7 @@ class PostListView(LoginRequiredMixin, ListView):
         else:
             post = Post.objects.all().order_by(order_by)
         return post
+
 
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)

@@ -17,6 +17,7 @@ urlpatterns = [
     re_path(r'^', include('accounts.urls',namespace='accounts')),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^blog/', include('blog.urls')),
+    re_path(r'^new/', include('news.urls')),
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
     re_path(r'^tag/', include('tag.urls')),

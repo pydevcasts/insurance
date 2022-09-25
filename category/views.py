@@ -1,9 +1,8 @@
 
 
-from django.contrib.messages.api import success
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.urls.base import reverse, reverse_lazy
+from django.shortcuts import redirect
+from django.urls.base import reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,7 +14,7 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     context_object_name = 'categories'
@@ -91,7 +90,7 @@ class CategoryUpdateView(SuccessMessageMixin, UpdateView):
         return redirect("dashboard:home")
 
 # subcat
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class SubCategoryListView(ListView):
     model=SubCategory
     paginate_by=3

@@ -1,0 +1,14 @@
+
+<section class="widget widget_categories">
+    <h3 class="widget-title">دسته بندی ها</h3>
+    <div class="post-wrap">
+        <ul>
+            {% for new in news %}
+         
+            <li>
+                <a href="{{ new.get_absolute_url }}">{{ new.categories.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>

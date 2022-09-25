@@ -7,40 +7,57 @@
 
 
 
- <section class="blog-area blog-area-two-columns ptb-100">
+
+<section class="blog-area blog-area-two-columns ptb-100">
         <div class="container">
                 <div class="section-title">
                         <h2>جستجوی نتایج شما</h2>
                         <p>ما {{ searchs.count }} مقاله برای شما پیدا کردیم</p>
-                        </div>
-               
-                <div class="row">
-                        {% for item in searchs %}
-                        <div class="col-lg-6 col-md-6">
-                                <div class="single-blog wow fadeInUp" data-wow-delay=".2s"
-                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                                        <a href="blog-details.html">
-                                                <img src="{{ item.banner }}" alt="ّبیمه">
-                                        </a>
-                                        <div class="blog-content">
-                                                <ul>
-                                                        <li><span>ارسال در:</span> <a
-                                                                href="#">{{ item.created|date:"D" }}
-                                                                {{ item.created|date:"m"  }}
-                                                                {{ item.created|date:"Y"  }}</a>
-                                                </li>
-                                                </ul>
-                                                <a href="#">
-                                                        <h3>{{ item.title }}</h3>
-                                                </a>
-                                                <p>{{ item.content| striptags |safe }}</p>
-                                        </div>
-                                </div>
-                        </div>
-                        {% endfor %}
-                     
                 </div>
         </div>
-</section> 
-
+</section>
+{% for item in searchs %}
+{%  if forloop.counter|divisibleby:2 %}
+<section class="about-area ptb-100">
+        <div class="container">
+                
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <span>{{ item.title }}</span>
+                    <h2>{{ item.summary }}</h2>
+                    <p>{{item.content | striptags }}</p>
+          
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img wow fadeInRight" data-wow-delay=".2s">
+                        <img src="{{ item.banner }}" alt="ّبیمه">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="our-vision-area ptb-100">
+    <div class="container">
+            <div class="row align-items-center">
+                    <div class="col-lg-6">
+                            <div class="about-img wow fadeInLeft" data-wow-delay=".2s">
+                                <img src="{{ item.banner }}" alt="ّبیمه">
+                            </div>
+                    </div>
+                    <div class="col-lg-6">
+                            <div class="vision-content">
+                                    <span> {{ item.title }}</span>
+                                    <h2>{{ item.summary }}</h2>
+                                    <p>{{ item.content|striptags }}</p>
+                                    
+                            </div>
+                    </div>
+            </div>
+    </div>
+</section>
+{% endif %}
+{% endfor %}
 {% endblock %}
