@@ -31,6 +31,7 @@
                         <img src="{{ post.subcategory.category.banner.url }}" alt="Image">
                         <div class="service-content">
                             <i class="icon-style {{ post.subcategory.category.icon }}"></i>
+                            <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>
                             <h3>{{ post.subcategory.category.title }}</h3>
                             <p>{{ post.content| striptags |safe| truncatewords:20 }}</p>
                             <a href="{{ post.get_absolute_url }}">

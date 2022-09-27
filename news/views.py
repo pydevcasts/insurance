@@ -1,9 +1,7 @@
 
-from itertools import count
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
-
 from news.models import New
 
 
@@ -12,7 +10,6 @@ class NewListView(ListView):
     def get(self, request, *args, **kwargs):
         news = New.objects.filter(status= 1).select_related('categories').order_by('-published_at')
         page = request.GET.get('page', 1)
-
         paginator = Paginator(news, 15)
         try:
             page_obj = paginator.page(page)
@@ -26,7 +23,6 @@ class NewListView(ListView):
 
 
 def new_detail(request, year, month, day, slug):
-
     list_ip =[]
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -40,9 +36,6 @@ def new_detail(request, year, month, day, slug):
                                 published_at__month=month,
                                 published_at__day=day)
 
- 
-
-    
     list_ip.append(ip)
     if ip in list_ip:
         new.view = ""
@@ -51,7 +44,7 @@ def new_detail(request, year, month, day, slug):
         new.save()
     return render(request,
                 'frontend/news/detail.html',
-                {'new': new, })
+                {'new': new, 'title':'جزییات خبر' })
 
 
 

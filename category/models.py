@@ -22,9 +22,8 @@ class Category(OrganizedMixin):
 
 
     def get_absolute_url(self):
+        # print("slug is:",self.subcats.subcategory.slug)
         return reverse('frontend:detail_by_subcategory_slug', kwargs={"slug": self.slug})
-
-
 
 
 

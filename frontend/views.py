@@ -68,7 +68,7 @@ class PostDetailView(FormMixin, DetailView):
     slug_field = 'slug'
     form_class = CommentForm
     obj = None
- 
+    list_ip = []
     def get_initial(self):
         instance = self.get_object()
        
@@ -90,8 +90,22 @@ class PostDetailView(FormMixin, DetailView):
         post = get_object_or_404(Post, slug = self.kwargs['slug'])
         comments = Comment.objects.filter_by_instance(post)
         context['comments'] = comments
+        context['title'] = "جزییات"
         context['form'] = self.get_form_class()
+   
+        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = self.request.META.get('REMOTE_ADDR')
+        self.list_ip.append(ip)
+        if ip in self.list_ip:
+            post.view = ""
+        else:
+            post.views += 1
+            post.save()
         return context
+
 
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -113,7 +127,6 @@ class PostDetailView(FormMixin, DetailView):
         user = self.request.user
         comment_content = form.cleaned_data['content']
         reply_id = self.request.POST.get('comment_id') #reply-section
-        print(reply_id)
         comment_qs = None
         
         if reply_id:

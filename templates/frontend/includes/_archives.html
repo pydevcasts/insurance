@@ -1,14 +1,14 @@
 {% load form_tags %}
 <section class="widget widget_categories">
-    <h3 class="widget-title">بایگانی ها</h3>
-    <div class="post-wrap">
-            <ul>
-               {% for archive in archives %}
-                    <li>
-                            <a href="{{ archive.get_absolute_url }}">{{ archive.published_at|jalali_date }} <span></span></a>
-                    </li>
-                    
-                    {% endfor %}
-            </ul>
-    </div>
+        <h3 class="widget-title">بایگانی ها</h3>
+        <div class="post-wrap">
+                <ul>
+                        {% for archive in archives %}
+                        <li>
+                                <a href="{{ archive.get_absolute_url }}">{{ archive.published_at|jalali_date }}
+                                        <span></span></a>
+                        </li>
+                        {% endfor %}
+                </ul>
+        </div>
 </section>

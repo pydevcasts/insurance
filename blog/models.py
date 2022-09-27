@@ -50,14 +50,14 @@ class Comment(TimeStampedMixin):
 
 class Post(OrganizedMixin):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = '+', on_delete = models.CASCADE)
-    summary = models.CharField(max_length = 128)
-    banner = models.ImageField(upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'subcategory')
-    tags = models.ManyToManyField(Tag, related_name = 'tags',  blank = True)
-    content = RichTextField(blank=True,null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = '+', on_delete = models.CASCADE,verbose_name = _("نویسنده"))
+    summary = models.CharField(_("خلاصه"), max_length = 128)
+    banner = models.ImageField(_("تصویر"), upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'subcategory',verbose_name = _("ساب کتگوری"))
+    views= models.IntegerField(_("بازدید"), default=0)
+    tags = models.ManyToManyField(Tag, related_name = 'tags',  blank = True, verbose_name = _("برچسب"))
+    content = RichTextField(_("پیام"), blank=True,null=True)
     comments = GenericRelation(Comment)
-
 
     objects = models.Manager()
     condition = PostPublishedManager()
@@ -72,10 +72,6 @@ class Post(OrganizedMixin):
     
 
     
-  
-   
-
-
     def __str__(self):
         return self.title
         

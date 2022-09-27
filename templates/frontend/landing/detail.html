@@ -18,7 +18,7 @@
                                                         <ul>
                                                                 <li><span>ارسال در:</span> <a href="#">{{ post.published_at|jalali_date }}</a></li>
                                                                 <li><span>توسط:</span> <a href="#">{{post.author.first_name }}</a></li>
-                                                                                
+                                                                <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>        
                                                         </ul>
                                                 </div>
                                                 <h3>{{ post.title }}</h3>
@@ -267,6 +267,7 @@
 
                                                 </div>
                                         </div>
+                                        
                                         {% include 'frontend/includes/_favorites.html' %}
                                         {% include 'frontend/includes/_archives.html' %}
                                         {% include 'frontend/includes/_categories.html' %}

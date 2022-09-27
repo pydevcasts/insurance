@@ -3,8 +3,6 @@ from django.urls import re_path,path
 from .import views
 from django.conf.urls.static import static
 from django.conf import settings
-from users import views as views_profile
-from django.contrib.auth import views as auth_views
 
 
 
