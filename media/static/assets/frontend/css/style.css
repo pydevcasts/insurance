@@ -3443,37 +3443,71 @@ Blog Area Five Style
   color: #12b48b;
   border-color: #12b48b;
 }
-
 .blog-area.blog-area-five .single-blog .blog-content ul li a {
   color: #12b48b;
 }
-
-.blog-area.blog-area-five .single-blog .blog-content ul li a:hover {
-  color: #204066;
+.blog-area.blog-area-five .single-blog .blog-content:hover ul li a {
+  color: #ffffff;
 }
-
+.blog-area.blog-area-five .single-blog .blog-content:hover ul li a:hover {
+  color: #12b48b;
+}
+.blog-area.blog-area-five .single-blog .blog-content:hover ul li {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.blog-area.blog-area-five .single-blog .blog-content ul li:hover {
+  color: #12b48b;
+  border-color: #12b48b;
+}
 .blog-area.blog-area-five .single-blog .blog-content a h3 {
   color: #204066;
 }
-
+.blog-area.blog-area-five .single-blog .blog-content:hover a h3 {
+  color: #ffffff;
+}
+.blog-area.blog-area-five .single-blog .blog-content:hover a h3:hover {
+  color: #12b48b;
+}
 .blog-area.blog-area-five .single-blog .blog-content .read-more {
   color: #12b48b;
 }
+.blog-area.blog-area-five .single-blog .blog-content:hover .read-more{
+  color: #ffffff;
+} 
+.blog-area.blog-area-five .single-blog .blog-content .read-more:hover{
+  color: #12b48b;
+} 
+.blog-area.blog-area-five .single-blog .blog-content .read-more i:hover{
+  color: #12b48b;
+} 
 
-.blog-area.blog-area-five .single-blog .blog-content .read-more:hover {
-  color: #204066;
+.blog-area.blog-area-five .single-blog .blog-content ul li ::before {
+  content: "";
+  position: absolute;
+  right: -100%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  color:#ffffff;
+  background-color: #007bff !important;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: -1;
 }
 
-.blog-area.blog-area-five .single-blog .blog-content .read-more:hover i {
-  color: #204066;
-}
-
-.blog-area.blog-area-five .single-blog .blog-content::before {
-  display: none;
-}
-
-.blog-area.blog-area-five .single-blog .blog-content::after {
-  display: none;
+.blog-area.blog-area-five .single-blog .blog-content ul li ::after {
+  content: "";
+  position: absolute;
+  right: -100%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  color:#ffffff;
+  background-color: #007bff !important;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: -1;
 }
 
 /*
