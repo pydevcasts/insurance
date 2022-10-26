@@ -1,5 +1,5 @@
 
-from tkinter.tix import MAX
+
 from aboutus import views
 from aboutus.models import About
 from category.models import Category

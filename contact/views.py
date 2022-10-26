@@ -46,6 +46,9 @@ class CreateContactView(SuccessMessageMixin , CreateView):
                 form = ContactForm(request.POST)
                 if form.is_valid():
                     form = form.save(commit=False)
+                    print(f"form is test:.....{type(form)}")
+                    print(f"request user is test:.....{type(request.user)}")
+                    print(f"form itself is test:.....{type(form)}")
                     my_first_task.delay(15)
                     form.save()
                     messages.success(request,

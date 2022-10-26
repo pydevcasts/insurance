@@ -17,6 +17,8 @@ docker container rm 2d8519db063d
 sudo service docker start
 sudo service --status-all | grep '+'
 sudo docker login
+docker run -it ubuntu /bin/bash
+
 ##Docker postgres database
 docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
 sudo lsof -i :5432 #kill use posrt 5432

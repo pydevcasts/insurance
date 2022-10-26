@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     'faq',
     'newsletters',
     'renewal',
-    'news'
+    'news',
+    'feedback',
+
     
     # 'django_celery_beat'
     ]
@@ -165,6 +167,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 
 

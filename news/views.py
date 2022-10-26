@@ -38,10 +38,10 @@ def new_detail(request, year, month, day, slug):
 
     list_ip.append(ip)
     if ip in list_ip:
-        new.view = ""
+        new.views = ""
     else:
         new.views += 1
-        new.save()
+    new.save()
     return render(request,
                 'frontend/news/detail.html',
                 {'new': new, 'title':'جزییات خبر' })

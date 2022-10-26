@@ -18,7 +18,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def post_subcategory_list(request, slug=None):
-    posts = Post.condition.published().select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    posts = Post.objects.published().select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
     news = New.objects.filter(status = 1).order_by('-published_at')
     postlists = posts[:5]
  

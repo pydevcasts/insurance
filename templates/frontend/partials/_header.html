@@ -73,6 +73,10 @@
                         ما</a>
                     </li>
                     <li class="nav-item">
+                      <a href="{% url 'customer-feedback:list'  %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'customer-feedback' %}active{%endif%}">بازخورد مشتریان</a>
+                    </li>
+                    <li class="nav-item">
                       <a href="{% url 'faq:faq-insurance'  %}"
                         class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات
                         متداول</a>

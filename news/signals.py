@@ -1,19 +1,18 @@
 import os
-from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save,post_delete
 from django.dispatch import receiver
 from .models import New
 from django.utils.text import slugify
 
 
-@receiver(models.signals.post_delete, sender=New)
+@receiver(post_delete, sender=New)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.banner:
         if os.path.isfile(instance.banner.path):
             os.remove(instance.banner.path)
 
 
-@receiver(models.signals.pre_save, sender=New)
+@receiver(pre_save, sender=New)
 def auto_delete_file_on_change(sender, instance, **kwargs):
     if not instance.pk:
         return False

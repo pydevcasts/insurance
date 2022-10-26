@@ -1,0 +1,59 @@
+{% extends "frontend/shared/home.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block styles %}
+<style>
+    .paginate-blog {
+        text-align: center;
+        font-size: large;
+
+    }
+</style>
+{% endblock %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+<section class="client-area ptb-100">
+    <div class="container">
+        <div class="section-title">
+            <h2>آنچه مشتریان ما می گویند</h2>
+            <p>لورم ایپسوم ساختار چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم ساختار
+                چاپ و متن را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+        </div>
+        <div class="row">
+           {% for feedback in page_obj %}
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-client">
+                    {% if feedback.banner %} <img src="..{{ feedback.banner.url }}" class="user-avatar rounded-circle me-3" style="width:70px;" alt="Avatar">{% else %}<img src="../../static/assets/backend/img/team/profile-picture-1.jpg" />{% endif %}
+                    <h3>{{ feedback.first_name}}-{{ feedback.last_name }}</h3>
+                    <span>{{ feedback.role }}</span>
+                    <p>{{ new.content | striptags |safe }}</p>
+                    <ul>
+                        <li>
+                            <i class="bx bxs-star"></i>
+                        </li>
+                        <li>
+                            <i class="bx bxs-star"></i>
+                        </li>
+                        <li>
+                            <i class="bx bxs-star"></i>
+                        </li>
+                        <li>
+                            <i class="bx bxs-star"></i>
+                        </li>
+                        <li>
+                            <i class="bx bxs-star"></i>
+                        </li>
+                    </ul>
+                    <div class="quotes">
+                        <i class="flaticon-left-quotes-sign"></i>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% include 'frontend/includes/_pagination.html' %}
+          
+        </div>
+    </div>
+</section>
+{% endblock %}
+

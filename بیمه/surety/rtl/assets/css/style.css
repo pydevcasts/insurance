@@ -1331,13 +1331,13 @@ Quat Area Style
   color: #ffffff;
 }
 
-.get-quat-area .quat-form .ratings li {
+/* .get-quat-area .quat-form .ratings li {
   color: #ffffff;
 }
 
 .get-quat-area .quat-form .ratings li a {
   color: #31abfc;
-}
+} */
 
 .get-quat-area .tab .tabs_item {
   display: none;

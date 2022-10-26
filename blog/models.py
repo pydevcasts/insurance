@@ -59,8 +59,8 @@ class Post(OrganizedMixin):
     content = RichTextField(_("پیام"), blank=True,null=True)
     comments = GenericRelation(Comment)
 
-    objects = models.Manager()
-    condition = PostPublishedManager()
+
+    objects = PostPublishedManager()
 
 
 
