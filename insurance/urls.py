@@ -21,7 +21,7 @@ urlpatterns = [
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
     re_path(r'^tag/', include('tag.urls')),
-    re_path(r'^about/', include('aboutus.urls')),
+    re_path(r'^about/', include('aboutus.urls' ,namespace='about_us')),
     re_path(r'^settings/', include('aboutus.urls')),
     re_path(r'^team/', include('team.urls')),
     re_path(r'^category/', include('category.urls')),

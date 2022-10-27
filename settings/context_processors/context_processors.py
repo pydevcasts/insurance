@@ -23,13 +23,10 @@ def posts_view_context_processor(request):
     sliders = Slider.condition.filter(status = 1)
     members= Member.objects.select_related('team').filter(status = 1).order_by('published_at')
     teams = Team.objects.filter(status = 1).order_by('published_at')
-    d = timezone.now() - timedelta(days=2)
-    favorites = New.objects.annotate(
-        total_views=Count('views')
-                    ).filter(
-                        published_at__gte=d, total_views__gt=0
-                    ).order_by('-total_views')[:5]
-    
+
+    favorites = New.objects.annotate(total_views=Count('views')).filter(published_at__gte=timezone.now() - timedelta(days=100),\
+            total_views__gt=0, status = 1).order_by('-total_views')
+
     archives = New.objects.filter(status = 1).order_by('-published_at')[:8]
     categories = Category.objects.all().filter(status = "1")
     news = New.objects.filter(status = 1).order_by('-published_at')

@@ -16,7 +16,7 @@ app_name = 'new'
 
 urlpatterns = [
     re_path(r'^$', views.NewListView.as_view(), name = 'list_news'), 
-    re_path(r'^(?P<year>[0-9]{4})/(?P<month>[-\d+])/(?P<day>[0-9]{2})/(?P<slug>[\w-]+)/$', views.new_detail, name = 'detail_news'), 
+    re_path(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]+)/(?P<day>[0-9]+)/(?P<slug>[\w-]+)/$', views.new_detail, name = 'detail_news'), 
     re_path(r'^sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 ]

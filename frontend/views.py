@@ -84,9 +84,6 @@ class PostDetailView(FormMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        # context["post"] = Post.objects.get(slug=self.kwargs.get("slug"))
-        # content_type = ContentType.objects.get_for_model(Post)
-        # context['comments'] = Comment.objects.filter(content_type=content_type, object_id=Post.objects.get(slug=self.kwargs.get("slug")))
         post = get_object_or_404(Post, slug = self.kwargs['slug'])
         comments = Comment.objects.filter_by_instance(post)
         context['comments'] = comments

@@ -30,15 +30,15 @@ def new_detail(request, year, month, day, slug):
     else:
         ip = request.META.get('REMOTE_ADDR')
 
-    new = get_object_or_404(New, slug=slug,
+    new = get_object_or_404(New,
                                 status = 1,
                                 published_at__year=year,
                                 published_at__month=month,
-                                published_at__day=day)
+                                published_at__day=day,slug=slug)
 
     list_ip.append(ip)
     if ip in list_ip:
-        new.views = ""
+        new.views += 0
     else:
         new.views += 1
     new.save()
