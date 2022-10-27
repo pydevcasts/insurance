@@ -25,8 +25,8 @@ def posts_view_context_processor(request):
     teams = Team.objects.filter(status = 1).order_by('published_at')
 
     favorites = New.objects.annotate(total_views=Count('views')).filter(published_at__gte=timezone.now() - timedelta(days=100),\
-            total_views__gt=0, status = 1).order_by('-total_views')
-
+            total_views__gt=0, status = 1).order_by('-total_views')[:5]
+    
     archives = New.objects.filter(status = 1).order_by('-published_at')[:8]
     categories = Category.objects.all().filter(status = "1")
     news = New.objects.filter(status = 1).order_by('-published_at')
