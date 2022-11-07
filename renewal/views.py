@@ -10,13 +10,12 @@ from renewal.forms import RenewalForm
 
 class RenewalView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
         return context
 
-    def post(self, request, *args, **kwargs):
 
+    def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.info(request,"لطفا ثبت نام نمایید!")
             return redirect("accounts:signup")
@@ -32,7 +31,6 @@ class RenewalView(LoginRequiredMixin, CreateView):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             form = RenewalForm()
-           
         return render(request, 'frontend/includes/_renewal.html')
 
 

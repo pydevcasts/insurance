@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.urls.base import reverse
+from painless.models.managers import NewManager
 from painless.models.mixins import OrganizedMixin
 from tag.models import Tag
 from category.models import Category
@@ -25,7 +26,7 @@ class New(OrganizedMixin):
     views= models.IntegerField(_("بازدید"), default=0)
     content = RichTextField(_("پیام"), blank=True,null=True)
 
-    objects = models.Manager()
+    objects = NewManager()
 
     class Meta:
         ordering = ['-published_at', 'title']

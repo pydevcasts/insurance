@@ -13,7 +13,7 @@ from blog.models import Post
 from tag.models import Tag
 from blog.forms import PostForm
 from django.utils import timezone
-from category.models import Category, SubCategory
+from category.models import Category
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 User = get_user_model()
@@ -40,7 +40,7 @@ class PostListView(LoginRequiredMixin, ListView):
 
 
     def get_context_data(self, **kwargs):
-        context = super(PostListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["filter"] = self.request.GET.get("filter", "")
         context["orderby"] = self.request.GET.get("orderby", "pk")
         context["all_table_fields"] = Post._meta.get_fields()
@@ -68,7 +68,7 @@ class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredM
         users = User.objects.all()
         categories_list = []
         for category in categories:
-            sub_category = SubCategory.objects.filter(category_id=category.id)
+            sub_category = Category.objects.filter(category_id=category.id)
             categories_list.append(
                 {"category": category, "sub_category": sub_category})
         return render(request, "backend/blog/create.html", {"categories": categories_list, "tags": tags, 'users': users})
@@ -114,7 +114,7 @@ class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         post = Post.objects.get(pk=post_id)
         categories_list = []
         for category in categories:
-            sub_category = SubCategory.objects.filter(category_id=category.id)
+            sub_category = Category.objects.filter(category_id=category.id)
             categories_list.append(
                 {"category": category, "sub_category": sub_category})
         return render(request, "backend/blog/edit.html", {"categories": categories_list, "post": post, "tags": tags, "posts": posts, 'users': users})

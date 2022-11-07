@@ -8,10 +8,10 @@ from painless.models.actions import PostableMixin,ExportMixin
 
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['title', 'slug', 'is_published', 'published','views', 'subcategory', 'get_tags']
-    list_editable = ['subcategory']
+    list_display = ['title', 'slug', 'is_published', 'published','views', 'category', 'get_tags']
+    list_editable = ['category']
     filter_horizontal = ['tags']
-    list_filter = ['status', 'published_at', 'subcategory__title']
+    list_filter = ['status', 'published_at', 'category__title']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   
     fieldsets = [
@@ -19,7 +19,7 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
             'fields': ( 
                     ('title',), 
                     ('author', 'status', ),
-                    ('subcategory','views'),
+                    ('category','views'),
                 ),
             }
         ),

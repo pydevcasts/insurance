@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from blog.forms import CommentForm
 from blog.models import Comment, Post
-from category.models import SubCategory
+from category.models import Category
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -17,14 +17,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
-def post_subcategory_list(request, slug=None):
-    posts = Post.objects.published().select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+def post_category_list(request, slug=None):
+    posts = Post.objects.published().select_related('category').order_by('category_id').distinct('category')[:6]
     news = New.objects.filter(status = 1).order_by('-published_at')
-    postlists = posts[:5]
  
     if slug:
-        subcategory = get_object_or_404(SubCategory, slug=slug)
-        posts = posts.filter(subcategory=subcategory)
+        category = get_object_or_404(Category, slug=slug)
+        posts = posts.filter(category=category)
         
     if request.method == 'POST':
             form = NewsLetter(subscriber=request.POST['subscriber'])
@@ -42,13 +41,12 @@ def post_subcategory_list(request, slug=None):
             
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
-                                                        "postlists":postlists,
                                                         'news':news
                                                         })
 
 def all_post_view(request):
     title = "همه پست ها"
-    all_post = Post.objects.all().filter(status= 1).select_related('subcategory').order_by('subcategory__category_id').distinct('subcategory__category')
+    all_post = Post.objects.all().filter(status= 1).select_related('category').order_by('category_id').distinct('category')
     page = request.GET.get('page', 1)
 
     paginator = Paginator(all_post, 15)
@@ -69,18 +67,21 @@ class PostDetailView(FormMixin, DetailView):
     form_class = CommentForm
     obj = None
     list_ip = []
+
     def get_initial(self):
         instance = self.get_object()
-       
         return {
             'content_type':instance.get_content_type,
             'object_id':instance.uid
         }
     
+
     def get_success_url(self):
-        return reverse("detail", kwargs={"slug": self.object.slug})
+        return reverse("frontend:detail", args=[self.published_at.year,
+                             self.published_at.month,
+                             self.published_at.day, 
+                             self.slug])
   
-    
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -89,6 +90,7 @@ class PostDetailView(FormMixin, DetailView):
         context['comments'] = comments
         context['title'] = "جزییات"
         context['form'] = self.get_form_class()
+        context['favorites'] = New.objects.most_views_by_users()[:5]
    
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
@@ -170,7 +172,7 @@ def unsubscrib_redirect_view(request, token, *args, **kwargs):
             html_template = loader.get_template('backend/dashboard/page-403.html')
             return HttpResponse(html_template.render({"title":" شما قبلا اشتراک خود را لغو نمودید"}, request))
 
-        return redirect("frontend:post_and_subcategory")
+        return redirect("frontend:post_and_category")
 
 
 
@@ -182,7 +184,7 @@ def pages(request):
         load_template = request.path.split('/')[-1]
 
         if load_template == 'frontend':
-            return HttpResponseRedirect(reverse('dashboard:post_and_subcategory'))
+            return HttpResponseRedirect(reverse('dashboard:post_and_category'))
         context['segment'] = load_template
 
         html_template = loader.get_template('dashboard/' + load_template)
@@ -196,5 +198,4 @@ def pages(request):
     except:
         html_template = loader.get_template('backend/dashboard/page-500.html')
         return HttpResponse(html_template.render(context, request))
-
 

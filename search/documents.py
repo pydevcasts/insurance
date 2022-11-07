@@ -2,7 +2,7 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from blog.models import  Post
 from tag.models import Tag
-from category.models import  SubCategory
+from category.models import  Category
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -28,21 +28,21 @@ class UserDocument(Document):
 
 
 @registry.register_document
-class SubCategoryDocument(Document):
+class CategoryDocument(Document):
     id = fields.IntegerField()
     category = fields.ObjectField(properties={
         'title': fields.TextField(),
         # 'content': fields.TextField(),
     })
     class Index:
-        name = 'subcategories'
+        name = 'categories'
         settings = {
             'number_of_shards': 1,
             'number_of_replicas': 0,
         }
 
     class Django:
-        model = SubCategory
+        model = Category
         fields = [
             'title',
             # 'content',
@@ -71,7 +71,7 @@ class PostDocument(Document):
         'last_name': fields.TextField(),
         'email': fields.TextField(),
     })
-    subcategory = fields.ObjectField(properties={
+    category = fields.ObjectField(properties={
         'id': fields.IntegerField(),
         'title': fields.TextField(),
         'content': fields.TextField(),
@@ -95,7 +95,7 @@ class PostDocument(Document):
             'number_of_shards': 1,
             'number_of_replicas': 0,
         }
-        related_models = [SubCategory, User]
+        related_models = [Category, User]
         
     def get_queryset(self):
         return super().get_queryset().select_related(
@@ -104,7 +104,7 @@ class PostDocument(Document):
     def get_instances_from_related(self, related_instance):
         if isinstance(related_instance, User):
             return related_instance.posts.all()
-        elif isinstance(related_instance, SubCategory):
+        elif isinstance(related_instance, Category):
             return related_instance.posts.all()
 
     class Django:

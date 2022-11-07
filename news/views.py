@@ -42,10 +42,10 @@ def new_detail(request, year, month, day, slug):
     else:
         new.views += 1
     new.save()
+    favorites = New.objects.most_views_by_users().exclude(slug = new.slug)[:5]
     return render(request,
                 'frontend/news/detail.html',
-                {'new': new, 'title':'جزییات خبر' })
-
+                {'new': new, 'title':'جزییات خبر' , 'favorites':favorites})
 
 
         

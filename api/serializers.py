@@ -3,12 +3,12 @@ from rest_framework.serializers import ModelSerializer
 from newsletters.models import NewsLetter
 from blog.models import Post
 from tag.models import Tag
-from category.models import Category, SubCategory
+from category.models import Category
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 from users.models import Profile
-from category.models import Category, SubCategory
+from category.models import Category
 
 from allauth.account import app_settings as allauth_settings
 from allauth.utils import email_address_exists
@@ -42,11 +42,11 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
             fields = ["url", "pk", "title", "content", "banner", "created", "updated"]
 
 
-class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
-        category = CategorySerializer()
-        class Meta:
-            model = SubCategory
-            fields = ["url", "pk", "title", "content", "banner", "category"]
+# class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
+#         category = CategorySerializer()
+#         class Meta:
+#             model = SubCategory
+#             fields = ["url", "pk", "title", "content", "banner", "category"]
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ["url", "pk", "title", "status", "summary", "banner", "content", "subcategory", "author", "created", "updated", "published_at","subcategory", "tag"]
+        fields = ["url", "pk", "title", "status", "summary", "banner", "content", "author", "created", "updated", "published_at","category", "tag"]
 
 
 class RegisterSerializer(serializers.Serializer):

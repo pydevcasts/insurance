@@ -1,4 +1,4 @@
-from django.urls import re_path, path
+from django.urls import re_path
 from .import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -10,6 +10,7 @@ urlpatterns = [
     re_path(r'^create/', views.CreateCategoryView.as_view(), name = 'create'), 
     re_path(r'^(?P<pk>[-\d]+)/delete/', views.DeleteCategoryView.as_view(), name = 'delete'),
     re_path(r'^(?P<pk>[-\d]+)/edit/', views.CategoryUpdateView.as_view(), name='update'),
+    re_path(r'^(?P<slug>[-\w]+)/', views.posts_list_by_category, name='posts_list_by_category'),
 
 ]
 if settings.DEBUG:

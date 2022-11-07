@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
               <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                  <a href="{% url 'frontend:post_and_subcategory' %}"
+                  <a href="{% url 'frontend:post_and_category' %}"
                     class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'post_and_subcategory' %}active{%endif%}">
                     خانه
                   </a>
@@ -122,21 +122,24 @@
                   </a>
                   <ul class="dropdown-menu">
                     {% for category in categories %}
+                    {% if category.is_parent %}
                     <li class="nav-item">
-                      <a href="#" class="nav-link dropdown-toggle">
+                      
+                      <a href="{{ category.posts_base_on_category }}" class="nav-link dropdown-toggle">
                         {{ category.title }}
                         <i class="bx bx-plus"></i>
                       </a>
                       <ul class="dropdown-menu">
-                        {% for sub in category.subcats.all %}
-                        {% for post in sub.subcategory.all %}
+                        {% for subcategory in category.children %}
+                        {% for postcat in subcategory.posts.all %}
                         <li class="nav-item">
-                          <a href="{{ post.get_absolute_url }}" class="nav-link">{{ sub }}</a>
+                          <a href="{{ postcat.get_absolute_url }}" class="nav-link">{{ subcategory.title }}</a>
                         </li>
                         {% endfor %}
                         {% endfor %}
                       </ul>
                     </li>
+                    {% endif %}
                     {% endfor %}
                   </ul>
                 </li>

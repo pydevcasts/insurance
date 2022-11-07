@@ -35,7 +35,7 @@
             </div>
             <ul class="nav flex-column mt-4 pt-3 pt-md-0">
               <li class="nav-item">
-                <a href="{% url 'frontend:post_and_subcategory' %}" class="nav-link d-flex align-items-center">
+                <a href="{% url 'frontend:post_and_category' %}" class="nav-link d-flex align-items-center">
                   <span class="sidebar-icon">
                     <img src="https://img.icons8.com/plasticine/40/000000/planner.png"/>
                   </span>
@@ -215,12 +215,12 @@
                 <div class="multi-level collapse" role="list" id="submenu-subcat" aria-expanded="false" >
                   <ul class="flex-column nav">
                     <li class="nav-item ">
-                      <a class="nav-link"  href="{% url 'subcategory:list' %}">
+                      <a class="nav-link"  href="{% url 'category:list' %}">
                         <span class="sidebar-text">List</span>
                       </a>
                     </li>
                     <li class="nav-item ">
-                      <a class="nav-link"  href="{% url 'subcategory:create' %}">
+                      <a class="nav-link"  href="{% url 'category:create' %}">
                         <span class="sidebar-text">Create</span>
                       </a>
                     </li>

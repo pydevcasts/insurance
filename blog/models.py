@@ -5,7 +5,7 @@ from django.urls.base import reverse
 from painless.models.mixins import OrganizedMixin, TimeStampedMixin
 from painless.models.managers import PostPublishedManager
 from tag.models import Tag
-from category.models import SubCategory
+from category.models import Category
 from painless.models.choices import PostStatus
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
@@ -53,16 +53,13 @@ class Post(OrganizedMixin):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = '+', on_delete = models.CASCADE,verbose_name = _("نویسنده"))
     summary = models.CharField(_("خلاصه"), max_length = 128)
     banner = models.ImageField(_("تصویر"), upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'subcategory',verbose_name = _("ساب کتگوری"))
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name = 'posts',verbose_name = _("ساب کتگوری"))
     views= models.IntegerField(_("بازدید"), default=0)
     tags = models.ManyToManyField(Tag, related_name = 'tags',  blank = True, verbose_name = _("برچسب"))
     content = RichTextField(_("پیام"), blank=True,null=True)
     comments = GenericRelation(Comment)
 
-
     objects = PostPublishedManager()
-
-
 
     class Meta:
         ordering = ['-published_at', 'title']
@@ -76,7 +73,10 @@ class Post(OrganizedMixin):
         return self.title
         
     def get_absolute_url(self):
-        return reverse("frontend:detail", kwargs={"slug": self.slug})
+        return reverse("frontend:detail", args=[self.published_at.year,
+                             self.published_at.month,
+                             self.published_at.day, 
+                             self.slug])
     
     @property
     def get_content_type(self):

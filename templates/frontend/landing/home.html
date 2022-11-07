@@ -15,22 +15,24 @@
                                 <div class="col-lg-4">
                                         <ul class="tabs">
                                           
-                                                {% for post in postlists %}
+                                                {% for post in posts %}
+                                                {% if post.category.is_parent %}
                                                 <li class="single-get-list">
-                                                        <i class="{{ post.subcategory.category.icon }}"></i>
-                                                        <span>{{ post.subcategory.category.title }} </span>
+                                                        <i class="{{ post.category.icon }}"></i>
+                                                        <span>{{ post.category.title }} </span>
                                                 </li>
+                                             {% endif %}
                                                 {% endfor %}
                                    
                                         </ul>
                                 </div>
                                 <div class="col-lg-4">
                                         <div class="tab_content">
-                                                {% for post in postlists %}
+                                                {% for post in posts %}
                                                 <div class="tabs_item">
                                                         <div class="get-quat-img">
-                                                                {% if post.subcategory.category.banner %}
-                                                                <img src="{{ post.subcategory.category.banner.url }}"
+                                                                {% if post.category.banner %}
+                                                                <img src="{{ post.category.banner.url }}"
                                                                         alt="Image">
                                                                 {% endif %}
                                                         </div>
@@ -42,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                         <div class="tab_content">
-                                                {% for post in postlists %}
+                                                {% for post in posts %}
 
                                                 <div class="tabs_item">
                                                         <div class="get-quat-content">
