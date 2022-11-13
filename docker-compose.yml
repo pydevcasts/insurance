@@ -15,7 +15,7 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=risk
+      - POSTGRES_DB=risk3
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=siyamak1981
      

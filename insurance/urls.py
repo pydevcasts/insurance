@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from dj_rest_auth.views import PasswordResetConfirmView
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
-from frontend import views
+from insurance import views
 
 
 
@@ -16,7 +16,7 @@ urlpatterns = [
     re_path(r'^i18n/', include('django.conf.urls.i18n')),
     re_path(r'^', include('accounts.urls',namespace='accounts')),
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'^blog/', include('blog.urls')),
+    re_path(r'^', include('blog.urls')),
     re_path(r'^new/', include('news.urls')),
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
@@ -30,7 +30,6 @@ urlpatterns = [
     re_path(r'^customer-feedback/', include('feedback.urls')),
     re_path(r'^user/', include('users.urls')),
     re_path(r'^frontend/', include('renewal.urls')),
-    re_path(r'^', include('frontend.urls',namespace='frontend')),
     re_path(r'^social-auth/', include('social_django.urls', namespace='social')),
     re_path(r'^', include('django.contrib.auth.urls')),
     re_path(r'^__debug__/', include('debug_toolbar.urls')),

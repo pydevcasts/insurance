@@ -1,140 +1,179 @@
 
-
-from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.db.models.query_utils import Q
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls.base import reverse_lazy
-from django.views.generic import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from blog.models import Post
-from tag.models import Tag
-from blog.forms import PostForm
-from django.utils import timezone
+from django.shortcuts import get_object_or_404, render
+from comment.forms import CommentForm
+from blog.models import Comment, Post
 from category.models import Category
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
-User = get_user_model()
+from django import template
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
+from django.urls import reverse
+from django.contrib import messages
+from news.models import New
+from newsletters.forms import NewsLettersForm
+from django.shortcuts import redirect, render
+from django.views.generic.detail import DetailView
+from newsletters.models import NewsLetter, decrypt_email
+from django.views.generic.edit import FormMixin
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
-@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
-class PostListView(LoginRequiredMixin, ListView):
+def post_category_list(request, slug=None):
+    posts = Post.objects.published().select_related('category').order_by('category_id').distinct('category')[:6]
+    news = New.objects.filter(status = 1).order_by('-published_at')
+ 
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
+        posts = posts.filter(category=category)
+        
+    if request.method == 'POST':
+            form = NewsLetter(subscriber=request.POST['subscriber'])
+            if NewsLetter.objects.filter(subscriber=form.subscriber).exists():
+                messages.error(request,"این ایمیل قبلا ثبت شده است")
+            else:
+                form.save()
+                messages.success(request,
+                                    "اشتراک شمابا موفقیت ثبت گردید !")
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+         
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'),
+                        {'form': NewsLettersForm() } 
+                    )
+            
+    return render(request, "frontend/landing/home.html", {
+                                                        "posts": posts,
+                                                        'news':news
+                                                        })
+
+def all_post_view(request):
+    title = "همه پست ها"
+    all_post = Post.objects.all().filter(status= 1).select_related('category').order_by('category_id').distinct('category')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(all_post, 15)
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, "frontend/posts/index.html", {"all_post":all_post, "title":title, 'page_obj': page_obj})
+
+
+
+class PostDetailView(FormMixin, DetailView):
+    template_name = 'frontend/landing/detail.html'
     model = Post
-    context_object_name = 'posts'
-    template_name = 'backend/blog/list.html'
-    paginate_by = 10
+    slug_field = 'slug'
+    form_class = CommentForm
+    obj = None
+    list_ip = []
 
-    # it is for pagination
-    def get_queryset(self):
-        filter_val = self.request.GET.get("filter", "")
-        order_by = self.request.GET.get("orderby", "pk")
-        if filter_val != "":
-            post = Post.objects.filter(Q(title__contains=filter_val) | Q(
-                description__contains=filter_val)).order_by(order_by)
+    def get_initial(self):
+        instance = self.get_object()
+        return {
+            'content_type':instance.get_content_type,
+            'object_id':instance.uid
+        }
+    
+
+    def get_success_url(self):
+        return reverse("frontend:detail", args=[self.published_at.year,
+                             self.published_at.month,
+                             self.published_at.day, 
+                             self.slug])
+  
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        post = get_object_or_404(Post, slug = self.kwargs['slug'])
+        comments = Comment.objects.filter_by_instance(post)
+        context['comments'] = comments
+        context['title'] = "جزییات"
+        context['form'] = self.get_form_class()
+        context['favorites'] = New.objects.most_views_by_users()[:5]
+   
+        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
         else:
-            post = Post.objects.all().order_by(order_by)
-        return post
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["filter"] = self.request.GET.get("filter", "")
-        context["orderby"] = self.request.GET.get("orderby", "pk")
-        context["all_table_fields"] = Post._meta.get_fields()
+            ip = self.request.META.get('REMOTE_ADDR')
+        self.list_ip.append(ip)
+        if ip in self.list_ip:
+            post.view = ""
+        else:
+            post.views += 1
+        post.save()
         return context
 
 
-class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, CreateView):
-    model = Post
-    form_class = PostForm
-    context_object_name = "form"
-    template_name = "backend/blog/create.html"
-    success_url = reverse_lazy('blog:list')
-    success_message = "Post Added Successfully!"
-    permission_required = "post.create_post"
-
-    def handle_no_permission(self):
-        messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
-        return redirect("dashboard:home")
-
-    def get(self, request, *args, **kwargs):
-        categories = Category.objects.filter(status = "1")
-        tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('tags')
-        users = User.objects.all()
-        categories_list = []
-        for category in categories:
-            sub_category = Category.objects.filter(category_id=category.id)
-            categories_list.append(
-                {"category": category, "sub_category": sub_category})
-        return render(request, "backend/blog/create.html", {"categories": categories_list, "tags": tags, 'users': users})
-
-
-class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
-    model = Post
-    permission_required = "post.delete_post"
-    template_name = 'backend/blog/list.html'
-    success_url = reverse_lazy('blog:list')
-    success_message = "Post Delete successfully"
-
-    def handle_no_permission(self):
-        messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
-        return redirect("dashboard:home")
-
-    def get(self, request, *args, **kwargs):
-        pk = kwargs.get("pk")
-        if pk is not None:
-            post_object = Post.objects.get_queryset().filter(pk=pk)
-            if post_object is not None:
-                post_object.delete()
-                messages.success(request, 'Your Post was updated.')
-                return redirect('blog:list')
-        return redirect('backend/blog/list.html')
-
-
-class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-
-    def handle_no_permission(self):
-        messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
-        return redirect("dashboard:home")
-
-    def get(self, request, *args, **kwargs):
-        post_id = kwargs['pk']
-        categories = Category.objects.all()
-        tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('tags')
-        posts = Post.objects.all()
-        users = User.objects.all()
-        post = Post.objects.get(pk=post_id)
-        categories_list = []
-        for category in categories:
-            sub_category = Category.objects.filter(category_id=category.id)
-            categories_list.append(
-                {"category": category, "sub_category": sub_category})
-        return render(request, "backend/blog/edit.html", {"categories": categories_list, "post": post, "tags": tags, "posts": posts, 'users': users})
-
     def post(self, request, *args, **kwargs):
-        instance = get_object_or_404(Post, pk=kwargs['pk'])
-        if request.method == 'POST':
-            form = PostForm(request.POST, request.FILES or None,
-                            instance=instance)
+        if request.method == "POST":
+            self.object = self.get_object()
+            form = self.get_form_class()
+            form = CommentForm(instance=self.obj, data=request.POST)
+
             if form.is_valid():
-                form = form.save(commit=False)
-                form.user = request.user
-                form.updated = timezone.now()
-                form.save()
-                messages.success(request,
-                                 "Post updated successfull!")
-                return redirect("blog:list")
-        else:
-            form = PostForm()
-        return render(request, 'backend/blog/edit.html',
-                      {'form': form}
-                      )
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+       
+
+    def form_valid(self, form):
+        if not self.request.user.is_authenticated:
+                messages.info(self.request,"برای ارسال پیام نیازبه ثبت نام دارید !")
+                return HttpResponseRedirect("/signup/")
+
+        user = self.request.user
+        comment_content = form.cleaned_data['content']
+        reply_id = self.request.POST.get('comment_id') #reply-section
+        comment_qs = None
+        
+        if reply_id:
+            comment_qs = Comment.objects.get(id = reply_id)
+            Comment.objects.create(
+                content_object=comment_qs,
+                content=comment_content,
+                user=user,
+            )
+    
+            messages.success(self.request, "پیامتان با موفقیت ارسال شد!")
+            return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+
+        Comment.objects.create(
+                content_object=Post.objects.get(slug=self.kwargs.get("slug")),
+                content=comment_content,
+                user=user,
+                
+            )
+        messages.success(self.request, "پیامتان با موفقیت ارسال شد!")
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+        
+
+    def form_invalid(self, form) -> HttpResponse:
+        messages.error(self.request, "پیامتان با مشکل مواجه شد!")
+        return super().form_invalid(form)
+
+
+
+
+
+def unsubscrib_redirect_view(request, token, *args, **kwargs):
+        print("token:", token)
+        email = decrypt_email(token)
+  
+        try :
+            email_obj = NewsLetter.objects.get(subscriber = email)
+            email_obj.delete()
+            messages.success(request,"شما با موفقیت اشتراک خود را حذف نمودید")
+        except NewsLetter.DoesNotExist:
+            print(
+                 "ایمیل وجود ندارد"
+            )
+            html_template = loader.get_template('dashboard/dashboard/page-403.html')
+            return HttpResponse(html_template.render({"title":" شما قبلا اشتراک خود را لغو نمودید"}, request))
+
+        return redirect("blog:post_and_category")
+
+
 

@@ -18,7 +18,7 @@ from tag.tasks import create_random_tag
 class TagListView(LoginRequiredMixin, ListView):
     model = Tag
     context_object_name = 'tags'
-    template_name = 'backend/tag/list.html'
+    template_name = 'dashboard/tag/list.html'
     paginate_by = 10
 
       # it is for pagination
@@ -44,7 +44,7 @@ class TagListView(LoginRequiredMixin, ListView):
 class CreateTagView(SuccessMessageMixin, PermissionRequiredMixin ,LoginRequiredMixin, CreateView):
     permission_required = "tag.create_tag"
     model = Tag
-    template_name = 'backend/tag/create.html'
+    template_name = 'dashboard/tag/create.html'
     form_class = TagForm
     title = 'create'
     success_url = reverse_lazy('tag:list')
@@ -57,7 +57,7 @@ class CreateTagView(SuccessMessageMixin, PermissionRequiredMixin ,LoginRequiredM
 class DeleteTagView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Tag
     permission_required = "tag.delete_tag"
-    template_name = 'backend/tag/list.html'
+    template_name = 'dashboard/tag/list.html'
     success_url = reverse_lazy('tag:list')
     success_message = "Tag Delete successfully"
 
@@ -74,13 +74,13 @@ class DeleteTagView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
                 tag_object.delete()
                 messages.success(request, 'Your profile was updated.') 
                 return redirect('tag:list')
-        return redirect('backend/tag/list.html')
+        return redirect('dashboard/tag/list.html')
        
 
 
 class TagUpdateView(SuccessMessageMixin,UpdateView):
     model = Tag
-    template_name = 'backend/tag/edit.html'
+    template_name = 'dashboard/tag/edit.html'
     fields = "__all__" 
     success_url = reverse_lazy('tag:list')
 
@@ -90,7 +90,7 @@ class TagUpdateView(SuccessMessageMixin,UpdateView):
 
 
 class GenerateRandomTagView(FormView):
-    template_name = 'backend/user/generate_random_users.html'
+    template_name = 'dashboard/user/generate_random_users.html'
     form_class = GenerateRandomTagForm
 
     def form_valid(self, form):

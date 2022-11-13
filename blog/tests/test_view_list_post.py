@@ -28,8 +28,8 @@ class DashboardPostListTest(MyAccountTestCase):
         self.assertEquals(view.func.view_class, PostListView)
     
     def test_post_page_template(self):
-        url = reverse('blog:list')
+        url = reverse('dashboard:list')
         self.response = self.client.get(url)
-        self.assertTemplateUsed(self.response, 'backend/blog/list.html')
+        self.assertTemplateUsed(self.response, 'dashboard/blog/list.html')
     
 

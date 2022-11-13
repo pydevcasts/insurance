@@ -1,24 +1,25 @@
 from .import views
-from django.urls import re_path
+from django.urls import re_path, path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.sitemaps.views import sitemap 
-from blog.sitemaps import StaticViewSitemap,PostSitemap
-sitemaps = {
-    'static': StaticViewSitemap,
-    'post':PostSitemap
-}
+
 
 app_name = 'blog'
 
 urlpatterns = [
-    re_path(r'^list/$', views.PostListView.as_view(), name = 'list'), 
-    re_path(r'^create/$', views.PostCreateView.as_view(), name = 'create'), 
-    re_path(r'^(?P<pk>[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12})/delete/$', views.PostDeleteView.as_view(), name = 'delete'),
-    re_path(r'^(?P<pk>[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12})/edit/$', views.PostUpdateView.as_view(), name='update'),
-    re_path(r'^sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+   
+    path('', views.post_category_list, name="post_and_category"),
+    re_path(r'^insurance/(?P<slug>[-\w]+)/$', views.post_category_list, name='detail_by_category_slug'),
+    re_path(r'^all_post/', views.all_post_view, name = "all_post"),
+    re_path(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]+)/(?P<day>[0-9]+)/(?P<slug>[\w-]+)/$', views.PostDetailView.as_view(), name = 'detail'),
+    path('mail/newsletter/unsubscribe/<str:token>', views.unsubscrib_redirect_view, name = "unsubscribe_redirect"),
+   
+    # re_path(r'^mail/newsletter/unsubscribe/(?P<token>[0-9A-Za-z].[0-9A-Za-z].[0-9A-Za-z])', views.unsubscrib_redirect_view, name = "unsubscribe_redirect"),
+    # [A-Za-z0-9.-]
 
 ]
+
+
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
    

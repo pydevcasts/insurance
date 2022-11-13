@@ -36,13 +36,13 @@ class DashboardPostCreateTest(MyAccountTestCase):
 
 
     def test_create_view_contains_link_to_post_list_page(self):
-        url = reverse('blog:create')
-        x = reverse('blog:list')
+        url = reverse('dashboard:create')
+        x = reverse('dashboard:list')
         response = self.client.get(url)
         self.assertContains(response, 'href="{}"'.format(x))
 
     def test_csrf(self):
-        url = reverse('blog:create')
+        url = reverse('dashboard:create')
         response = self.client.get(url)
         self.assertContains(response, 'csrfmiddlewaretoken')
 
@@ -57,7 +57,7 @@ class DashboardPostCreateTest(MyAccountTestCase):
         Invalid post data should not redirect
         The expected behavior is to show the form again with validation errors
         '''
-        url = reverse('blog:create')
+        url = reverse('dashboard:create')
         response = self.client.post(url, {})
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)

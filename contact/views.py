@@ -16,7 +16,7 @@ from contact.tasks import my_first_task
 class ListContactView(LoginRequiredMixin, ListView):
     model = Contact
     context_object_name = 'contacts'
-    template_name = 'backend/contact/list.html'
+    template_name = 'dashboard/contact/list.html'
     paginate_by = 10
 
     # it is for pagination
@@ -81,7 +81,7 @@ class CreateContactView(SuccessMessageMixin , CreateView):
 class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Contact
     permission_required = "contact.delete_contact"
-    template_name = 'backend/contact/list.html'
+    template_name = 'dashboard/contact/list.html'
     success_url = reverse_lazy('contact:list')
     success_message = "Contact Delete successfully"
 
@@ -98,14 +98,14 @@ class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView
                 Contact_object.delete()
                 messages.success(request, 'Contact was deleted.') 
                 return redirect('contact:list')
-        return redirect('backend/Contact/list.html')
+        return redirect('dashboard/Contact/list.html')
        
 
 
 class ContactShowView(SuccessMessageMixin,PermissionRequiredMixin, UpdateView):
     permission_required = "contact.update_contact"
     model = Contact
-    template_name = 'backend/contact/show.html'
+    template_name = 'dashboard/contact/show.html'
     fields = "__all__" 
     success_url = reverse_lazy('contact:list')
     

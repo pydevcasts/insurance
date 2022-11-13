@@ -20,8 +20,8 @@ class BlogPostTests(TestCase):
 
 
     def test_redirection_post_list_view(self):
-        response = self.client.get(reverse('blog:list'), follow=True)
-        expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('blog:list'), "")
+        response = self.client.get(reverse('dashboard:list'), follow=True)
+        expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('dashboard:list'), "")
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from .querysets import NewQuerySet, PostStatusQuerySet
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -23,3 +24,11 @@ class NewManager(models.Manager):
         return self.get_queryset().total_view()
     
     
+
+
+class CommentManager(models.Manager):
+    def filter_by_instance(self, instance):
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        object_id = instance.uid
+        qs = super().filter(content_type=content_type, object_id=object_id)
+        return qs

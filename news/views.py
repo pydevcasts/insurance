@@ -2,13 +2,19 @@
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
+from blog.models import Comment
 from news.models import New
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from comment.forms import CommentForm
+
+
 
 
 class NewListView(ListView):
 
     def get(self, request, *args, **kwargs):
-        news = New.objects.filter(status= 1).select_related('categories').order_by('-published_at')
+        news = New.objects.filter(status= 1).select_related('category').order_by('-published_at')
         page = request.GET.get('page', 1)
         paginator = Paginator(news, 15)
         try:
@@ -35,7 +41,6 @@ def new_detail(request, year, month, day, slug):
                                 published_at__year=year,
                                 published_at__month=month,
                                 published_at__day=day,slug=slug)
-
     list_ip.append(ip)
     if ip in list_ip:
         new.views += 0
@@ -43,9 +48,42 @@ def new_detail(request, year, month, day, slug):
         new.views += 1
     new.save()
     favorites = New.objects.most_views_by_users().exclude(slug = new.slug)[:5]
+    comments = Comment.objects.filter_by_instance(new)
+ 
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            comment_content = form.cleaned_data['content']
+            reply_id = request.POST.get('comment_id') #reply-section
+            comment_qs = None
+            
+            if reply_id:
+                comment_qs = Comment.objects.get(id = reply_id)
+                Comment.objects.create(
+                    content_object=comment_qs,
+                    content=comment_content,
+                    user=user,
+                )
+        
+                messages.success(request, "پیامتان با موفقیت ارسال شد!")
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+            Comment.objects.create(
+                    content_object=New.objects.get(slug=slug),
+                    content=comment_content,
+                    user=user,
+                    
+                )
+            messages.success(request, "پیامتان با موفقیت ارسال شد!")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+       
+    
+    else:
+        form = CommentForm()
     return render(request,
                 'frontend/news/detail.html',
-                {'new': new, 'title':'جزییات خبر' , 'favorites':favorites})
+                {'new': new, 'title':'جزییات خبر' , 'favorites':favorites, 'form':form ,'comments':comments})
 
 
-        
+

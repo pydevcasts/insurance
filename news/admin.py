@@ -8,10 +8,10 @@ from khayyam import JalaliDate as jd
 
 @admin.register(models.New)
 class NewAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['title', 'slug', 'is_published', 'published','views', 'categories', 'get_tags']
+    list_display = ['title', 'slug', 'is_published', 'published','views', 'category', 'get_tags']
     filter_horizontal = ['tags',]
-    list_editable = ['categories',]
-    list_filter = ['status', 'published_at', 'categories__title']
+    list_editable = ['category',]
+    list_filter = ['status', 'published_at', 'category__title']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   
     fieldsets = [
@@ -19,7 +19,7 @@ class NewAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
             'fields': ( 
                     ('title',), 
                     ('author', 'status', ),
-                    ('categories','views')
+                    ('category','views')
                 ),
             }
         ),

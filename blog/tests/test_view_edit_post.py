@@ -20,7 +20,7 @@ class PostUpdateViewTestCase(TestCase):
         self.post = Post.objects.create(title='Django Edit', summary = "Django summary test blog post is Editedt Test", author = author, banner="https://static.vecteezy.com/system/resources/previews/002/375/042/non_2x/abstract-background-wave-radial-ellipse-free-vector.jpg",subcategory = subcategory, content='edited message', published_at = published_at)
         self.post.tag.create(title = "test tag", status = 1)
         self.client.login(email='admin@gmail.com', password="admin")
-        self.url = reverse('blog:update', kwargs={
+        self.url = reverse('dashboard:update', kwargs={
             'pk': self.post.pk,
         })
         self.response = self.client.get(self.url)
@@ -49,8 +49,8 @@ class PostUpdateViewTestCase(TestCase):
 
 
     def test_update_view_contains_link_to_post_list_page(self):
-        url = reverse('blog:update', kwargs={'pk':self.post.pk})
-        x = reverse('blog:list')
+        url = reverse('dashboard:update', kwargs={'pk':self.post.pk})
+        x = reverse('dashboard:list')
         response = self.client.get(url)
         self.assertContains(response, 'href="{}"'.format(x))
 

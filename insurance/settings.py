@@ -58,9 +58,8 @@ INSTALLED_APPS = [
     'renewal',
     'news',
     'feedback',
+    'comment'
 
-    
-    # 'django_celery_beat'
     ]
 
 
@@ -133,11 +132,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 DATABASES = {
 
-
-    #   'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('DB_NAME'),
@@ -198,11 +192,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'siyamak1981@gmail.com'
-# EMAIL_HOST_PASSWORD = "hkgttjourdfnhwcm"
+
 
 #Django’s Debug Toolbar Showing Inside Docker
 INTERNAL_IPS = [

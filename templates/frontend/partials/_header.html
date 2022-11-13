@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
               <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                  <a href="{% url 'frontend:post_and_category' %}"
+                  <a href="{% url 'blog:post_and_category' %}"
                     class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'post_and_subcategory' %}active{%endif%}">
                     خانه
                   </a>
@@ -151,7 +151,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li class="nav-item">
-                      <a href="{% url 'frontend:all_post' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'all_post' %}active{%endif%}">پست ها</a>
+                      <a href="{% url 'blog:all_post' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'all_post' %}active{%endif%}">پست ها</a>
                     </li>
                     <li class="nav-item">
                       <a href="{% url 'new:list_news' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'list_news' %}active{%endif%}">خبر ها</a>

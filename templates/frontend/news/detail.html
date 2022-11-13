@@ -58,8 +58,153 @@
                                                         </ul>
                                                 </div>
                                         </div>
+
+                                        <div class="comments-area">
+                                                <h3 class="comments-title">{{ new.comments.count }} نظر:</h3>
+                                                {% for comment in new.comments.all %}
+                                                <ol class="comment-list">
+                                                        <li class="comment">
+                                                                <div class="comment-body">
+                                                                        <footer class="comment-meta">
+                                                                                <div class="comment-author vcard">
+                                                                                        {% if comment.user.profile.avatar %}
+                                                                                       
+                                                                                        <img src="{{ comment.user.profile.get_avatar }}"
+                                                                                                class="rounded-circle"
+                                                                                                width=50
+                                                                                                alt="insurance">{% else %}
+                                                                                        
+                                                                                        <img src="{% static 'assets/frontend/img/blog-details/comment-img-1.jpg'%}"
+                                                                                                class="avatar"
+                                                                                                alt="image">
+                                                                                        {% endif %}
+
+                                                                                        <b class="fn">{{ comment.user.first_name }}-{{ comment.user.last_name }}
+                                                                                        </b>
+                                                                                        <span class="says">می
+                                                                                                گوید:</span>
+                                                                                </div>
+                                                                                <div class="comment-metadata">
+                                                                                        <a href="#">
+                                                                                                <span>
+                                                                                                        {{ comment.published_at|jalali_date }}
+                                                                                                </span>
+                                                                                        </a>
+                                                                                </div>
+                                                                        </footer>
+                                                                        <div class="comment-content">
+                                                                                <p>{{ comment.content }}
+                                                                                </p>
+                                                                        </div>
+                                                                        <div class="reply">
+                                                                                <a href="#"
+                                                                                        class="comment-reply-link"
+                                                                                        data-toggle="collapse"
+                                                                                        data-target="#replyBox{{comment.id}}"
+                                                                                        aria-expanded="false"
+                                                                                        aria-controls="replyBox{{comment.id}}">پاسخ
+                                                                                        
+                                                                                </a>
+                                                                        </div>
+
+                                                                        <div class="collapse"
+                                                                                id="replyBox{{comment.id}}">
+                                                                                <div
+                                                                                        class="card card-body my-2">
+                                                                                        <form class="comment-reply" action="#"
+                                                                                                method="post">
+                                                                                                {% csrf_token %}
+                                                                                                <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                                for="comment">پاسخ
+                                                                                                                به
+                                                                                                                کامنت
+                                                                                                        </label>
+                                                                                                        <input type="hidden"
+                                                                                                                name="comment_id"
+                                                                                                                value="{{comment.id}}">
+                                                                                                        <input type="text"
+                                                                                                                class="form-control"
+                                                                                                                name="content"
+                                                                                                                placeholder="بنویسید متن تان...">
+                                                                                                </div>
+                                                                                                <button type="submit"
+                                                                                                class="default-btn btn-block page-btn">
+                                                                                                ارسال 
+                                                                                                </button>
+                        
+                                                                                        </form>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <ol class="children">
+                                                                        {% for reply in comment.comments.all %}
+                                                                        <li class="comment">
+                                                                                <div class="comment-body">
+                                                                                        <footer class="comment-meta">
+                                                                                                <div
+                                                                                                        class="comment-author vcard">
+                                                                                                        {% if reply.user.profile.avatar %} 
+                                                                                                       
+                                                                                                       <img src="{{ reply.user.profile.get_avatar }}"
+                                                                                                                class="rounded-circle"
+                                                                                                                width=50
+                                                                                                                alt="insurance">{% else %}
+                                                                                                       
+                                                                                                        <img src="{% static 'assets/frontend/img/blog-details/comment-img-1.jpg'%}"
+                                                                                                                class="avatar"
+                                                                                                                alt="image">
+                                                                                                        {% endif %}
+                                                                                                        <b class="fn">{{ reply.count }}
+                                                                                                        </b>
+                                                                                                        <span
+                                                                                                                class="says">می
+                                                                                                                گوید:</span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                        class="comment-metadata">
+                                                                                                        <a href="#">
+                                                                                                                <span> {{ reply.published_at|jalali_date }}
+                                                                                                                </span>
+                                                                                                        </a>
+                                                                                                </div>
+                                                                                        </footer>
+                                                                                        <div class="comment-content">
+                                                                                                <p>{{ reply.content }}
+                                                                                                </p>
+                                                                                        </div>
+                                                                                     
+                                                                                </div>
+                                                                        </li>
+                                                                        {% endfor %}
+                                                                </ol>
+                                                        </li>
+                                                </ol>
+                                                {% endfor %}
+                                                <div class="comment-respond">
+                                                        <h3 class="comment-reply-title">نظر بدهید</h3>
+                                                        <form class="comment-form" method="post" novalidate>
+                                                                <p class="comment-notes">
+                                                                        <span id="email-notes">آدرس ایمیل شما
+                                                                                منتشر نخواهد شد.</span>
+                                                                        قسمتهای مورد نیاز علامت گذاری شده اند
+                                                                        <span class="required">*</span>
+                                                                </p>
+                                                                {% csrf_token %}
+                                                                {% include 'dashboard/includes/form.html' %}
+                                                                <button type="submit"
+                                                                        class="default-btn btn-block page-btn">
+                                                                        ارسال پیام
+                                                                </button>
+
+                                                        </form>
+                                                </div>
+                                        </div>
+
                                 </div>
                         </div>
+                        
                         <div class="col-lg-4 col-md-12">
                                 <aside class="widget-area" id="secondary">
                                         <div class="widget widget_search">

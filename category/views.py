@@ -20,7 +20,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     context_object_name = 'categories'
-    template_name = 'backend/category/list.html'
+    template_name = 'dashboard/category/list.html'
     paginate_by=10
     
     # it is for pagination
@@ -46,7 +46,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
 class CreateCategoryView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, CreateView):
     model = Category
     permission_required = "category.create_category"
-    template_name = 'backend/category/create.html'
+    template_name = 'dashboard/category/create.html'
     form_class = CategoryForm
     success_url = reverse_lazy('category:list')
     success_message = "Category Create successfully"
@@ -59,7 +59,7 @@ class CreateCategoryView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequi
 class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
     model = Category
     permission_required = "category.delete_category"
-    template_name = 'backend/category/list.html'
+    template_name = 'dashboard/category/list.html'
     pk_url_kwarg = 'slug'
     success_url = reverse_lazy('category:list')
     success_message = "Category Delete successfully"
@@ -76,12 +76,12 @@ class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, DeleteVie
                 category_object.delete()
                 messages.success(request, 'Category is deleted successfully.') 
                 return redirect('category:list')
-        return redirect('backend/category/list.html')
+        return redirect('dashboard/category/list.html')
        
 
 class CategoryUpdateView(SuccessMessageMixin, UpdateView):
     model = Category
-    template_name = 'backend/category/edit.html'
+    template_name = 'dashboard/category/edit.html'
     pk_url_kwarg = 'pk'
     fields = "__all__" 
     success_message="Category Updated!"

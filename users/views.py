@@ -26,7 +26,7 @@ User = get_user_model()
 class UserListView(ListView):
 
     model = get_user_model()
-    template_name="backend/user/list.html"
+    template_name="dashboard/user/list.html"
     context_object_name = 'users'
     paginate_by = 10
 
@@ -35,7 +35,7 @@ class UserListView(ListView):
 class DeleteUserView(SuccessMessageMixin,PermissionRequiredMixin, DeleteView):
     permission_required = "user.delete_user"
     model = User
-    template_name = 'backend/user/list.html'
+    template_name = 'dashboard/user/list.html'
     success_url = reverse_lazy('user:list')
     success_message = "user Delete successfully"
 
@@ -51,7 +51,7 @@ class DeleteUserView(SuccessMessageMixin,PermissionRequiredMixin, DeleteView):
                 post_object.delete()
                 messages.success(request, 'User was deleted successfully.') 
                 return redirect('user:list')
-        return redirect('backend/user/list.html')
+        return redirect('dashboard/user/list.html')
     
 
 
@@ -66,7 +66,7 @@ class ProfileView(View, PermissionRequiredMixin):
 
     def get(self, request):
         context = {'profile': self.profile, 'segment': 'profile'}
-        return render(request, 'backend/user/create.html', context)
+        return render(request, 'dashboard/user/create.html', context)
 
     def post(self, request):
         if request.method == 'POST':
@@ -81,7 +81,7 @@ class ProfileView(View, PermissionRequiredMixin):
                 messages.success(request, 'Profile saved successfully')
                 return redirect('user:list')
             else:
-                return render(request,'backend/user/create.html', {"form":form, })
+                return render(request,'dashboard/user/create.html', {"form":form, })
             
         else:
             form = ProfileForm(request.FILES,)
@@ -124,7 +124,7 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
 
 
 class GenerateRandomUserView(FormView):
-    template_name = 'backend/user/generate_random_users.html'
+    template_name = 'dashboard/user/generate_random_users.html'
     form_class = GenerateRandomUserForm
 
     def form_valid(self, form):

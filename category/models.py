@@ -34,7 +34,7 @@ class Category(OrganizedMixin):
         return True
 
     def get_absolute_url(self):
-        return reverse('frontend:detail_by_category_slug', kwargs={"slug": self.slug})
+        return reverse('blog:detail_by_category_slug', kwargs={"slug": self.slug})
 
 
     def posts_base_on_category(self):
