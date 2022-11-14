@@ -1,3 +1,36 @@
+body {
+  direction: rtl;
+}
+#sidebarMenu{
+  right:0;
+}
+
+@media (min-width: 992px){
+  .content {
+     
+      margin-right: 260px;
+  }
+
+}
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.sidebar .nav {
+  white-space: nowrap;
+  padding-right: 20px;
+}
+.align-items-center {
+  padding-left: 70px;
+  align-items: center !important;
+}
+.sidebar .nav-link .link-arrow {
+  font-size: 0.875rem;
+  margin-left: 10px;
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 .datepicker {
@@ -14872,7 +14905,7 @@ textarea.form-control-lg {
       transition: none; } }
   @media (min-width: 992px) {
     .content {
-      margin-left: 260px; } }
+      margin-right: 260px; } }
 
 .sidebar-toggle {
   font-size: 1.3rem; }
