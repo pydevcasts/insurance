@@ -97,7 +97,7 @@
                         </li>
                        {% endif %}
                         <li class="nav-item">
-                          <a href="{% url 'user:update_profile' user.pk %}" class="nav-link">پروفایل</a>
+                          <a href="{% url 'user:user-update' user.pk %}" class="nav-link">پروفایل</a>
                         </li>
                         <li class="nav-item">
                           <a href="{% url 'user:password_change' %}" class="nav-link">تغییر گذر واژه</a>
@@ -161,7 +161,7 @@
               
                 <li class="nav-item ">
                   <a class="nav-link {% if request.resolver_match.url_name == 'create' %}active{% endif %}"
-                    href="{% url 'contact:create' %}">تماس با ما</a>
+                    href="{% url 'contact:contact-create' %}">تماس با ما</a>
                 </li>
               </ul>
               <div class="others-option">

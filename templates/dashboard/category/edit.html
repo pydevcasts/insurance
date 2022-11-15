@@ -39,11 +39,17 @@
             {% include 'dashboard/includes/form.html' %}
         
             <div class="d-grid mt-4">
-                <button type="submit" name="login" class="btn btn-gray-800">Submit</button>
+                <button type="submit" name="login" class="btn btn-gray-800">ارسال</button>
             </div>
         </form>
     </div>
   </div>
 </div>
 
-{% endblock content %} {% block javascripts %}{% endblock javascripts %}
+{% endblock content %} {% block javascripts %}
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('content');
+</script>
+
+{% endblock javascripts %}

@@ -20,7 +20,7 @@ class ProfileInline(admin.StackedInline):
             'classes': ['collapse']
         }),
         ('II. کد ملی-تاریخ تولد-درباره', {
-            'fields':[ 'code', 'birthday', 'about'],
+            'fields':[ 'code', 'birthday'],
             'classes': ['collapse']
         }),
         ('III. عکس -کد پستی', {
@@ -29,6 +29,10 @@ class ProfileInline(admin.StackedInline):
         }),
         ('IV. شبکه اجتماعی', {
             'fields': ['linkedin', 'instagram', 'whatsapp'],
+            'classes': ['collapse']
+        }),
+         ('V. درباره خودتان ', {
+            'fields': ['about'],
             'classes': ['collapse']
         })
     ]   
@@ -41,7 +45,7 @@ class ProfileInline(admin.StackedInline):
 class UserAdmin(DjangoUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'mobile')}),
+        (_('Personal info'), {'fields': ('mobile', 'first_name', 'last_name', )}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),

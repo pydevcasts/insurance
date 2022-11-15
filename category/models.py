@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from painless.models.mixins import OrganizedMixin
 from django.urls import reverse
@@ -9,7 +10,7 @@ from ckeditor.fields import RichTextField
 class Category(OrganizedMixin):
     icon = models.CharField(_("ایکن"), max_length=128, blank = True, null = True)
     parent = models.ForeignKey('self', default=None, null=True, blank=True, on_delete=models.SET_NULL,
-                               related_name='subcategory')
+                               related_name='subcategory', verbose_name="زیر مجموعه")
     banner=models.ImageField(_('تصویر'),
         upload_to='category/%Y/%m/%d', blank=True)
     content = RichTextField(_('پیام'),blank=True,null=True)

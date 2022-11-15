@@ -27,7 +27,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
-        fields = ['url', 'pk', 'user', 'avatar', 'birthday', 'gender', 'phone', 'number', 'city', 'zip']
+        fields = ['url', 'pk', 'user', 'avatar', 'birthday', 'phone', 'number', 'zip']
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):

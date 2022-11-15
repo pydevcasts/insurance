@@ -8,15 +8,11 @@ from painless.models.managers import NewManager
 from painless.models.mixins import OrganizedMixin
 from tag.models import Tag
 from category.models import Category
-from painless.models.choices import PostStatus
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
-
-
-status = PostStatus(is_charfield = False)
 
 
 class New(OrganizedMixin):

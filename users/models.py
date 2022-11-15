@@ -17,7 +17,6 @@ class Profile(TimeStampedMixin):
     code = models.CharField(_('کد ملی'),validators=[validate_national_code], blank=True, null = True, max_length= 20)
     phone = models.CharField(_(' تلفن ثابت'),max_length=12, null=True, blank=True)
     address = models.CharField(_(' آدرس'),max_length=255, null=True, blank=True)
-    city = models.CharField(_('شهر'),max_length=50, null=True, blank=True)
     zip = models.CharField(_('کد پستی'),max_length=30, null=True, blank=True,validators=[validate_postal_code])
     instagram = models.URLField(_("اینستاگرام"), blank = True, null = True)
     whatsapp = models.URLField(_("واتس آپ"), blank = True, null = True)
@@ -34,5 +33,5 @@ class Profile(TimeStampedMixin):
         return self.avatar.url if self.avatar else static('../static/assets/backend/img/team/profile-picture-1.jpg')
 
     def __str__(self):
-        return f'({self.city})'
+        return f'({self.code})'
 

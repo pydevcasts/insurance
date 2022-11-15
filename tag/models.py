@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 class Tag(OrganizedMixin):
     class Meta:
-        ordering = [ '-created' ]
+        ordering = [ '-title' ]
         verbose_name = _('برچسب')
         verbose_name_plural = _('برچسبها')
      

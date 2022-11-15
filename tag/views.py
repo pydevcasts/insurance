@@ -5,21 +5,23 @@ from django.urls.base import  reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView, DeleteView, FormView,UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from tag.models import Tag
-from tag.forms import GenerateRandomTagForm, TagForm
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
-
-from tag.tasks import create_random_tag
+from tag.forms import TagForm
+from django.db.models import Q
 
 
-@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
-class TagListView(LoginRequiredMixin, ListView):
+
+class TagListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Tag
     context_object_name = 'tags'
     template_name = 'dashboard/tag/list.html'
-    paginate_by = 10
+    paginate_by = 20
+    permission_required = "tag.view_tag"
+
+    def handle_no_permission(self):
+        messages.warning(self.request, "شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
 
       # it is for pagination
     def get_queryset(self):
@@ -37,6 +39,7 @@ class TagListView(LoginRequiredMixin, ListView):
         context = super(TagListView, self).get_context_data(**kwargs)
         context["filter"] = self.request.GET.get("filter", "")
         context["orderby"] = self.request.GET.get("orderby", "pk")
+        context["segment"] = "تگها"
         context["all_table_fields"] = Tag._meta.get_fields()
         return context
 
@@ -47,23 +50,24 @@ class CreateTagView(SuccessMessageMixin, PermissionRequiredMixin ,LoginRequiredM
     template_name = 'dashboard/tag/create.html'
     form_class = TagForm
     title = 'create'
-    success_url = reverse_lazy('tag:list')
-    success_message = "Tag Create successfully"
+    success_url = reverse_lazy('tag:tag-list')
+    success_message = "پست شما با موفقیت ایجاد شد"
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, "شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
-class DeleteTagView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
+
+class DeleteTagView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Tag
     permission_required = "tag.delete_tag"
     template_name = 'dashboard/tag/list.html'
-    success_url = reverse_lazy('tag:list')
-    success_message = "Tag Delete successfully"
+    success_url = reverse_lazy('tag:tag-list')
+    success_message = "پست با موفقیت حذف گردید"
 
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, "شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
     def get(self, request, *args, **kwargs):
@@ -72,29 +76,20 @@ class DeleteTagView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
             tag_object = Tag.objects.get_queryset().filter(slug= slug)
             if tag_object is not None:
                 tag_object.delete()
-                messages.success(request, 'Your profile was updated.') 
-                return redirect('tag:list')
+                messages.success(request, 'پروفایل شما اپدیت شد') 
+                return redirect('tag:tag-list')
         return redirect('dashboard/tag/list.html')
        
 
 
-class TagUpdateView(SuccessMessageMixin,UpdateView):
+class TagUpdateView(SuccessMessageMixin,PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Tag
+    permission_required = "tag.update_tag"
     template_name = 'dashboard/tag/edit.html'
     fields = "__all__" 
-    success_url = reverse_lazy('tag:list')
+    success_url = reverse_lazy('tag:tag-list')
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, "شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
-
-class GenerateRandomTagView(FormView):
-    template_name = 'dashboard/user/generate_random_users.html'
-    form_class = GenerateRandomTagForm
-
-    def form_valid(self, form):
-        total = form.cleaned_data.get('total')
-        create_random_tag.delay(total)
-        messages.success(self.request, 'We are generating your random tags! Wait a moment and refresh this page.')
-        return redirect('tag:list')

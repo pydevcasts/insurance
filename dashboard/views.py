@@ -2,19 +2,14 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models.query_utils import Q
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from blog.models import Post
-from tag.models import Tag
 from blog.forms import PostForm
-from django.utils import timezone
-from category.models import Category
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
 User = get_user_model()
 
 
@@ -30,7 +25,7 @@ class ResetPasswordView(TemplateView):
 
 
 
-@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     context_object_name = 'posts'
@@ -54,46 +49,42 @@ class PostListView(LoginRequiredMixin, ListView):
         context["filter"] = self.request.GET.get("filter", "")
         context["orderby"] = self.request.GET.get("orderby", "pk")
         context["all_table_fields"] = Post._meta.get_fields()
+        context['segment'] = "لیست پست"
         return context
 
 
-class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, CreateView):
+class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     context_object_name = "form"
     template_name = "dashboard/blog/create.html"
-    success_url = reverse_lazy('dashboard:list')
-    success_message = "Post Added Successfully!"
+    success_url = reverse_lazy('dashboard:post-list')
+    success_message = "پست با موفقیت ایجاد شد !"
     permission_required = "post.create_post"
 
     def handle_no_permission(self):
         messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
-    def get(self, request, *args, **kwargs):
-        categories = Category.objects.filter(status = "1")
-        tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('tags')
-        users = User.objects.all()
-        categories_list = []
-        for category in categories:
-            sub_category = Category.objects.filter(category_id=category.id)
-            categories_list.append(
-                {"category": category, "sub_category": sub_category})
-        return render(request, "dashboard/blog/create.html", {"categories": categories_list, "tags": tags, 'users': users})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "ایجاد پست"
+        return context
+    
+  
 
 
-class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
+class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Post
     permission_required = "post.delete_post"
     template_name = 'dashboard/blog/list.html'
-    success_url = reverse_lazy('dashboard:list')
-    success_message = "Post Delete successfully"
+    success_url = reverse_lazy('dashboard:post-list')
+
 
     def handle_no_permission(self):
         messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
     def get(self, request, *args, **kwargs):
@@ -102,51 +93,31 @@ class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
             post_object = Post.objects.get_queryset().filter(pk=pk)
             if post_object is not None:
                 post_object.delete()
-                messages.success(request, 'Your Post was updated.')
-                return redirect('dashboard:list')
+                messages.success(request, "پست با موفقیت حذف گردید!")
+                return redirect('dashboard:post-list')
         return redirect('dashboard/blog/list.html')
 
 
-class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class PostUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
 
+    form_class = PostForm
+    model = Post
+    permission_required = "post.update_post"
+    pk_url_kwarg = 'pk'
+    template_name = 'dashboard/blog/edit.html'
+    success_url = reverse_lazy('dashboard:post-list')
+    success_message = "پست با موفقیت ویرایش گردید!"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "ویرایش پست"
+        return context
+    
     def handle_no_permission(self):
         messages.warning(
-            self.request, "You dont have permission to this page please signin with superuser!")
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
-    def get(self, request, *args, **kwargs):
-        post_id = kwargs['pk']
-        categories = Category.objects.all()
-        tags = Tag.objects.filter(status="1").order_by(
-            "-created").prefetch_related('tags')
-        posts = Post.objects.all()
-        users = User.objects.all()
-        post = Post.objects.get(pk=post_id)
-        categories_list = []
-        for category in categories:
-            sub_category = Category.objects.filter(category_id=category.id)
-            categories_list.append(
-                {"category": category, "sub_category": sub_category})
-        return render(request, "dashboard/blog/edit.html", {"categories": categories_list, "post": post, "tags": tags, "posts": posts, 'users': users})
-
-    def post(self, request, *args, **kwargs):
-        instance = get_object_or_404(Post, pk=kwargs['pk'])
-        if request.method == 'POST':
-            form = PostForm(request.POST, request.FILES or None,
-                            instance=instance)
-            if form.is_valid():
-                form = form.save(commit=False)
-                form.user = request.user
-                form.updated = timezone.now()
-                form.save()
-                messages.success(request,
-                                 "Post updated successfull!")
-                return redirect("dashboard:list")
-        else:
-            form = PostForm()
-        return render(request, 'dashboard/blog/edit.html',
-                      {'form': form}
-                      )
 
 
 

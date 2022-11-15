@@ -10,13 +10,11 @@ from blog.models import Post
 from category.models import Category
 from category.forms import CategoryForm
 from django.db.models import Q
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, render,redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     context_object_name = 'categories'
@@ -39,6 +37,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
         context["filter"]=self.request.GET.get("filter","")
         context["orderby"]=self.request.GET.get("orderby","id")
         context["all_table_fields"]=Category._meta.get_fields()
+        context['segment'] = "لیست دسته بندی"
         return context
 
 
@@ -48,24 +47,28 @@ class CreateCategoryView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequi
     permission_required = "category.create_category"
     template_name = 'dashboard/category/create.html'
     form_class = CategoryForm
-    success_url = reverse_lazy('category:list')
-    success_message = "Category Create successfully"
+    success_url = reverse_lazy('category:cat-list')
+    success_message = "دسته بندی با موفقیت ایجاد گردید!"
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['segment'] = "ایجاد دسته بندی"
+        return context
 
-class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
+
+class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin,DeleteView):
     model = Category
     permission_required = "category.delete_category"
     template_name = 'dashboard/category/list.html'
-    pk_url_kwarg = 'slug'
-    success_url = reverse_lazy('category:list')
-    success_message = "Category Delete successfully"
+    success_url = reverse_lazy('category:cat-list')
+   
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
     
     def get(self, request, *args, **kwargs):
@@ -74,21 +77,23 @@ class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, DeleteVie
             category_object = Category.objects.get_queryset().get(pk= pk)
             if category_object is not None:
                 category_object.delete()
-                messages.success(request, 'Category is deleted successfully.') 
-                return redirect('category:list')
+                messages.success(request, "دسته بندی شما با موفقیت حذف گردید!")
+                return redirect('category:cat-list')
         return redirect('dashboard/category/list.html')
        
 
-class CategoryUpdateView(SuccessMessageMixin, UpdateView):
+class CategoryUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     model = Category
     template_name = 'dashboard/category/edit.html'
+    form_class = CategoryForm
     pk_url_kwarg = 'pk'
-    fields = "__all__" 
-    success_message="Category Updated!"
-    success_url = reverse_lazy('category:list')
+    success_message="کتگوری با موفقیت ویرایش شد!"
+    success_url = reverse_lazy('category:cat-list')
+    permission_required = "category.update_category"
+
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
 
@@ -111,6 +116,6 @@ def posts_list_by_category(request, slug=None):
             page_obj = paginator.page(paginator.num_pages)
     return render(request,
                   'frontend/posts/list_category.html',
-                  {'page_obj':page_obj, 'title':'دسته بندی ها'})
+                  {'page_obj':page_obj, 'segment':'دسته بندی ها'})
 
 

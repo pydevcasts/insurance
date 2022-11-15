@@ -10,6 +10,7 @@ import string
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(label="نام", max_length=16)
     last_name = forms.CharField(label="نام خانوادگی", max_length=255)
+    mobile = forms.CharField(label="تلفن همراه", max_length=255)
     email = forms.EmailField(label="ایمیل")
 
     class Meta:
@@ -69,12 +70,3 @@ def form_validation_error(form):
 
 
 
-
-class GenerateRandomUserForm(forms.Form):
-    total = forms.IntegerField(
-        validators=[
-            MinValueValidator(20),
-            MaxValueValidator(500)
-        ]
-    )
-    

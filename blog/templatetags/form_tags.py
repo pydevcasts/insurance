@@ -1,16 +1,7 @@
 from django import template
 import datetime, time
-
-from django import template
 import khayyam
 register = template.Library()
-
-
-
-
-@register.filter
-def field_type(bound_field):
-    return bound_field.field.widget.__class__.__name__
 
 
 
@@ -23,6 +14,13 @@ def input_class(bound_field):
         elif field_type(bound_field) != 'PasswordInput':
             css_class = 'is-valid'
     return 'form-control {}'.format(css_class)
+
+
+
+@register.filter
+def field_type(bound_field):
+    return bound_field.field.widget.__class__.__name__
+
 
 
 

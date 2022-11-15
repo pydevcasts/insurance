@@ -13,7 +13,7 @@
   <link rel="shortcut icon" href="images/favicon.ico" />
   <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
     rel="stylesheet" />
-  <title>{% block title %}{% endblock title %}</title>
+  <title>{% block title %}{{ segment }}{% endblock title %}</title>
 
   {% include 'frontend/partials/_style.html' %}
   {% include "frontend/partials/_header.html" %}
@@ -38,8 +38,7 @@
       var i = "uB2zs9", a = window, d = document; function g() { var g = d.createElement("script"), s = "https://www.goftino.com/widget/" + i, l = localStorage.getItem("goftino_" + i); g.async = !0, g.src = l ? s + "?o=" + l : s; d.getElementsByTagName("head")[0].appendChild(g); } "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load", g, !1);
     }();
   </script>
-  <!-- https://www.goftino.com/app/profile -->
-  <!---end GOFTINO code--->
+
   {% endblock %}
 </body>
 

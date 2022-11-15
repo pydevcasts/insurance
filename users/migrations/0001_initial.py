@@ -28,7 +28,6 @@ class Migration(migrations.Migration):
                 ('code', models.CharField(blank=True, max_length=20, null=True, validators=[painless.models.validations.validate_national_code], verbose_name='کد ملی')),
                 ('phone', models.CharField(blank=True, max_length=12, null=True, verbose_name=' تلفن ثابت')),
                 ('address', models.CharField(blank=True, max_length=255, null=True, verbose_name=' آدرس')),
-                ('city', models.CharField(blank=True, max_length=50, null=True, verbose_name='شهر')),
                 ('zip', models.CharField(blank=True, max_length=30, null=True, validators=[painless.models.validations.validate_postal_code], verbose_name='کد پستی')),
                 ('instagram', models.URLField(blank=True, null=True, verbose_name='اینستاگرام')),
                 ('whatsapp', models.URLField(blank=True, null=True, verbose_name='واتس آپ')),

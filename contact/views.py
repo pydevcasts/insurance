@@ -13,13 +13,18 @@ from contact.tasks import my_first_task
 
 
 
-class ListContactView(LoginRequiredMixin, ListView):
+class ListContactView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Contact
+    permission_required = "contact.view_contact"
     context_object_name = 'contacts'
     template_name = 'dashboard/contact/list.html'
     paginate_by = 10
 
-    # it is for pagination
+    def handle_no_permission(self):
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
+
+
     def get_queryset(self):
         filter_val = self.request.GET.get("filter", "")
         order_by = self.request.GET.get("orderby", "pk")
@@ -36,28 +41,25 @@ class ListContactView(LoginRequiredMixin, ListView):
         context["filter"] = self.request.GET.get("filter", "")
         context["orderby"] = self.request.GET.get("orderby", "pk")
         context["all_table_fields"] = Contact._meta.get_fields()
+        context["segment"] = "لیست تماس"
         return context
 
 
 class CreateContactView(SuccessMessageMixin , CreateView):
-
     def post(self, request, *args, **kwargs):
             if request.method == 'POST':
                 form = ContactForm(request.POST)
                 if form.is_valid():
                     form = form.save(commit=False)
-                    print(f"form is test:.....{type(form)}")
-                    print(f"request user is test:.....{type(request.user)}")
-                    print(f"form itself is test:.....{type(form)}")
                     my_first_task.delay(15)
                     form.save()
                     messages.success(request,
                                     "پیام شما با موفقیت ارسال گردید !")
-                    return redirect("contact:create")
+                    return redirect("contact:contact-create")
             else:
                 form = ContactForm()
             return render(request, 'frontend/contact/create.html',
-                        {'form': form , "title":"تماس با ما"} 
+                        {'form': form , "segment":"تماس با ما"} 
                     )
 
 
@@ -72,13 +74,13 @@ class CreateContactView(SuccessMessageMixin , CreateView):
         folium.Marker([lat,lng],tooltip="click for more",popup = country).add_to(map)
         map = map._repr_html_()
         return render(request, 'frontend/contact/create.html',
-                        {'map':map, 'title': 'تماس با ما'}
+                        {'map':map, 'segment': 'تماس با ما'}
                         )
 
 
 
 
-class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
+class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Contact
     permission_required = "contact.delete_contact"
     template_name = 'dashboard/contact/list.html'
@@ -87,7 +89,7 @@ class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView
 
 
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 
     def get(self, request, *args, **kwargs):
@@ -96,20 +98,20 @@ class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView
             Contact_object = Contact.objects.get_queryset().filter(pk= pk)
             if Contact_object is not None:
                 Contact_object.delete()
-                messages.success(request, 'Contact was deleted.') 
-                return redirect('contact:list')
+                messages.success(request, 'پست شما با موفقیت حذف گردید') 
+                return redirect('contact:contact-list')
         return redirect('dashboard/Contact/list.html')
        
 
 
-class ContactShowView(SuccessMessageMixin,PermissionRequiredMixin, UpdateView):
+class ContactShowView(SuccessMessageMixin,PermissionRequiredMixin, LoginRequiredMixin,UpdateView):
     permission_required = "contact.update_contact"
     model = Contact
     template_name = 'dashboard/contact/show.html'
     fields = "__all__" 
-    success_url = reverse_lazy('contact:list')
+    success_url = reverse_lazy('contact:contact-list')
     
     def handle_no_permission(self):
-        messages.warning(self.request, "You dont have permission to this page please signin with superuser!")
+        messages.warning(self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
         return redirect("dashboard:home")
 

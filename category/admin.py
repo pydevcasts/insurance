@@ -4,18 +4,9 @@ from khayyam import JalaliDate as jd
 
 
 
-# class SubCategoryInline(admin.StackedInline):
-#     model = models.SubCategory
-#     fields = [
-#         ('title','status', 'banner'),
-#         'content',
-    
-#     ]
-
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'parent','created_at', 'updated_at']
-    # inlines = [SubCategoryInline]
     list_filter = ['title',]
     fields = [
         ('title','status', 'parent'),

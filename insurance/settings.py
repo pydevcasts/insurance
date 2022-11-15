@@ -131,10 +131,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 
 DATABASES = {
-    #      'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
+  
 
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -235,7 +232,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '549418161873-vunmslj02haoovb8r9imscaoa2kad4sc.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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' # Google Consumer Secret
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-LOGIN_REDIRECT_URL = "dashboard:home"  
+LOGIN_REDIRECT_URL = "blog:post_and_category"  
 LOGOUT_REDIRECT_URL = 'login'
 
 
