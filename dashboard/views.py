@@ -10,27 +10,42 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from blog.models import Post
 from blog.forms import PostForm
+from news.models import New
+from news.forms import NewForm
 User = get_user_model()
+from django.contrib.auth.views import PasswordChangeView
 
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/dashboard/home.html'
 
-
-
-class ResetPasswordView(TemplateView):
-    template_name = 'dashboard/reset-password.html'
-    title = 'تغییر رمز عبور'
+    def get_context_data(self, **kwargs):
+        return {'segment':'داشبورد بیمه'}
 
 
 
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name='dashboard/accounts/password_change.html'
+    success_message = "پسوردتان با موفقیت تغیرر یافت"
+    success_url = reverse_lazy('dashboard:password_change')
+   
+  
 
-class PostListView(LoginRequiredMixin, ListView):
+
+
+class PostListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'dashboard/blog/list.html'
     paginate_by = 10
+    permission_required = "post.view_post"
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
+
 
     # it is for pagination
     def get_queryset(self):
@@ -123,7 +138,108 @@ class PostUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredM
 
 
 
+# =======================================
+#  ##############داشبورد###############
+# =======================================
 
+
+class NewListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
+    model = New
+    context_object_name = 'news'
+    template_name = 'dashboard/news/list.html'
+    paginate_by = 10
+    permission_required = "new.view_news"
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
+
+    # it is for pagination
+    def get_queryset(self):
+        filter_val = self.request.GET.get("filter", "")
+        order_by = self.request.GET.get("orderby", "pk")
+        if filter_val != "":
+            new = New.objects.filter(Q(title__contains=filter_val) | Q(
+                description__contains=filter_val)).order_by(order_by)
+        else:
+            new = New.objects.all().order_by(order_by)
+        return new
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter"] = self.request.GET.get("filter", "")
+        context["orderby"] = self.request.GET.get("orderby", "pk")
+        context["all_table_fields"] = New._meta.get_fields()
+        context['segment'] = "لیست خبر"
+        return context
+
+
+class NewCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    model = New
+    form_class = NewForm
+    context_object_name = "form"
+    template_name = "dashboard/news/create.html"
+    success_url = reverse_lazy('dashboard:new-list')
+    success_message = "خبر با موفقیت ایجاد شد !"
+    permission_required = "new.create_news"
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "ایجاد خبر"
+        return context
+    
+  
+
+
+class NewDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    model = New
+    permission_required = "new.delete_post"
+    template_name = 'dashboard/news/list.html'
+    success_url = reverse_lazy('dashboard:new-list')
+
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get("pk")
+        if pk is not None:
+            post_object = New.objects.get_queryset().filter(pk=pk)
+            if post_object is not None:
+                post_object.delete()
+                messages.success(request, "خبر با موفقیت حذف گردید!")
+                return redirect('dashboard:new-list')
+        return redirect('dashboard/new/list.html')
+
+
+class NewUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
+
+    form_class = NewForm
+    model = New
+    permission_required = "new.update_new"
+    pk_url_kwarg = 'pk'
+    template_name = 'dashboard/news/edit.html'
+    success_url = reverse_lazy('dashboard:new-list')
+    success_message = "خبر با موفقیت ویرایش گردید!"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "ویرایش خبر"
+        return context
+    
+    def handle_no_permission(self):
+        messages.warning(
+            self.request, " شما اجازه دسترسی به این صفحه رو ندارید")
+        return redirect("dashboard:home")
 
 
 

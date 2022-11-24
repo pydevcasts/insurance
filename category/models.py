@@ -24,7 +24,7 @@ class Category(OrganizedMixin):
         return self.title
 
     def children(self):
-        """Return replies of a comment."""
+       
         return Category.objects.filter(parent=self)
 
     @property

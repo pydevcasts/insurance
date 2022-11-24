@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404, render
 from comment.forms import CommentForm
 from blog.models import Comment, Post
 from category.models import Category
-from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse

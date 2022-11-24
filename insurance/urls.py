@@ -30,6 +30,7 @@ urlpatterns = [
     re_path(r'^customer-feedback/', include('feedback.urls')),
     re_path(r'^user/', include('users.urls')),
     re_path(r'^frontend/', include('renewal.urls')),
+    re_path(r'^ticket/', include('tickets.urls')),
     re_path(r'^social-auth/', include('social_django.urls', namespace='social')),
     re_path(r'^', include('django.contrib.auth.urls')),
     re_path(r'^__debug__/', include('debug_toolbar.urls')),

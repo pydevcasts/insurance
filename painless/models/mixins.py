@@ -18,8 +18,6 @@ class TimeStampedMixin(models.Model):
     @property
     def published(self):
         return jd(self.published_at)
-        
-
 
 
 

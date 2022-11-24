@@ -9,13 +9,13 @@ from django.contrib import messages
 from comment.forms import CommentForm
 
 
-
-
 class NewListView(ListView):
 
     def get(self, request, *args, **kwargs):
         news = New.objects.filter(status= 1).select_related('category').order_by('-published_at')
+       
         page = request.GET.get('page', 1)
+     
         paginator = Paginator(news, 15)
         try:
             page_obj = paginator.page(page)
@@ -23,9 +23,8 @@ class NewListView(ListView):
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
+        print(page_obj)
         return render(request, 'frontend/news/index.html', {'page_obj': page_obj,'title':'خبر ها','summary':'خبر های روز بیمه' })
-
-
 
 
 def new_detail(request, year, month, day, slug):
@@ -84,6 +83,5 @@ def new_detail(request, year, month, day, slug):
     return render(request,
                 'frontend/news/detail.html',
                 {'new': new, 'title':'جزییات خبر' , 'favorites':favorites, 'form':form ,'comments':comments})
-
 
 

@@ -1,6 +1,4 @@
 {% extends "frontend/shared/home.html" %}
-
-{% block title %}{{ title }}{% endblock %}
 {% load static %}
 {% block styles %}
 <style>
@@ -19,8 +17,6 @@
         <div class="container">
             <div class="section-title">
                 <span>دسته بندیها</span>
-       
-              
             </div>
             <div class="row">
                 {% for post in page_obj %}

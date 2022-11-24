@@ -1,6 +1,5 @@
 from django import forms
 from blog.models import Post
-from ckeditor.widgets import CKEditorWidget
 from django.utils.translation import gettext_lazy as _
 
 

@@ -3,11 +3,14 @@
     <h3 class="widget-title">دسته بندی ها</h3>
     <div class="post-wrap">
         <ul>
-            {% for new in news %}
-         
+            {% for category in categories %}
+            {% if category.is_parent %}
             <li>
-                <a href="{{ new.get_absolute_url }}">{{ new.categories.title }}</a>
+                <a href="{{ category.posts_base_on_category }}">
+                    {{ category.title }}
+                  </a>
             </li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>

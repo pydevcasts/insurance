@@ -6,7 +6,6 @@ from django.views.generic import ListView,UpdateView
 from django.views.generic.edit import  DeleteView
 from users.forms import ProfileForm
 from users.models import Profile
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages

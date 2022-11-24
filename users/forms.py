@@ -3,7 +3,6 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from users.models import Profile
 from django import forms
-from django.core.validators import MinValueValidator, MaxValueValidator
 import string
 
 

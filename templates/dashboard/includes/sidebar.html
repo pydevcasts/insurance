@@ -12,12 +12,11 @@
   <div class="sidebar-inner  pt-3">
     <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
       <div class="d-flex align-items-center">
-        <div class="avatar-lg me-4">
-          {% if user.profile.avatar %} <img src="..{{ user.profile.get_avatar }}" class="card-img-top rounded-circle border-white" width=70 alt="Avatar">{% else %}<img src="../../static/assets/backend/img/team/profile-picture-1.jpg" />{% endif %} 
-            alt="Bonnie Green">
+        <div class="avatar-lg me-4 mb-5">
+          {% if user.profile.avatar %} <img src="{{ user.profile.get_avatar }}" class="card-img-top rounded-circle border-white" width=60 alt="Avatar">{% else %}<img src="../../static/assets/backend/img/team/profile-picture-1.jpg"  alt="Bonnie Green"/>{% endif %} 
         </div>
         <div class="d-block">
-          <h2 class="h5 mb-3">سلام {{ request.user.first_name}}</h2>
+          <h2 class="h5 mb-3  p-3">سلام {{ request.user.first_name }}</h2>
           <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
             <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>            
             خروج
@@ -37,7 +36,7 @@
       <li class="nav-item">
         <a href="{% url 'blog:post_and_category' %}" class="nav-link d-flex align-items-center">
           <span class="sidebar-icon">
-            <img src="https://img.icons8.com/plasticine/40/000000/planner.png" />
+            <img src="https://img.icons8.com/plasticine/50/000000/planner.png" />
           </span>
           <span class="mt-1 ms-1 sidebar-text">داشبورد</span>
         </a>
@@ -48,7 +47,7 @@
           data-bs-target="#submenu-profile">
           <span>
             <span class="sidebar-icon">
-              <img src="https://img.icons8.com/plasticine/40/000000/administrator-male.png" />
+              <img src="https://img.icons8.com/plasticine/50/000000/administrator-male.png" />
             </span>
             <span class="sidebar-text">پروفایل</span>
           </span>
@@ -81,7 +80,7 @@
           <span>
             <span class="sidebar-icon">
               <img
-                src="https://img.icons8.com/external-itim2101-flat-itim2101/25/000000/external-contact-us-contact-and-message-itim2101-flat-itim2101-1.png" />
+                src="https://img.icons8.com/external-itim2101-flat-itim2101/40/000000/external-contact-us-contact-and-message-itim2101-flat-itim2101-1.png" />
             </span>
             <span class="sidebar-text"> تماس با ما</span>
           </span>
@@ -115,7 +114,7 @@
 
             <span class="sidebar-icon">
               <img
-                src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/30/000000/external-tag-interface-kiranshastry-lineal-color-kiranshastry.png" />
+                src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/40/000000/external-tag-interface-kiranshastry-lineal-color-kiranshastry.png" />
             </span>
             <span class="sidebar-text">برچسب ها</span>
           </span>
@@ -156,7 +155,7 @@
           data-bs-target="#submenu-components" aria-expanded="false">
           <span>
             <span class="sidebar-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 171 171"
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 171 171"
                 style=" fill:#000000;">
                 <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
                   stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
@@ -208,7 +207,7 @@
           <span>
             <span class="sidebar-icon">
               <img
-                src="https://img.icons8.com/external-itim2101-lineal-color-itim2101/30/000000/external-blogger-blogger-and-influencer-itim2101-lineal-color-itim2101-1.png" />
+                src="https://img.icons8.com/external-itim2101-lineal-color-itim2101/40/000000/external-blogger-blogger-and-influencer-itim2101-lineal-color-itim2101-1.png" />
             </span>
             <span class="sidebar-text">پستها</span>
           </span>
@@ -241,13 +240,52 @@
         </div>
       </li>
       {% endif %}
+      {% if request.user.is_superuser %}
+      <li class="nav-item  {% if 'page-' in segment %}active{% endif %}">
+        <span class="nav-link d-flex justify-content-between align-items-center collapsed " data-bs-toggle="collapse"
+          data-bs-target="#submenu-new" aria-expanded="false">
+          <span>
+            <span class="sidebar-icon">
+              <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/40/null/external-news-news-kiranshastry-lineal-color-kiranshastry-1.png"/>
+            </span>
+            <span class="sidebar-text">خبر ها</span>
+          </span>
+          <span class="link-arrow">
+            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </span>
+        </span>
+       
+        <div class="multi-level collapse" role="list" id="submenu-new" aria-expanded="false">
+          <ul class="flex-column nav">
+            {% if perms.auth.view_news %}
+            <li class="nav-item  {% if request.resolver_match.url_name == 'new-list' %}active{%endif%}">
+              <a class="nav-link" href="{% url 'dashboard:new-list' %}">
+                <span class="sidebar-text">لیست</span>
+              </a>
+            </li>
+            {% endif %}
+            {% if perms.auth.create_new %}
+            <li class="nav-item  {% if request.resolver_match.url_name == 'new-create' %}active{%endif%}">
+              <a class="nav-link" href="{% url 'dashboard:new-create' %}">
+                <span class="sidebar-text">ایجاد پست</span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </li>
+      {% endif %}
 
       <li class="nav-item  {% if 'page-' in segment %}active{% endif %}">
         <span class="nav-link d-flex justify-content-between align-items-center collapsed " data-bs-toggle="collapse"
           data-bs-target="#submenu-ticket" aria-expanded="false">
           <span>
             <span class="sidebar-icon">
-              <img src="https://img.icons8.com/fluency/30/000000/ticket-purchase.png" />
+              <img src="https://img.icons8.com/fluency/40/000000/ticket-purchase.png" />
             </span>
             <span class="sidebar-text">تیکت ها</span>
           </span>
@@ -259,7 +297,23 @@
             </svg>
           </span>
         </span>
-
+        <div class="multi-level collapse" role="list" id="submenu-ticket" aria-expanded="false" >
+          <ul class="flex-column nav">
+            <li class="nav-item ">
+             
+                <a class="nav-link" href="{% url 'tickets:ticket-list' %}">
+                <span class="sidebar-text">پاکت نامه</span>
+              </a>
+            </li>
+          
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'tickets:ticket_create'  %}">
+                <span class="sidebar-text">ایجاد تیکت</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

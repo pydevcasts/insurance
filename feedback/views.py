@@ -4,15 +4,13 @@ from django.views.generic import ListView
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from .models import CustomerFeedback
-
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
-from news.models import New
+from django.shortcuts import render
 
 
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class CustomerFeedbackListView(ListView):
 
     def get(self, request, *args, **kwargs):

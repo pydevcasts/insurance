@@ -1,9 +1,7 @@
 
 
-from aboutus import views
 from aboutus.models import About
 from category.models import Category
-from blog.models import Post
 from news.models import New
 from slider.models import Slider
 from django.contrib.auth import get_user_model
@@ -20,10 +18,9 @@ def posts_view_context_processor(request):
     sliders = Slider.condition.filter(status = 1)
     members= Member.objects.select_related('team').filter(status = 1).order_by('published_at')
     teams = Team.objects.filter(status = 1).order_by('published_at')
-    
     archives = New.objects.filter(status = 1).order_by('-published_at')[:8]
     categories = Category.objects.all().filter(status = "1")
-
+   
     q = request.GET.get("q")
     if q:
         searchs = PostDocument.search().query((Q("multi_match", query=q, fields=['title', 'summary', 'content'])))
@@ -31,5 +28,5 @@ def posts_view_context_processor(request):
    
     else:
         searchs = ""    
-    return ({'archives':archives,  'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
+    return ({'archives':archives, 'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
 

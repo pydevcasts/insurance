@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'renewal',
     'news',
     'feedback',
-    'comment'
+    'comment',
+    'tickets'
 
     ]
 

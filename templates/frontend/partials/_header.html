@@ -6,7 +6,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6">
           <div class="header-content-left">
-            <p>به بیمه آسیا خوش آمدید!</p>
+            <p>به آکادمی بیمه خوش آمدید!</p>
           </div>
         </div>
         <div class="col-lg-6">
@@ -38,7 +38,7 @@
 
       <div class="mobile-nav">
         <a href="index.html" class="logo">
-          <img src="{% static 'assets/frontend/img/logo.png' %}" alt="Logo">
+          <img src="{% static 'assets/frontend/img/logo.png' %}" alt="Logo" width="100">
         </a>
       </div>
 
@@ -46,7 +46,7 @@
         <nav class="navbar navbar-expand-md navbar-light">
           <div class="container">
             <a class="navbar-brand" href="index.html">
-              <img src="{% static 'assets/frontend/img/home-one-logo.png' %}" alt="Logo">
+              <img src="{% static 'assets/frontend/img/home-one-logo.png' %}" alt="Logo" width="100">
             </a>
             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
               <ul class="navbar-nav m-auto">
@@ -92,10 +92,13 @@
                         <li class="nav-item">
                           <a href="/admin/" class="nav-link">ورود ادمین</a>
                         </li>
+                        {% endif %}
                         <li class="nav-item">
                           <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
                         </li>
-                       {% endif %}
+                        <li class="nav-item">
+                          <a href="{% url 'tickets:ticket_create' %}" class="nav-link"> ارسالل تیکت</a>
+                        </li>
                         <li class="nav-item">
                           <a href="{% url 'user:user-update' user.pk %}" class="nav-link">پروفایل</a>
                         </li>

@@ -98,8 +98,8 @@ class CategoryUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequi
 
 
 
-def posts_list_by_category(request, slug=None):
-   
+def posts_list_by_category(request, slug=None, *args, **kwargs):
+
     category = None
     posts = Post.objects.filter(status=1)
     if slug:
@@ -116,6 +116,6 @@ def posts_list_by_category(request, slug=None):
             page_obj = paginator.page(paginator.num_pages)
     return render(request,
                   'frontend/posts/list_category.html',
-                  {'page_obj':page_obj, 'segment':'دسته بندی ها'})
+                  {'page_obj':page_obj, 'title':'دسته بندی ها'})
 
 

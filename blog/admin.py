@@ -54,12 +54,6 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         return []
 
 
-
-
-
-
-
-
 admin.site.site_header = "سیامک"
 admin.site.site_title = "سیامک سایت ادمین"
 admin.site.index_title = "خوش امدی سیامک"

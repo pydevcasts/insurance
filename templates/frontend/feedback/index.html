@@ -1,5 +1,4 @@
 {% extends "frontend/shared/home.html" %}
-{% block title %}{{ title }}{% endblock %}
 {% load static %}
 {% block styles %}
 <style>
@@ -26,7 +25,7 @@
                     {% if feedback.banner %} <img src="..{{ feedback.banner.url }}" class="user-avatar rounded-circle me-3" style="width:70px;" alt="Avatar">{% else %}<img src="../../static/assets/backend/img/team/profile-picture-1.jpg" />{% endif %}
                     <h3>{{ feedback.first_name}}-{{ feedback.last_name }}</h3>
                     <span>{{ feedback.role }}</span>
-                    <p>{{ new.content | striptags |safe }}</p>
+                        <p>{{ feedback.content | striptags |safe| truncatewords:20 }}</p>
                     <ul>
                         <li>
                             <i class="bx bxs-star"></i>
