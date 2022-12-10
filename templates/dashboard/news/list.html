@@ -1,0 +1,98 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+  <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% include "dashboard/includes/_headnav.html" %}
+
+<div class="card border-0 shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-0 rounded-start">#</th>
+            <th class="border-0">تصویر</th>
+            <th class="border-0">متن</th>
+            <th class="border-0">اسلاگ</th>
+            <th class="border-0">دسته بندی</th>
+            <th class="border-0">وضعیت</th>
+            <th class="border-0">بازدید</th>
+            <th class="border-0">تاریخ انتشار</th>
+            <th class="border-0">حذف / ویرایش</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for new in news %}
+          
+          <tr>
+            <td><a href="#" class="text-primary fw-bold">
+                {{ forloop.counter }}
+              </a>
+            </td>
+            {% if new.banner %}
+            <td><img src="{{ new.banner.url }}" class="rounded-circle" width=70 /></td>
+            {% endif %}
+            <td>{{ new.title}}</td>
+            <td>{{ new.slug}}</td>
+            <td>{{ new.category.title }}</td>
+            <td>{% if new.status == 1 %}<img src="https://img.icons8.com/fluency/35/null/door-sensor-checked.png"/>{% else %}<img src="https://img.icons8.com/avantgarde/35/null/no-edit.png"/> {% endif %}</td>
+            <td>{{ new.views }}</td>
+            <td class="text-success">
+              <div class="d-flex align-items-center">
+                <svg class="icon icon-xs me-1" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <span class="fw-bold">{{ new.published }}</span>
+              </div>
+            </td>
+            {% if request.user.is_authenticated%}
+            <td>
+              <a href="{% url 'dashboard:new-update' new.pk %}"><img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/25/null/external-edit-web-flaticons-lineal-color-flat-icons-9.png"/></a>
+              <form method="POST" action="{% url 'dashboard:new-list' %}">
+                {% csrf_token %}
+                <a href="{% url 'dashboard:new-delete' new.pk %}"><img src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/30/F25081/external-trash-office-flatart-icons-solid-flatarticons.png"/></a>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+         
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'dashboard:new-list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">قبل</a></li>
+          {% endif %}
+          {% for i in paginator.page_range %}
+          <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link"
+              href="{% url 'dashboard:new-list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{ i }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'dashboard:new-list' %}' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">بعد</a></li>
+          {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}

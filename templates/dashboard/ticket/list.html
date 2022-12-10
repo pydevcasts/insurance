@@ -1,0 +1,96 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+  <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% include "dashboard/includes/_headnav.html" %}
+
+
+<div class="card border-0 shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0 rounded">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="border-0 rounded-start">#</th>
+                        <th class="border-0">متن</th>
+                        <th class="border-0">توضیح</th>
+                        <th class="border-0">کاربر</th>
+                        <th class="border-0">وضعیت</th>
+                        <th class="border-0">تاریخ انتشار</th>
+                        <th class="border-0">حذف / ویرایش</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td><a href="#" class="text-primary fw-bold">
+                                {{ forloop.counter }}
+                            </a>
+                        </td>
+                        <td>{{ ticket.title}}</td>
+                        <td>{{ ticket.description| striptags |safe| truncatewords:20  }}</td>
+                        <td>{{ ticket.user }}</td>
+                        <td>{% if ticket.status == "TODO" %}
+                            <span class="badge bg-danger">مشاهده نشده</span>
+                            {% elif ticket.status == "IN PROGRESS" %}
+                            <span class="badge bg-info">در حال انجام است</span>
+                            {% elif ticket.status == "WAITING" %}
+                            <span class="badge bg-warning">منتظر بمانید</span>
+                            {% elif ticket.status == "DONE" %}
+                            <span class="badge bg-success">انجام شده</span>
+                            {% else %}
+                            {{ ticket.status }}
+                            {% endif %}
+                        <td>{{ ticket.published }}</td>
+                                    {% if request.user.is_authenticated %}
+                        <td>
+                        <a title="Edit Ticket" href="{% url 'tickets:update_ticket' ticket.id %}"><img
+                                src="https://img.icons8.com/bubbles/30/000000/edit.png" /></a>
+                        <a title="Detail Ticket" href="{{ ticket.get_absolute_url }}"><img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAADHklEQVRIicWWW0hUURSG/3XOHI8z03jLEkkhU4oiKujmjS5go0WGL0IU9FCo9GJRhBVd5qFSC3rqpetDEVgEhXZhpDSIvFD50A2y1EKzmkozmWku5+zVS4naUWcczf9xr/Ovb++1OHttYIpEowU3HmuY5ZUVFQAi9YDv9qHMj5MKzqts2MFM2xlol4g9ACCYLESUCsGXnAcyLkw42F7ZUEAs5fu8v0oeOtZqg2NrHPUmNTLyHBNX15Zl3goHLBnspUglbfdwKAA8dKzVVNJ3AVQUDtQQTAI3q8uy+0cyVJdl9xPDEi54XMqtaKwPN4dBqf+PCADWVzYl2awRV5kxIxiTP6DHRCjyDyJ87Xf7t94rS+8KFWwCALNqKlm9ePaqlMSYULyJHZ965z9o6SgGcCRUsAQARGRTTKFXXTHJIFBUyEZMYY9NY33Q5/YBBERb1JCTrz/5OJU1zBQK2mr3ZbmCBvd7fLjifA4iYFvuItiChOeVN85WzcqNWJt1liVSVXt+un0Fp1vq9J+iqMaxzDMmGABAgEQEiUadJwNa46ifZrGodelL5qZEWc0D651fvhe+au2MB5ALjNFjm0XFvOTpSEuKg9UcERQ4Njrq6IK05KTBUABITpiuxMfZlq070ZgFBHHixakJQQEHRJyTGB+jGIWSEuLjvn3rWwfg8ZjgmbHW0MCS9EsXArL8bzE1XWNNwA1Mwu+k+8Xlts7P/wwZBtDW+cUV0AI3B4FZHz9qqLd679Kz77tdLzq6XB7+uxldoOVV+w+v13/ReSDzHfCnxz6v/9r9Z+2FilF9RlFA14U7IKqGLBJxn6N+9ZuO7uNvP3zaLJEUqwndFRDi0J09y6tGSDXxGmmETu2Vaa9ozCegdJw5zjv3Z1wfF7h2f0YNgJpQzfbypqVEvAWAITin4mk0IWD4jAqr1LK15yWAdIeDDfPIpG0C86MJB98r3eAj5lsN5qbDw2M55U/mgLnYpuKMkTe4m380MZO9ovm4RLyQwVUM6gVhhcS8ShLyzrsHV7ZODviP7KeaU6CLPIl5GpP82uf1OI3e5lOu30m/HcZaaNaVAAAAAElFTkSuQmCC" /></a>
+                        <!-- <form method="post" action="#">
+                            {% csrf_token %}
+                            <a title="Trash" href="{% url 'tickets:delete_attachments' ticket.id %}"><img src="https://img.icons8.com/cute-clipart/25/000000/trash.png" /></a>
+                        </form> -->
+                        </td>
+                        {% endif %}
+                    </tr>
+                 
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-body">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link"
+                    href="{% url 'tickets:ticket-list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link"
+                    href="{% url 'tickets:ticket-list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ i }}">{{i}}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link"
+                    href="{% url 'tickets:ticket-list' %}?filter={{ filter }}&orderby={{ orderby }}&page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      {% endblock content %}
+      

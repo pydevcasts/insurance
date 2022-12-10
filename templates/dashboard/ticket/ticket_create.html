@@ -1,0 +1,129 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% include "dashboard/includes/_headnav.html" %}
+
+<div class="card border-0 shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <form method="post" action="" class="mt-4" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group card-body">
+                    <label>{{ field.label }}</label>
+                    {% if field.field.required %}
+                    <span style="color: red;" class="required">*</span>
+                    {% endif %}
+
+                    {{field}}
+                    {% if field.help_text %}
+                    <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                {% with named_formsets.attachments as formset %}
+                {{ formset.management_form }}
+                <script type="text/html" id="attachments-template">   // id="inlineformsetname-template"
+                        <tr id="attachments-__prefix__" class= hide_all>  // id="inlineformsetname-__prefix__"
+                            {% for fields in formset.empty_form.hidden_fields %}
+                                {{ fields }}
+                            {% endfor %}
+                        
+                            {% for fields in formset.empty_form.visible_fields %}
+                                <td>{{fields}}</td>
+                            {% endfor %}
+                        </tr>
+                </script>
+
+                <div class="table-responsive card mt-4">
+                    <table class="table card-body">
+                        <thead>
+                            <th>فایل </th>
+                            <th>نام فایل</th>
+                            <th> حذف</th>
+                        </thead>
+                        <tbody id="item-attachments">
+
+                            {% for error in formset.non_form_errors %}
+                            <span style="color: red">{{ error }}</span>
+                            {% endfor %}
+                            {% for formss in formset %}
+                            {{ formss.management_form }}
+                            <tr id="attachments-{{ forloop.counter0 }}" class=hide_all>
+                                {{ formss.id }}
+                                {% for field in formss.visible_fields %}
+                                <td>
+                                    {{field}}
+                                    {% for error in field.errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                </td>
+                                {% endfor %}
+                                {% if formss.instance.pk %}
+                                <td>
+                                    <a href="{% url 'tickets:delete_attachments' formss.instance.pk %}" type="submit"
+                                        class="btn btn-danger "> حذف</a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="d-grid mt-4">
+                    <button href="#" id="add-attachments-button"
+                        class="btn btn-success btn-block text-with add-attachments mt-4">اضافه گردد</button>
+                </div>
+                {% endwith %}
+                <!-- inline form for attachments end -->
+                <div class="d-grid mt-4">
+                    <button type="submit" name="login" class="btn btn-gray-800 text-success">ارسال</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+
+<script>
+
+    $(document).ready(function () {
+        // when user clicks add more btn of attachments
+        $('.add-attachments').click(function (ev) {
+            ev.preventDefault();
+            var count = $('#item-attachments').children().length;
+            var tmplMarkup = $('#attachments-template').html();
+            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+            $('#item-attachments').append(compiledTmpl);
+
+            // update form count
+            $('#id_attachments-TOTAL_FORMS').attr('value', count + 1);
+        });
+    });
+
+
+</script>
+
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('content');
+</script>
+
+{% endblock javascripts %}
+{% endblock content %}

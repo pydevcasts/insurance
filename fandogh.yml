@@ -1,0 +1,53 @@
+kind: ExternalService
+name: academy
+spec:
+  image_pull_policy: Always
+  port: 80
+  domains:
+  - name: academybime.com
+  
+  source:
+    context: .
+    media_path: media
+    project_type: django
+    python_version: '3.9'
+    static_path: static
+    wsgi: insurance.wsgi
+
+  volume_mounts:
+  - mount_path: /usr/src/app/media
+    sub_path: academy/media
+    volume_name: media-production
+ 
+  env:
+  - name: DEBUG
+    value: True
+  - name: EMAIL_BACKEND
+    value: django.core.mail.backends.smtp.EmailBackend
+  - name: EMAIL_HOST
+    value: smtp.gmail.com
+  - name: EMAIL_HOST_USER
+    value: siyamak1981@gmail.com
+  - name: EMAIL_HOST_PASSWORD
+    value: hkgttjourdfnhwcm
+  - name: EMAIL_USE_TLS
+    value: True
+  - name: EMAIL_PORT
+    value: 587
+  - name: ELASTICSEARCH_DSL_HOSTS
+    value: es:9200
+  - name: DB_HOST
+    value: postgres
+  - name: DB_NAME
+    value: postgres
+  - name: DB_USER
+    value: postgres
+  - name: DB_PASSWORD
+    value: siyamak1981
+  - name: DB_PORT
+    value: 5432
+  - name: GOOGLE_MAPS_API_KEY
+    value: AIzaSyAosgxc63Vzg0rPPulpvVrcl7NgQPX41UM
+  
+  
+
