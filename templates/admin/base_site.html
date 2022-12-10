@@ -1,0 +1,10 @@
+{% extends 'admin/base.html' %}
+{% block title %} {{ user.first_name }} {{ user.last_name }}{% endblock %}
+{% load static %}
+{% block branding %}
+<h1 id = 'head' >
+<img src = "{% static 'assets/frontend/img/logo.png' %}" alt ='logo' class = "brand_img mx-auto" height='40'; wight='60'> داشبورد {{ user.first_name }}</h1>
+{% endblock %}
+{% block extrastyle %}
+<link rel = 'stylesheet' href ="{% static 'assets/backend/css/admin.css' %}">
+{% endblock %}

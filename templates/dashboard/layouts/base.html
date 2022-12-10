@@ -1,0 +1,18 @@
+{% include "dashboard/includes/_head.html" %}
+<body>
+    {% include 'dashboard/includes/sidebar.html' %}
+    
+    <main class="content">
+
+      {% include 'dashboard/includes/navigation.html' %}
+
+      {% block content %}{% endblock content %} 
+
+      {% include 'dashboard/includes/footer.html' %}
+    </main>
+
+    
+  </body>
+  </html>
+  {% include 'dashboard/includes/scripts.html' %}
+  {% block javascripts %}{% endblock javascripts %}  

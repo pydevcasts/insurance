@@ -1,0 +1,33 @@
+{% extends "frontend/shared/home.html" %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<section class="user-area-all-style sign-up-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-action">
+                    <div class="form-heading text-center">
+                        <h3 class="form-title"> اطلاعات شخصی!</h3>
+                    </div>
+                
+                    <form method="post" action="{% url 'user:user-update' user.pk %}" novalidate  enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'dashboard/includes/form.html' %}
+                        
+                        <div class="col-12">
+                            <button class="default-btn btn-block btn-two" type="submit">
+                               ویرایش
+                            </button>
+                        </div>
+
+        
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

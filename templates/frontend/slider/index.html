@@ -1,0 +1,49 @@
+{% for slider in sliders %}
+{% if forloop.counter0 == 0  %}
+<section class="hero-slider-area-six">
+    <div class="hero-slider-six owl-carousel owl-theme">
+        <div class="slider-item slider-item-bg-1">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="slider-text one">
+                            <span class="top-title">{{ slider.title }}</span>
+                            <h1>{{ slider.summary }}</h1>
+                            <p>{{ slider.content |safe| truncatewords:40 }}</p>
+                            <div class="slider-btn">
+                                <a class="default-btn btn-six" href="{% url 'contact:contact-create' %}">
+                                    تماس با ما
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else  %}
+        <div class="slider-item slider-item-bg-2">
+            <div class="d-table">
+                <div class="d-table-cell">
+                    <div class="container">
+                        <div class="slider-text one">
+                            <span class="top-title">{{ slider.title }}</span>
+                            <h1>{{ slider.summary }}</h1>
+                            <p>{{ slider.content |safe| truncatewords:40 }}</p>
+                            <div class="slider-btn">
+                                <a class="default-btn btn-six" href="{% url 'contact:contact-create' %}">
+                                    تماس با ما
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+{% endfor %}

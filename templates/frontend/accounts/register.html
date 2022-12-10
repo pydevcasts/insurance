@@ -1,0 +1,39 @@
+{% extends "frontend/shared/home.html" %}
+{% block body %}
+
+{% include 'frontend/partials/_head.html' %}
+<section class="user-area-all-style sign-up-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-action">
+                    <div class="form-heading text-center">
+                        <h3 class="form-title">ایجاد حساب کاربری!</h3>
+                        <p class="form-desc">یا با شبکه اجتماعی وارد شوید.</p>
+                    </div>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form method="post" action="" novalidate>
+                                    {% csrf_token %} {% include 'dashboard/includes/form.html' %}
+                               
+                            </div>
+                            <div class="col-12">
+                                <button class="default-btn btn-block" type="submit">
+                                    ثبت نام
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <p class="account-desc">
+                                    حساب کاربری داری؟
+                                    <a href="{% url 'login' %}"> ورود</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

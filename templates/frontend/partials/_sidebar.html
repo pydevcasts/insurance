@@ -1,0 +1,100 @@
+{% load static %}
+<div class="sidebar-modal">
+        <div class="modal right fade" id="myModal2">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">
+                                                        <i class="bx bx-x"></i>
+                                                </span>
+                                        </button>
+                                        <h2 class="modal-title">
+                                                <a href="index.html">
+                                                        <img src="{% static 'assets/frontend/img/logo.png' %}"
+                                                                alt="Logo" width="100">
+                                                </a>
+                                        </h2>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="sidebar-modal-widget">
+                                                <h3 class="title">{{ setting.title }}</h3>
+                                                <p>{{ setting.content |safe| truncatewords:40 }}</p>
+                                        </div>
+                                        <div class="sidebar-modal-widget">
+                                                <h3 class="title">پیوندهای اضافی</h3>
+                                                <ul>
+                                                        <li>
+                                                                <a href="{% url 'login' %}">وارد شوید</a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{% url 'accounts:signup' %}">ثبت نام</a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="faq.html">سوالات متداول</a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{% url 'logout' %}">خروج</a>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="sidebar-modal-widget">
+                                                <h3 class="title">اطلاعات مشتری</h3>
+                                                <ul class="contact-info">
+                                                        {% for user in users %}
+                                                        {% if user.is_superuser %}
+                                                        <li>
+                                                                <i class="bx bx-location-plus"></i>
+
+                                                                آدرس
+                                                                <span>{{ user.profile.address}}</span>
+                                                        </li>
+                                                        <li>
+                                                                <i class="bx bx-envelope"></i>
+                                                                ایمیل
+                                                                <a href="#">{{ user.email }}</a>
+                                                        </li>
+                                                        <li>
+                                                                <i class="bx bxs-phone-call"></i>
+                                                                تلفن
+                                                                <a href="#">{{ user.profile.phone }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                </ul>
+                                        </div>
+                                        <div class="sidebar-modal-widget">
+                                                <h3 class="title">با ما در ارتباط باشید</h3>
+                                                <ul class="social-list">
+                                                        <li>
+                                                                <a href="{{ user.profile.linkedin }}">
+                                                                        <i class='bx bxl-twitter'></i>
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ user.profile.facebook }}">
+                                                                        <i class='bx bxl-facebook'></i>
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ user.profile.instagram }}">
+                                                                        <i class='bx bxl-instagram'></i>
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ user.profile.linkedin }}">
+                                                                        <i class='bx bxl-linkedin'></i>
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ user.profile.youtube }}">
+                                                                        <i class='bx bxl-youtube'></i>
+                                                                </a>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</div>

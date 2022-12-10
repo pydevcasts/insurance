@@ -1,0 +1,54 @@
+{% extends "frontend/shared/home.html" %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+<section class="team-area team-area-five pt-100 pb-70">
+    <div class="container">
+        {% for team in teams %}
+        <div class="section-title section-title-five">
+            <span> {{ team.title }}</span>
+            <h2>{{ team.summary }}</h2>
+            <p>{{ team.content | safe }}</p>
+        </div>
+        {% endfor %}
+
+        <div class="row">
+            {% for member in members %}
+
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-team">
+                    <div class="image">
+                        <img src="{{ member.banner.url }}" alt="Insurance_Team">
+                        <ul class="social">
+                            <li>
+                                <a href="{{ member.facebook }}">
+                                    <i class="bx bxl-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ member.instagram }}">
+                                    <i class="bx bxl-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ member.linkedin }}">
+                                    <i class="bx bxl-linkedin"></i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="content">
+                        <h3>{{ member.first_name }} {{ member.last_name }}</h3>
+                        <span>{{ member.role }}</span>
+                        <span>{{ member.phone }}</span>
+
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

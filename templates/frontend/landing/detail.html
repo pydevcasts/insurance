@@ -1,0 +1,293 @@
+{% extends 'frontend/shared/home.html' %}
+{% load form_tags %}
+{% load static %}
+<title>{% block title %} {{ post.title }}{% endblock title %}</title>
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<section class="blog-details-area ptb-100">
+        <div class="container">
+                <div class="row">
+                        <div class="col-lg-8 col-md-12">
+                                <div class="blog-details-desc">
+                                        <div class="article-image">
+                                                <img src="{{ post.banner.url }}" alt="image">
+                                        </div>
+                                        <div class="article-content">
+                                                <div class="entry-meta">
+                                                        <ul>
+                                                                <li><span>ارسال در:</span> <a href="#">{{ post.published_at|jalali_date }}</a></li>
+                                                                <li><span>نوشته شده:</span> <a href="#">{{post.author.first_name }}</a></li>
+                                                                <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>        
+                                                        </ul>
+                                                </div>
+                                                <h3>{{ post.title }}</h3>
+                                                <blockquote class="flaticon-quote">
+                                                        <p>{{ post.summary }}</p>
+                                                </blockquote>
+                                                <p>{{ post.content |safe }}</p>
+
+                                        </div>
+                                        <div class="article-footer">
+                                                <div class="article-tags">
+                                                        <span><i class='bx bx-share-alt'></i></span>
+                                                        <a href="#">اشتراک گذاری</a>
+                                                </div>
+                                                <div class="article-share">
+                                                        <ul class="social">
+                                                                <li>
+                                                                        <a href="#" target="_blank">
+                                                                                <i class='bx bxl-facebook'></i>
+                                                                        </a>
+                                                                </li>
+                                                                <li>
+                                                                        <a href="#" target="_blank">
+                                                                                <i class='bx bxl-twitter'></i>
+                                                                        </a>
+                                                                </li>
+                                                                <li>
+                                                                        <a href="#" target="_blank">
+                                                                                <i class='bx bxl-linkedin'></i>
+                                                                        </a>
+                                                                </li>
+                                                                <li>
+                                                                        <a href="#" target="_blank">
+                                                                                <i class='bx bxl-pinterest-alt'></i>
+                                                                        </a>
+                                                                </li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+
+
+                                        <div class="comments-area">
+                                                <h3 class="comments-title">{{ post.comments.count }} نظر:</h3>
+                                                {% for comment in post.comments.all %}
+                                                <ol class="comment-list">
+                                                        <li class="comment">
+                                                                <div class="comment-body">
+                                                                        <footer class="comment-meta">
+                                                                                <div class="comment-author vcard">
+                                                                                        {% if comment.user.profile.avatar %}
+                                                                                       
+                                                                                        <img src="{{ comment.user.profile.get_avatar }}"
+                                                                                                class="rounded-circle"
+                                                                                                width=50
+                                                                                                alt="insurance">{% else %}
+                                                                                        
+                                                                                        <img src="{% static 'media/static/assets/frontend/img/testimonial/6.jpg'%}"
+                                                                                                class="avatar"
+                                                                                                alt="image">
+                                                                                        {% endif %}
+
+                                                                                        <b class="fn">{{ comment.user.first_name }}-{{ comment.user.last_name }}
+                                                                                        </b>
+                                                                                        <span class="says">می
+                                                                                                گوید:</span>
+                                                                                </div>
+                                                                                <div class="comment-metadata">
+                                                                                        <a href="#">
+                                                                                                <span>
+                                                                                                        {{ comment.published_at|jalali_date }}
+                                                                                                </span>
+                                                                                        </a>
+                                                                                </div>
+                                                                        </footer>
+                                                                        <div class="comment-content">
+                                                                                <p>{{ comment.content | safe }}
+                                                                                </p>
+                                                                        </div>
+                                                                        <div class="reply">
+                                                                                <a href="#"
+                                                                                        class="comment-reply-link"
+                                                                                        data-toggle="collapse"
+                                                                                        data-target="#replyBox{{comment.id}}"
+                                                                                        aria-expanded="false"
+                                                                                        aria-controls="replyBox{{comment.id}}">پاسخ
+                                                                                        
+                                                                                </a>
+                                                                        </div>
+
+                                                                        <div class="collapse"
+                                                                                id="replyBox{{comment.id}}">
+                                                                                <div
+                                                                                        class="card card-body my-2">
+                                                                                        <form class="comment-reply" action="#"
+                                                                                                method="post">
+                                                                                                {% csrf_token %}
+                                                                                                <div
+                                                                                                        class="form-group">
+                                                                                                        <label
+                                                                                                                for="comment">پاسخ
+                                                                                                                به
+                                                                                                                کامنت
+                                                                                                        </label>
+                                                                                                        <input type="hidden"
+                                                                                                                name="comment_id"
+                                                                                                                value="{{comment.id}}">
+                                                                                                        <input type="text"
+                                                                                                                class="form-control"
+                                                                                                                name="content"
+                                                                                                                placeholder="بنویسید متن تان...">
+                                                                                                </div>
+                                                                                                <button type="submit"
+                                                                                                class="default-btn btn-block page-btn">
+                                                                                                ارسال 
+                                                                                                </button>
+                        
+                                                                                        </form>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <ol class="children">
+                                                                        {% for reply in comment.comments.all %}
+                                                                        <li class="comment">
+                                                                                <div class="comment-body">
+                                                                                        <footer class="comment-meta">
+                                                                                                <div
+                                                                                                        class="comment-author vcard">
+                                                                                                        {% if reply.user.profile.avatar %} 
+                                                                                                       
+                                                                                                       <img src="{{ reply.user.profile.get_avatar }}"
+                                                                                                                class="rounded-circle"
+                                                                                                                width=50
+                                                                                                                alt="insurance">{% else %}
+                                                                                                       
+                                                                                                        <img src="{% static 'media/static/assets/frontend/img/testimonial/5.jpg'%}"
+                                                                                                                class="avatar"
+                                                                                                                alt="image">
+                                                                                                        {% endif %}
+                                                                                                        <b class="fn">{{ reply.count }}
+                                                                                                        </b>
+                                                                                                        <span
+                                                                                                                class="says">می
+                                                                                                                گوید:</span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                        class="comment-metadata">
+                                                                                                        <a href="#">
+                                                                                                                <span> {{ reply.published_at|jalali_date }}
+                                                                                                                </span>
+                                                                                                        </a>
+                                                                                                </div>
+                                                                                        </footer>
+                                                                                        <div class="comment-content">
+                                                                                                <p>{{ reply.content | safe  }}
+                                                                                                </p>
+                                                                                        </div>
+                                                                                        <!-- <div class="reply">
+                                                                                                <a href="#"
+                                                                                                        class="comment-reply-link"
+                                                                                                        data-toggle="collapse"
+                                                                                                        data-target="#replyBox{{reply.id}}"
+                                                                                                        aria-expanded="false"
+                                                                                                        aria-controls="replyBox{{reply.id}}">پاسخ
+                                                                                                        
+                                                                                                </a>
+                                                                                        </div> -->
+
+                                                                                        <!-- <div class="collapse"
+                                                                                                id="replyBox{{reply.id}}">
+                                                                                                <div
+                                                                                                        class="card card-body my-2">
+                                                                                                        <form action="#"
+                                                                                                                method="post">
+                                                                                                                {%  csrf_token %}
+                                                                                                                <div
+                                                                                                                        class="form-group">
+                                                                                                                        <label
+                                                                                                                                for="comment">پاسخ
+                                                                                                                                به
+                                                                                                                                کامنت
+                                                                                                                        </label>
+                                                                                                                        <input type="text"
+                                                                                                                                class="form-control"
+                                                                                                                                name="content"
+                                                                                                                                placeholder="بنویسید متن تان...">
+                                                                                                                        <input type="hidden"
+                                                                                                                                name="comment_id"
+                                                                                                                                value="{{reply.id}}">
+                                                                                                                </div>
+                                                                                                              <input type="hidden"
+                                                                                                                        name="postSno"
+                                                                                                                        value="{{post.sno}}">
+                                                                                                                        <button type="submit"
+                                                                                                                        class="default-btn btn-block page-btn">
+                                                                                                                        ارسال 
+                                                                                                                        </button> 
+                                                                                                        </form>
+                                                                                                </div>
+                                                                                        </div> -->
+                                                                                </div>
+                                                                        </li>
+                                                                        {% endfor %}
+                                                                </ol>
+                                                        </li>
+                                                </ol>
+                                                {% endfor %}
+                                                <div class="comment-respond">
+                                                        <h3 class="comment-reply-title">نظر بدهید</h3>
+                                                        <form class="comment-form" method="post" novalidate>
+                                                                <p class="comment-notes">
+                                                                        <span id="email-notes">آدرس ایمیل شما
+                                                                                منتشر نخواهد شد.</span>
+                                                                        قسمتهای مورد نیاز علامت گذاری شده اند
+                                                                        <span class="required">*</span>
+                                                                </p>
+                                                                {% csrf_token %}
+                                                                {% include 'dashboard/includes/form.html' %}
+                                                                <button type="submit"
+                                                                        class="default-btn btn-block page-btn">
+                                                                        ارسال پیام
+                                                                </button>
+
+                                                        </form>
+                                                </div>
+                                        </div>
+
+
+
+                                </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                                <aside class="widget-area" id="secondary">
+                                        <div class="widget widget_search">
+                                                <h3 class="widget-title">جستجو کنید</h3>
+                                                <div class="post-wrap">
+                                                        <form class="search-form" method="GET" action="/search/">
+                                                                <label>
+                                                                        <span class="screen-reader-text">جستجو
+                                                                                کنید:</span>
+                                                                        <input type="search" class="search-field" id="q"
+                                                                                name="q" placeholder="جستجو ...">
+                                                                </label>
+                                                                <button type="submit"><i
+                                                                                class='bx bx-search'></i></button>
+                                                        </form>
+
+                                                </div>
+                                        </div>
+                                        
+                                        {% include 'frontend/includes/_favorites.html' %}
+                                        {% include 'frontend/includes/_archives.html' %}
+                                        {% include 'frontend/includes/_categories.html' %}
+                                        <section class="widget widget_tag_cloud">
+                                                <h3 class="widget-title">برچسب ها</h3>
+                                                <div class="post-wrap">
+                                                        <div class="tagcloud">
+
+                                                                {% for tag in post.tags.all %}
+                                                                <a href="#">{{ tag.title }} </a>
+
+                                                                {% endfor %}
+                                                        </div>
+                                                </div>
+                                        </section>
+                                </aside>
+                        </div>
+                </div>
+        </div>
+</section>
+
+
+{% endblock %}

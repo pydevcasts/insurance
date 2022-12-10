@@ -1,0 +1,15 @@
+{% include "dashboard/includes/_head.html" %}  
+{% block stylesheets %}{% endblock stylesheets %}
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="insurance-direction">
+
+    {% block content %}{% endblock content %}
+
+    {% include 'dashboard/includes/scripts.html' %}
+
+    {% block javascripts %}{% endblock javascripts %}  
+
+</body>
+</html>

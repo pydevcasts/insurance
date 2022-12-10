@@ -1,0 +1,8 @@
+
+<form  method="post" action ="{% url 'blog:post_and_category' %}">
+    <div class="form-group">
+        {% csrf_token %}
+        <input type="email" class="form-control" placeholder="آدرس ایمیل شما" name="subscriber"  autocomplete="off">
+        <button type="submit"  class="default-btn">مشترک شدن</button>
+    </div>
+</form>

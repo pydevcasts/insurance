@@ -1,0 +1,107 @@
+{% extends "frontend/shared/home.html" %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+{% for about in abouts %}
+{%  if forloop.counter|divisibleby:2 %}
+<section class="about-area ptb-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <span>{{ about.title }}</span>
+                    <h2>{{ about.summary }}</h2>
+                    <p>{{about.content | safe}}</p>
+                    <div class="about-list">
+                        <ul>
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                پس انداز کنید
+                            </li>
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                برنامه سریع
+                            </li>
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                بیمه انعطاف پذیر
+                            </li>
+                        </ul>
+                        <ul class="ml-30">
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                بدون کارگزار ، بدون فروش زیاد
+                            </li>
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                برنامه ریزی سرمایه گذاری
+                            </li>
+                            <li>
+                                <i class="flaticon-checked"></i>
+                                مشاور حرفه ای
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img wow fadeInRight" data-wow-delay=".2s">
+                    <img src="{% static 'assets/frontend/img/about-img.png' %}" alt="Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="our-vision-area ptb-100">
+    <div class="container">
+            <div class="row align-items-center">
+                    <div class="col-lg-6">
+                            <div class="about-img wow fadeInLeft" data-wow-delay=".2s">
+                                    <img src="{% static 'assets/frontend/img/vision-img.png' %}" alt="Image">
+                            </div>
+                    </div>
+                    <div class="col-lg-6">
+                            <div class="vision-content">
+                                    <span> {{ about.title }}</span>
+                                    <h2>{{ about.summary }}</h2>
+                                    <p>{{ about.content|safe }}</p>
+                                    <div class="vision-list">
+                                            <ul>
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            پس انداز کنید
+                                                    </li>
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            برنامه سریع
+                                                    </li>
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            بیمه انعطاف پذیر
+                                                    </li>
+                                            </ul>
+                                            <ul class="ml-30">
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            بدون کارگزار ، بدون فروش زیاد
+                                                    </li>
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            برنامه ریزی سرمایه گذاری
+                                                    </li>
+                                                    <li>
+                                                            <i class="bx bx-chevrons-left"></i>
+                                                            مشاور حرفه ای
+                                                    </li>
+                                            </ul>
+                                    </div>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</section>
+{% endif %}
+{% endfor %}
+{% endblock %}

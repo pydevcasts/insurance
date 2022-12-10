@@ -1,0 +1,104 @@
+{% extends "frontend/shared/home.html" %}
+{% load static %}
+{% block body %}
+{% include 'frontend/partials/_head.html' %}
+
+<section class="contact-area ptb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="contact-wrap">
+          <div class="contact-form">
+            <div class="section-title">
+              <h2>برای هرگونه سوال پیامی برای ما ارسال کنید</h2>
+            </div>
+
+
+
+            <form id="post_form" method="POST" action="{% url 'contact:contact-create' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="ایمیل شما">
+                    {% for error in form.errors.subject %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" name="subject" id="subject" class="form-control" required
+                      data-error="لطفا موضوع خود را وارد کنید" placeholder="موضوع شما">
+                    {% for error in form.errors.subject %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group">
+                    <textarea name="content" class="form-control" id="content" cols="30" rows="5" required
+                      data-error="پیام خود را بنویسید" placeholder="پیام شما"></textarea>
+                    {% for error in form.errors.content %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <button type="submit" class="default-btn btn-block page-btn">
+                    ارسال پیام
+                  </button>
+                  <div id="msgSubmit" class="h3 text-center hidden">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="quick-contact">
+          <h3>تماس سریع </h3>
+          <ul>
+            {% for user in users %}
+            <li>
+              <i class="flaticon-maps-and-flags"></i>
+              موقعیت:
+              <span> {{ user.profile.address}}
+              </span>
+            </li>
+            <li>
+              <i class="flaticon-call"></i>
+              تماس با ما:
+              <a href="#">{{ user.profile.phone }}</a>
+              <a href="#">{{ user.mobile }}</a>
+            </li>
+            <li>
+              <i class="flaticon-email"></i>
+              ایمیل ما:
+              <a href="#">{{ user.email }}</a>
+
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          {{ map|safe}}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

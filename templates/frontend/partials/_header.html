@@ -1,0 +1,216 @@
+{% load static %}
+
+<header class="header-area fixed-top">
+  <div class="top-header-area">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="header-content-left">
+            <p>به آکادمی بیمه خوش آمدید!</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul class="header-content-right">
+            {% for user in users %}
+            {% if user.is_superuser %}
+            <li>
+              <a href="#">
+                <i class="bx bx-phone-call"></i>
+                 تلفن تماس: {{ user.profile.phone }}
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="bx bx-envelope"></i>
+                ایمیل: {{ user.email }}
+              </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-area nev-style-two">
+    <div class="navbar-area">
+
+      <div class="mobile-nav">
+        <a href="index.html" class="logo">
+          <img src="{% static 'assets/frontend/img/logo.png' %}" alt="Logo" width="100">
+        </a>
+      </div>
+
+      <div class="main-nav">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <div class="container">
+            <a class="navbar-brand" href="{% url 'blog:post_and_category' %}">
+              <img src="{% static 'assets/frontend/img/home-one-logo.png' %}" alt="Logo" width="100">
+            </a>
+            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
+              <ul class="navbar-nav m-auto">
+                <li class="nav-item">
+                  <a href="{% url 'blog:post_and_category' %}"
+                    class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'post_and_subcategory' %}active{%endif%}">
+                    خانه
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'about:about-insurance' %}"
+                    class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'about-insurance' %}active{%endif%}">درباره
+                    ما</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link dropdown-toggle">
+                    صفحات
+                    <i class="bx bx-plus"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <a href="{% url 'team:team-insurance' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'team-insurance' %}active{%endif%}">تیم
+                        ما</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'customer-feedback:list'  %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'customer-feedback' %}active{%endif%}">بازخورد مشتریان</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'faq:faq-insurance'  %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'faq-insurance' %}active{%endif%}">سوالات
+                        متداول</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link dropdown-toggle">
+                        کاربران
+                        <i class="bx bx-plus"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                        <li class="nav-item">
+                          <a href="/admin/" class="nav-link">ورود ادمین</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                          <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'tickets:ticket_create' %}" class="nav-link"> ارسال تیکت</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'user:user-update' user.pk %}" class="nav-link">پروفایل</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'user:password_change' %}" class="nav-link">تغییر گذر واژه</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{% url 'logout' %}" class="nav-link">خروج</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                          <a href="{% url 'login' %}" class="nav-link"> ورود</a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </li>
+             
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link dropdown-toggle">
+                    بیمه
+                    <i class="bx bx-plus"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    {% for category in categories %}
+                    {% if category.is_parent %}
+                    <li class="nav-item">
+                      
+                      <a href="{{ category.posts_base_on_category }}" class="nav-link dropdown-toggle">
+                        {{ category.title }}
+                        <i class="bx bx-plus"></i>
+                      </a>
+                      {% for subcategory in category.children %}
+                      <ul class="dropdown-menu">
+                        <li class="nav-item">
+                          <a href="{{ subcategory.get_absolute_url }}" class="nav-link"> {{ subcategory.title }}
+                        <i class="bx bx-plus"></i>
+
+                          </a>
+                          <ul class="dropdown-menu">
+                          {% for postcat in subcategory.posts.all %}
+                          <li class="nav-item">
+                            <a href="{{ postcat.get_absolute_url }}" class="nav-link">{{ postcat.title }}</a>
+                          </li>
+                          {% endfor %}
+                        </li>
+                      </ul>
+                      </ul>
+                      {% endfor %}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a href="#" class="nav-link dropdown-toggle">
+                    وبلاگ
+                    <i class="bx bx-plus"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <a href="{% url 'blog:all_post' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'all_post' %}active{%endif%}">پست ها</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'new:list_news' %}"  class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'list_news' %}active{%endif%}">خبر ها</a>
+                    </li>
+                  </ul>
+                </li>
+              
+                <li class="nav-item ">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'create' %}active{% endif %}"
+                    href="{% url 'contact:contact-create' %}">تماس با ما</a>
+                </li>
+              </ul>
+              <div class="others-option">
+                <div class="option-item">
+                  <i class="search-btn bx bx-search"></i>
+                  <i class="close-btn bx bx-x"></i>
+                  <div class="search-overlay search-popup">
+                    <div class="search-box">
+                      <form class="search-form" method="GET" action="/search/">
+                        <input class="search-input" name="q" id = "q" placeholder="جستجو" type="text">
+                        <button class="search-button" type="submit"><i class="bx bx-search"></i></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="subscribe">
+                  {% if user.is_authenticated %}
+                  <a href="{% url 'logout' %}" class="default-btn">
+                    خروج
+                  </a>
+                  {% else %}
+                  <a href="{% url 'login' %}" class="default-btn">
+                    ورود | ثبت نام
+                  </a>
+                  {% endif %}
+                </div>
+                <div class="sidebar-menu">
+                  <a href="#" data-toggle="modal" data-target="#myModal2">
+                    <i class="bx bx-grid-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% include 'frontend/partials/_sidebar.html' %}

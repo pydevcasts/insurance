@@ -1,0 +1,43 @@
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    
+}
+
+#header {
+height:45px;
+background:#050b2a;
+color:#fff;
+}
+
+#branding h1{
+    color:#fff;
+    font-size: 11px;
+    
+}
+
+a:link,
+a:visited {
+    color:#050b2a;
+}
+div.breadcrumbs {
+    background:#12b48b;
+    color:#050b2a;
+}
+div.breadcrumbs a {
+    color:#333;
+}
+.module h2, .module caption, .inline_group h2 {
+    background:#12b48b;
+}
+.button, input[type=submit], input[type=button], .submit-row input, a-button {
+    background: #050b2a;
+    color: #fff;
+}
+.input[type=submit].default, .submit-row input.default {
+    background: #12b48b;
+    color: #fff;
+}
+
+
+
+

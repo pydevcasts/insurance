@@ -1,0 +1,73 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 10/04/2020 17:03
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../fonts/Flaticon.eot");
+  src: url("../fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/Flaticon.woff2") format("woff2"),
+       url("../fonts/Flaticon.woff") format("woff"),
+       url("../fonts/Flaticon.ttf") format("truetype"),
+       url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-style: normal;
+}
+
+.flaticon-heart:before { content: "\f100"; }
+.flaticon-email:before { content: "\f101"; }
+.flaticon-call:before { content: "\f102"; }
+.flaticon-right:before { content: "\f103"; }
+.flaticon-right-1:before { content: "\f104"; }
+.flaticon-left:before { content: "\f105"; }
+.flaticon-left-1:before { content: "\f106"; }
+.flaticon-play-button:before { content: "\f107"; }
+.flaticon-left-2:before { content: "\f108"; }
+.flaticon-right-2:before { content: "\f109"; }
+.flaticon-maps-and-flags:before { content: "\f10a"; }
+.flaticon-technical-support:before { content: "\f10b"; }
+.flaticon-social-care:before { content: "\f10c"; }
+.flaticon-support:before { content: "\f10d"; }
+.flaticon-experience:before { content: "\f10e"; }
+.flaticon-checked:before { content: "\f10f"; }
+.flaticon-tick:before { content: "\f110"; }
+.flaticon-kindness:before { content: "\f111"; }
+.flaticon-customer:before { content: "\f112"; }
+.flaticon-target:before { content: "\f113"; }
+.flaticon-social-care-1:before { content: "\f114"; }
+.flaticon-ancient-scroll:before { content: "\f115"; }
+.flaticon-target-1:before { content: "\f116"; }
+.flaticon-trophy:before { content: "\f117"; }
+.flaticon-car-insurance:before { content: "\f118"; }
+.flaticon-life-insurance:before { content: "\f119"; }
+.flaticon-travel-insurance:before { content: "\f11a"; }
+.flaticon-salesman:before { content: "\f11b"; }
+.flaticon-insurance:before { content: "\f11c"; }
+.flaticon-left-quotes-sign:before { content: "\f11d"; }
+.flaticon-user:before { content: "\f11e"; }
+.flaticon-calendar:before { content: "\f11f"; }
+.flaticon-smile:before { content: "\f120"; }
+.flaticon-flags:before { content: "\f121"; }
+.flaticon-menu:before { content: "\f122"; }
+.flaticon-menu-1:before { content: "\f123"; }
+.flaticon-hand:before { content: "\f124"; }
+.flaticon-life-insurance-1:before { content: "\f125"; }
+.flaticon-health-care:before { content: "\f126"; }
+.flaticon-insurance-1:before { content: "\f127"; }
+.flaticon-team:before { content: "\f128"; }
+.flaticon-money:before { content: "\f129"; }
+.flaticon-contract:before { content: "\f12a"; }

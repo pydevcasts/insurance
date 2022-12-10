@@ -1,0 +1,28 @@
+<section class="business-contact-area ptb-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 p-0">
+                <div class="business-img">
+                    <img src="{% static 'assets/frontend/img/business-img-2.jpg' %}" alt="Image">
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="business-content">
+                    <h3>با خرید آنلاین بیمه مشاغل کوچک ، تا 30٪ پس انداز کنید</h3>
+                    <a href="contact.html" class="default-btn">
+                        تماس با ما
+                    </a>
+                    <p>امروز تماس بگیرید: <br>
+                        {% for user in users %}
+                        {% if user.profile.phone %}
+
+                        {{ user.profile.phone }} - {{ user.mobile }}
+
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
