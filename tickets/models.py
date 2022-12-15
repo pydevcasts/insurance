@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from painless.models.mixins import TimeStampedMixin
+from painless.models.validations import validate_charachters, validate_file_extension, validate_file_size
 User = get_user_model()
 from django.conf import settings
 from ckeditor.fields import RichTextField
@@ -85,11 +86,9 @@ class FollowUp(TimeStampedMixin):
 
 class Attachment(TimeStampedMixin):
     ticket   = models.ForeignKey(Ticket, on_delete =models.CASCADE, related_name = "attachments", verbose_name = _("تیکت"))
-    file     = models.FileField(_("فایل"), upload_to="tickets", max_length=1000)
-    filename = models.CharField(_("نام فایل"), max_length=1000)
+    file     = models.FileField(_("فایل"), upload_to="tickets", max_length=1000, blank= True, null = True, validators=[validate_file_extension, validate_file_size])
+    filename = models.CharField(_("نام فایل"), max_length=1000, validators=[validate_charachters], blank = True, null = True)
    
-
-
     def get_upload_to(self, field_attname):
         """ Get upload_to path specific to this item """
         if not self.id:

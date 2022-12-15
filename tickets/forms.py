@@ -6,7 +6,7 @@ from django.forms import inlineformset_factory
 
 
 class TicketCreateForm(forms.ModelForm):
-    description = forms.CharField(label='پیام', widget=forms.Textarea(attrs={'class': 'ckeditor'}))
+    description = forms.CharField(label='پیام', widget=forms.Textarea(attrs={'class': 'ckeditor','style':'direction:rtl;'}))
     class Meta:
         model = Ticket
         fields = ('title', 'description')
@@ -16,7 +16,6 @@ class TicketCreateForm(forms.ModelForm):
                     'class': 'form-control'
                     }
                 ),
-        
         }
 
 
@@ -40,15 +39,12 @@ class AttachmentForm(forms.ModelForm):
         model = Attachment
         fields = ('file','filename',)
         widgets = {
-                
                 'filename': forms.TextInput(
                     attrs={
                         'class': 'form-control'
                         }
                     ),
             }
-
-
 
 
 AttachmentFormSet = inlineformset_factory(

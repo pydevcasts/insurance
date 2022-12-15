@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'rest_framework',
     'widget_tweaks',
-    'social_django',
     'users', 
     'debug_toolbar',
     'ckeditor',
@@ -42,8 +41,11 @@ INSTALLED_APPS = [
     'dj_rest_auth',
 
     'allauth',
+    'social_django',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', # for Google OAuth 2.0
+
     'dj_rest_auth.registration',
     'django_filters',
     
@@ -80,7 +82,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-      'social_django.middleware.SocialAuthExceptionMiddleware', #add
 ]
 
 ROOT_URLCONF = 'insurance.urls'
@@ -226,13 +227,17 @@ RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY",default="")
 RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY",default="")
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '549418161873-vunmslj02haoovb8r9imscaoa2kad4sc.apps.googleusercontent.com' # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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' # Google Consumer Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY') 
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+ACCOUNT_EMAIL_VERIFICATION = None
+
 
 LOGIN_REDIRECT_URL = "blog:post_and_category"  
 LOGOUT_REDIRECT_URL = 'login'

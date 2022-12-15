@@ -96,7 +96,9 @@ class ProfileUpdateView(SuccessMessageMixin,LoginRequiredMixin, UpdateView):
     model = User
     template_name= 'frontend/accounts/profile.html'
     pk_url_kwarg = 'pk'
-
+    segment = "پروفایل"
+    title = "پروفایل"
+        
     def form_valid(self, form):
         user = form.save(commit = False)
         user.first_name = form.cleaned_data['first_name']

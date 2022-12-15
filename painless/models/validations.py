@@ -1,3 +1,4 @@
+import os
 import re
 import string
 from django import forms
@@ -50,3 +51,17 @@ def validate_postal_code(value):
         pass
     
 
+def validate_file_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.pdf', '.doc', '.docx', '.jpg', '.png', '.xlsx', '.xls', 'jpeg', 'mp3', 'mp4']
+    if not ext.lower() in valid_extensions:
+        raise forms.ValidationError('فایل با این فرمت قابل آپلود نیست!')
+
+
+def validate_file_size(value):
+    filesize= value.size
+    
+    if filesize > 10485760:
+        raise forms.ValidationError("نمیتوان فایل با حجم بیشتر از ۱۰۰ مگابایت آپلود کرد")
+    else:
+        return value

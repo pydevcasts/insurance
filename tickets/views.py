@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from . models import Ticket, Attachment, FollowUp
@@ -74,34 +75,13 @@ class AttachmentInline():
 
 
 class TicketCreate(AttachmentInline, LoginRequiredMixin, CreateView):
-
-    def post(self, request, *args, **kwargs):
-            if request.method == 'POST':
-                form = TicketCreateForm(request.POST)
-                if form.is_valid():
-                    form = form.save(commit=False)
-                    form.user = request.user
-                    form.status = "TODO"
-                    form.save()
-                    my_first_task.delay(15)
-                # mail notification of user to academybime
-                    notification_subject = "[#" + str(form.user.id) + "] آکادمی بیمه"
-                    notification_body = "سلام,\n\n یک تیکت  ارسال کردید    #" + "\n\nممنون از همراهی شما"
-                    send_mail(notification_subject, notification_body, 'siyamak1981@gmail.com',
-                        [form.user.email, 'siyamak1981@gmail.com'], fail_silently=False)
-                    messages.success(request,
-                                    "پیام شما با موفقیت ارسال گردید !")
-                    return redirect('tickets:ticket-list')
-            else:
-                form = TicketCreateForm()
-            return render(request, 'dashboard/ticket/ticket_create.html',
-                        {'form': form , "segment":"ایجاد تیکت"} 
-                    )
-
+    form_class = TicketCreateForm
+    model = Ticket
+    template_name = 'dashboard/ticket/ticket_create.html'
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['named_formsets'] = self.get_named_formsets()
-        return ctx
+        context = super().get_context_data(**kwargs)
+        context['named_formsets'] = self.get_named_formsets()
+        return context
 
 
     def get_named_formsets(self):
@@ -113,8 +93,31 @@ class TicketCreate(AttachmentInline, LoginRequiredMixin, CreateView):
             return {
                 'attachments': AttachmentFormSet(self.request.POST or None, self.request.FILES or None, prefix='attachments'),
             }
-
-
+    
+  
+    def form_valid(self, form):
+        context = self.get_context_data()
+        inlines = context['named_formsets']
+        inlines = inlines.get('attachments')
+        if inlines.is_valid() and form.is_valid():
+            form = form.save(commit=False)
+            form.user = self.request.user
+            form.status = "TODO"
+            form.save()
+            instance = form
+            inlines.instance = instance
+            inlines.save()
+            # my_first_task.delay(10)
+         
+            # mail notification of user to academybime
+            notification_subject = "[#" + str(form.user.id) + "] آکادمی بیمه"
+            notification_body = "سلام,\n\n یک تیکت  ارسال کردید    #" + "\n\nممنون از همراهی شما"
+            send_mail(notification_subject, notification_body, 'siyamak1981@gmail.com',
+                [form.user.email, 'siyamak1981@gmail.com'], fail_silently=False)
+            messages.success(self.request,
+                            "پیام شما با موفقیت ارسال گردید !")
+        return redirect('tickets:ticket-list')
+          
 
    
 class TicketUpdate(AttachmentInline, LoginRequiredMixin, UpdateView):

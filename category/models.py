@@ -4,6 +4,7 @@ from painless.models.mixins import OrganizedMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
+from painless.models.validations import validate_file_extension, validate_file_size
 
 
 
@@ -12,7 +13,7 @@ class Category(OrganizedMixin):
     parent = models.ForeignKey('self', default=None, null=True, blank=True, on_delete=models.SET_NULL,
                                related_name='subcategory', verbose_name="زیر مجموعه")
     banner=models.ImageField(_('تصویر'),
-        upload_to='category/%Y/%m/%d', blank=True)
+        upload_to='category/%Y/%m/%d', blank=True, validators=[validate_file_extension, validate_file_size])
     content = RichTextField(_('پیام'),blank=True,null=True)
 
     class Meta:

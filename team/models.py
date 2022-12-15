@@ -4,6 +4,8 @@ from painless.models.managers import PostPublishedManager
 from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
 
+from painless.models.validations import validate_file_extension, validate_file_size
+
 
 class Member(OrganizedMixin):
     title = None
@@ -12,7 +14,7 @@ class Member(OrganizedMixin):
     last_name = models.CharField(_("نام خانوادگی"), max_length=128, null = True, blank = True)
     role = models.CharField(_("سمت"), max_length=128, null = True, blank = True)
     phone = models.CharField(_("تلفن"), max_length=128, null = True, blank = True)
-    banner = models.ImageField(upload_to = 'memnber/%Y/%m/%d', null = True, blank = True)
+    banner = models.ImageField(upload_to = 'memnber/%Y/%m/%d', null = True, blank = True, validators=[validate_file_extension, validate_file_size])
     instagram = models.URLField(_("اینستاگرام"), blank = True, null = True)
     whatsapp = models.URLField(_("واتس آپ"), blank = True, null = True)
     linkedin = models.URLField(_("لینکدین"), blank = True, null = True)

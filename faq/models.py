@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from painless.models.mixins import OrganizedMixin, TimeStampedMixin
 from ckeditor.fields import RichTextField
 from django.core.validators import validate_email
-from painless.models.validations import validate_charachters,validate_phone_number
+from painless.models.validations import validate_charachters, validate_file_extension, validate_file_size,validate_phone_number
 
 
 
@@ -49,7 +49,7 @@ class Answer(OrganizedMixin):
     slug = None
     title = None
     answer = RichTextField(_('پیام'), blank=True,null=True)
-    banner = models.ImageField(_('آپلود فایل'),upload_to = 'answer/%Y/%m/%d', null = True, blank = True)
+    banner = models.ImageField(_('آپلود فایل'),upload_to = 'answer/%Y/%m/%d', null = True, blank = True, validators=[validate_file_extension, validate_file_size])
     alt = models.CharField(_('توضیح عکس'),max_length = 50, blank = True, null = True, default = "insurance")
     question = models.OneToOneField('Question', on_delete=models.CASCADE, related_name='question')
     

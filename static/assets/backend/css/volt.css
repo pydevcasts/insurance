@@ -14835,7 +14835,7 @@ textarea.form-control-lg {
     .sidebar .nav-link .link-arrow {
       font-size: 0.875rem; }
     .sidebar .nav-link[data-bs-toggle=collapse][aria-expanded=true] .link-arrow {
-      transform: rotate(90deg);
+      transform: rotate(269deg);
       transition: all 0.2s ease; }
   .sidebar .nav-link.active {
     color: #F2F4F6; }
