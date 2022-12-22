@@ -88,7 +88,8 @@ class PostDetailView(FormMixin, DetailView):
         post = get_object_or_404(Post, slug = self.kwargs['slug'])
         comments = Comment.objects.filter_by_instance(post)
         context['comments'] = comments
-        context['title'] = "جزییات"
+        context['title'] = post.title
+        context['segment'] = post.title
         context['form'] = self.get_form_class()
         context['favorites'] = New.objects.most_views_by_users()[:5]
    

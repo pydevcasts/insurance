@@ -41,10 +41,10 @@ def validate_national_code(value):
 def validate_postal_code(value):
     if not len(value) == 10:
         raise forms.ValidationError('کد پستی صحیح نیست')
-    elif '2' in value or '0' in value:
-        raise forms.ValidationError('کد پستی صحیح نیست')
-    elif value[4] == 5:
-        raise forms.ValidationError('کد پستی صحیح نیست')
+    # elif '2' in value or '0' in value:
+    #     raise forms.ValidationError('کد پستی صحیح نیست')
+    # elif value[4] == 5:
+    #     raise forms.ValidationError('کد پستی صحیح نیست')
     elif len(set(value)) == 1:
         raise forms.ValidationError('کد پستی صحیح نیست')
     else:

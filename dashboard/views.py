@@ -29,9 +29,6 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name='dashboard/accounts/password_change.html'
     success_message = "پسوردتان با موفقیت تغیرر یافت"
     success_url = reverse_lazy('dashboard:password_change')
-   
-  
-
 
 
 class PostListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):

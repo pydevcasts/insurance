@@ -58,3 +58,4 @@ MarkupSafe==2.1.1
 ratelim==0.1.6
 markdown2==2.4.3
 django-celery-beat==2.3.0
+django-admin-thumbnails==0.2.6

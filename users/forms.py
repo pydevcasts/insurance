@@ -15,7 +15,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = '__all__'
-        exclude = [ 'user', 'published_at','instagram','whatsapp', 'linkedin', 'birthday', 'about']
+        exclude = ['user', 'published_at','instagram','whatsapp', 'linkedin', 'birthday', 'about']
         widgets = {
             'birthday': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
         }

@@ -4,6 +4,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls.base import reverse_lazy
 from django.views.generic import ListView,UpdateView
 from django.views.generic.edit import  DeleteView
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from users.forms import ProfileForm
 from users.models import Profile
 from django.shortcuts import render, redirect
@@ -34,7 +36,7 @@ class UserListView(LoginRequiredMixin, ListView):
         return redirect("dashboard:home")
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class DeleteUserView(SuccessMessageMixin,PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
     model = User
@@ -79,26 +81,27 @@ class ProfileView(View, LoginRequiredMixin, PermissionRequiredMixin):
                 profile.user.first_name = form.cleaned_data.get('first_name')
                 profile.user.last_name = form.cleaned_data.get('last_name')
                 profile.user.email = form.cleaned_data.get('email')
+                profile.user.mobile = form.cleaned_data.get('mobile')
                 profile.user.save()
                 messages.success(request, 'پروفایل با موفقیت ایجاد گردید')
-                return redirect('dashboard:home')
+                return redirect('user:user-create')
             else:
-                return render(request,'dashboard/user/create.html', {"form":form, })
+                messages.warning(request, 'فرم ارسالی شما مشکل دارد')
+                return redirect('user:user-create')
+
             
-        else:
-            form = ProfileForm(request.FILES,)
-        return redirect('user:user-list')
 
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ProfileUpdateView(SuccessMessageMixin,LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
+    segment = "پروفایل"
+    title = "پروفایل"
     model = User
     template_name= 'frontend/accounts/profile.html'
     pk_url_kwarg = 'pk'
-    segment = "پروفایل"
-    title = "پروفایل"
-        
+
     def form_valid(self, form):
         user = form.save(commit = False)
         user.first_name = form.cleaned_data['first_name']
@@ -110,13 +113,12 @@ class ProfileUpdateView(SuccessMessageMixin,LoginRequiredMixin, UpdateView):
         user.profile.address = form.cleaned_data['address']
         user.profile.zip = form.cleaned_data['zip']
         user.profile.avatar = form.cleaned_data['avatar']
-        user.profile.about = form.cleaned_data['about']
         user.save()
         messages.success(self.request, 'پروفایل با موفقیت آپدیت شد!')
         return redirect('user:user-update', pk=user.pk,)
         
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'frontend/accounts/password_change.html'
     success_message = "پسوردتان با موفقیت تغیرر یافت"

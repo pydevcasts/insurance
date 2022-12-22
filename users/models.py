@@ -28,10 +28,10 @@ class Profile(TimeStampedMixin):
         verbose_name = _('پروفایل')
         verbose_name_plural = _('پروفایل')
 
+    def __str__(self):
+        return "siyamak"
+
     @property
     def get_avatar(self):
         return self.avatar.url if self.avatar else static('../static/assets/backend/img/team/profile-picture-1.jpg')
-
-    def __str__(self):
-        return f'({self.code})'
 

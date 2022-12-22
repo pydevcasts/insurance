@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.utils.html import format_html
 from painless.models.actions import PostableMixin,ExportMixin
 
 
@@ -8,7 +9,10 @@ from painless.models.actions import PostableMixin,ExportMixin
 
 @admin.register(models.CustomerFeedback)
 class CustomeFeedbackAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['first_name','last_name','is_published','status', 'published','role']
+    def thumbnail(self, object):
+        return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))
+    thumbnail.short_description = 'تصویر بازخورد'
+    list_display = ['thumbnail','first_name','last_name','is_published','status', 'published','role']
     list_filter = ['status', 'published_at',]
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
   

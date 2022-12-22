@@ -82,6 +82,6 @@ def new_detail(request, year, month, day, slug):
         form = CommentForm()
     return render(request,
                 'frontend/news/detail.html',
-                {'new': new, 'title':'جزییات خبر' , 'favorites':favorites, 'form':form ,'comments':comments})
+                {'new': new, 'title':new.title , 'segment':new.title, 'favorites':favorites, 'form':form ,'comments':comments})
 
 

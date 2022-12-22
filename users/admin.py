@@ -5,15 +5,36 @@ from .actions import make_active
 from .actions import make_deactive
 from .models import User
 from .models import Profile
+from django.db import models
+from django.utils.safestring import mark_safe
+from django.contrib.admin.widgets import AdminFileWidget
+import admin_thumbnails
 
 
+class AdminImageWidget(AdminFileWidget):
+    def render(self, name, value, attrs=None, renderer=None):
+        output = []
+        if value and getattr(value, "url", None):
+            image_url = value.url
+            file_name = str(value)
+            output.append(
+                f'<a href="{image_url}" target="_blank">'
+                f'<img src="{image_url}" alt="{file_name}" width="150" height="150" '
+                f'style="object-fit: cover;"/> </a>')
+        output.append(super(AdminFileWidget, self).render(name, value, attrs, renderer))
+        return mark_safe(u''.join(output))
+
+
+@admin_thumbnails.thumbnail('avatar')
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
     verbose_name_plural = 'General Profile'
     fk_name = 'user'
     
-    
+    formfield_overrides = {
+        models.ImageField: {'widget': AdminImageWidget}
+    }
     fieldsets = [
         ('I. تلفن -آدرس', {
             'fields': ['phone', 'address'],

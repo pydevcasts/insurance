@@ -1,14 +1,17 @@
 from django.contrib import admin
 from . import models
 from painless.models.actions import PostableMixin,ExportMixin
-
+from django.utils.html import format_html
 
 
 
 
 @admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
-    list_display = ['title', 'slug', 'is_published', 'published','views', 'category', 'get_tags']
+    def thumbnail(self, object):
+        return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))
+    thumbnail.short_description = 'Post Picture'
+    list_display = ['thumbnail', 'title', 'slug', 'is_published', 'published','views', 'category', 'get_tags']
     list_editable = ['category']
     filter_horizontal = ['tags']
     list_filter = ['status', 'published_at', 'category__title']

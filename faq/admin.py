@@ -3,6 +3,9 @@ from faq.models import FAQ, Answer, Question
 from painless.models.actions import PostableMixin,ExportMixin
 from khayyam import JalaliDate as jd
 from django.utils.translation import gettext_lazy as _
+from django.db import models
+from django.utils.safestring import mark_safe
+from django.contrib.admin.widgets import AdminFileWidget
 
 
 
@@ -42,9 +45,25 @@ class FAQAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
         return []
 
 
+class AdminImageWidget(AdminFileWidget):
+    def render(self, name, value, attrs=None, renderer=None):
+        output = []
+        if value and getattr(value, "url", None):
+            image_url = value.url
+            file_name = str(value)
+
+            output.append(
+                f'<a href="{image_url}" target="_blank">'
+                f'<img src="{image_url}" alt="{file_name}" width="150" height="150" '
+                f'style="object-fit: cover;"/> </a>')
+
+        output.append(super(AdminFileWidget, self).render(name, value, attrs, renderer))
+        return mark_safe(u''.join(output))
+
 
 
 class AnswerInline(admin.StackedInline):
+    
     model = Answer
     can_delete = False
     verbose_name_plural = 'General Answer'
@@ -59,7 +78,9 @@ class AnswerInline(admin.StackedInline):
             }
         ),
     ]   
-
+    formfield_overrides = {
+        models.ImageField: {'widget': AdminImageWidget}
+    }
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
@@ -74,11 +95,9 @@ class QuestionAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
    
     list_display = ['title', 'status', 'is_published', 'published']
     search_fields = ('title',)
-
-    inlines = (
-        AnswerInline,
-    )
-    ordering = ('created',)
+   
+    inlines = [AnswerInline]
+    ordering = ('-created',)
 
 
     def published(self, obj):

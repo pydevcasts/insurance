@@ -6,6 +6,7 @@ from django.urls.base import reverse
 from blog.models import Comment
 from painless.models.managers import NewManager
 from painless.models.mixins import OrganizedMixin
+from painless.models.validations import validate_file_extension, validate_file_size
 from tag.models import Tag
 from category.models import Category
 from ckeditor.fields import RichTextField
@@ -19,7 +20,7 @@ class New(OrganizedMixin):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name = 'users', on_delete = models.CASCADE, verbose_name=_("نویسنده"))
     summary = models.CharField(_("خلاصه"), max_length = 128)
-    banner = models.ImageField(_("آپلود"), upload_to = 'news/%Y/%m/%d', null = True, blank = True)
+    banner = models.ImageField(_("آپلود"), upload_to = 'news/%Y/%m/%d', null = True, blank = True, validators=[validate_file_extension, validate_file_size])
     category = models.ForeignKey(Category, related_name = 'news',verbose_name=_("دسته بندی"), on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name = 'tags_new',  blank = True,verbose_name=_("برچسب"))
     views= models.IntegerField(_("بازدید"), default=0)
