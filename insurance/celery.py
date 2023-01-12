@@ -7,6 +7,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'insurance.settings')
 
 app = Celery('insurance')
 app.config_from_object('django.conf:settings', namespace='CELERY')
+app.conf.enable_utc = False
+app.conf.update(timezone='Asia/Tehran')
+
 app.autodiscover_tasks()
 
 

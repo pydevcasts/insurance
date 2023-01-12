@@ -174,6 +174,21 @@
                   <a class="nav-link {% if request.resolver_match.url_name == 'create' %}active{% endif %}"
                     href="{% url 'contact:contact-create' %}">تماس با ما</a>
                 </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link notification dropdown-toggle"id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="true">
+                    <i class="bx bx-bell"></i>
+                  <span class="badge" id="notification-badge">0</span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="notifications-dropdown"
+                  data-popper-placement="bottom-end">
+                    {% for i in notifications %}
+                    <li class="dropdown-item">
+                      <a href="#"  class="nav-link dropdown-toggle ">{{ i.message }}</a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </li>
               </ul>
               <div class="others-option">
                 <div class="option-item">
@@ -208,6 +223,8 @@
             </div>
           </div>
         </nav>
+        {{ room_name|json_script:"room-name" }}
+
       </div>
     </div>
   </div>

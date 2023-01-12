@@ -13,6 +13,7 @@ urlpatterns = [
     re_path(r'^all_post/', views.all_post_view, name = "all_post"),
     re_path(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]+)/(?P<day>[0-9]+)/(?P<slug>[\w-]+)/$', views.PostDetailView.as_view(), name = 'detail'),
     path('mail/newsletter/unsubscribe/<str:token>', views.unsubscrib_redirect_view, name = "unsubscribe_redirect"),
+    re_path(r'^send-notification/', views.notification_broadcast, name="notification_broadcast"),
    
     # re_path(r'^mail/newsletter/unsubscribe/(?P<token>[0-9A-Za-z].[0-9A-Za-z].[0-9A-Za-z])', views.unsubscrib_redirect_view, name = "unsubscribe_redirect"),
     # [A-Za-z0-9.-]

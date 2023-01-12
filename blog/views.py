@@ -1,4 +1,5 @@
 
+import json
 from django.shortcuts import get_object_or_404, render
 from comment.forms import CommentForm
 from blog.models import Comment, Post
@@ -14,6 +15,9 @@ from django.views.generic.detail import DetailView
 from newsletters.models import NewsLetter, decrypt_email
 from django.views.generic.edit import FormMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 
 
@@ -41,7 +45,8 @@ def post_category_list(request, slug=None):
             
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
-                                                        'news':news
+                                                        'news':news,
+                                                        
                                                         })
 def all_post_view(request):
     title = "همه پست ها"
@@ -176,3 +181,14 @@ def unsubscrib_redirect_view(request, token, *args, **kwargs):
 
 
 
+
+def notification_broadcast(request):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "notification_broadcast",
+        {
+            'type': 'send.notification',
+            'message': json.dumps("Notification")
+        }
+    )
+    return HttpResponse("Done")

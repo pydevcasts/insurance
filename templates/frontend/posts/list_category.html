@@ -23,7 +23,9 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="single-service wow fadeInLeft" data-wow-delay=".3s"
                         style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                        {% if post.banner %}
                         <img src="{{ post.banner.url }}" alt="Image">
+                        {% endif %}
                         <div class="service-content">
                             <i class="icon-style {{ post.category.icon }}"></i>
                             <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>

@@ -16,6 +16,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.spl
 INSTALLED_APPS = [
     'daphne',
     'channels',
+    'django_celery_beat',
+    'django_celery_results',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,7 +67,7 @@ INSTALLED_APPS = [
     'comment',
     'tickets',
     'notifications',
-    'channels_redis',
+    # 'channels_redis',
     ]
 
 
@@ -182,11 +184,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'fa-ir'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_L10N = True
 USE_I18N = True
 USE_TZ = True
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

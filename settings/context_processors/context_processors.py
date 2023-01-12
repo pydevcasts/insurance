@@ -9,10 +9,12 @@ from search.documents import PostDocument
 from elasticsearch_dsl import Q
 from team.models import Member, Team
 User = get_user_model()
+from notifications.models import BroadcastNotification
 
 
 
 def posts_view_context_processor(request):
+    allnotifications = BroadcastNotification.objects.filter(sent = True)
     setting = About.objects.filter(status = 1)
     users = User.objects.filter(email = "siyamak1981@gmail.com", is_active = True, is_superuser = True)
     sliders = Slider.condition.filter(status = 1)
@@ -28,5 +30,5 @@ def posts_view_context_processor(request):
    
     else:
         searchs = ""    
-    return ({'archives':archives, 'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
+    return ({'archives':archives,'notifications': allnotifications, 'room_name': "broadcast",'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
 

@@ -63,3 +63,5 @@ django_jinja
 channels==4.0.0
 channels-redis==4.0.0
 daphne
+django-celery-beat>=2.2.1
+django-celery-results>=2.2.0

@@ -3,6 +3,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import validate_email
 
+
+
+
 class Contact(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     subject = models.CharField(_("موضوع"),max_length = 128)
