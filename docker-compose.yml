@@ -49,7 +49,24 @@ services:
     depends_on:
       - db 
       - es
-  
+  #channels
+  worker_channels:
+    build: .
+    command: python manage.py runworker
+    volumes: 
+      - .:/django
+    links:
+      - redis
+      
+  channels:
+    build: .
+    command: daphne -b 0.0.0.0 -p 8001 insurance.asgi:application
+    volumes:
+      - .:/django
+    ports:
+      - "8001:8001"
+    links:
+      - redis
 
   # Celery
   celery:

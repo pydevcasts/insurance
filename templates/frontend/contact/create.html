@@ -15,7 +15,7 @@
 
 
 
-            <form id="post_form" method="POST" action="{% url 'contact:create' %}" enctype="multipart/form-data">
+            <form id="post_form" method="POST" action="{% url 'contact:contact-create' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="row">
                 <div class="col-lg-6 col-sm-6">

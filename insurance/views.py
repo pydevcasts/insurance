@@ -9,12 +9,8 @@ from django.urls import reverse
 @login_required(login_url="/accounts/login/")
 def pages(request):
     context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
     try:
-
         load_template = request.path.split('/')[-1]
-
         if load_template == 'dashboard':
             return HttpResponseRedirect(reverse('dashboard:home'))
         context['segment'] = load_template

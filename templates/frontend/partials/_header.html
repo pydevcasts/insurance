@@ -16,7 +16,7 @@
             <li>
               <a href="#">
                 <i class="bx bx-phone-call"></i>
-                تماس بگیرید: {{ user.mobile }}
+                 تلفن تماس: {{ user.profile.phone }}
               </a>
             </li>
             <li>
@@ -45,7 +45,7 @@
       <div class="main-nav">
         <nav class="navbar navbar-expand-md navbar-light">
           <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{% url 'blog:post_and_category' %}">
               <img src="{% static 'assets/frontend/img/home-one-logo.png' %}" alt="Logo" width="100">
             </a>
             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
@@ -97,7 +97,7 @@
                           <a href="{% url 'dashboard:home' %}" class="nav-link"> داشبورد</a>
                         </li>
                         <li class="nav-item">
-                          <a href="{% url 'tickets:ticket_create' %}" class="nav-link"> ارسالل تیکت</a>
+                          <a href="{% url 'tickets:ticket_create' %}" class="nav-link"> ارسال تیکت</a>
                         </li>
                         <li class="nav-item">
                           <a href="{% url 'user:user-update' user.pk %}" class="nav-link">پروفایل</a>
@@ -132,15 +132,23 @@
                         {{ category.title }}
                         <i class="bx bx-plus"></i>
                       </a>
+                      {% for subcategory in category.children %}
                       <ul class="dropdown-menu">
-                        {% for subcategory in category.children %}
-                        {% for postcat in subcategory.posts.all %}
                         <li class="nav-item">
-                          <a href="{{ postcat.get_absolute_url }}" class="nav-link">{{ subcategory.title }}</a>
+                          <a href="{{ subcategory.get_absolute_url }}" class="nav-link"> {{ subcategory.title }}
+                        <i class="bx bx-plus"></i>
+
+                          </a>
+                          <ul class="dropdown-menu">
+                          {% for postcat in subcategory.posts.all %}
+                          <li class="nav-item">
+                            <a href="{{ postcat.get_absolute_url }}" class="nav-link">{{ postcat.title }}</a>
+                          </li>
+                          {% endfor %}
                         </li>
-                        {% endfor %}
-                        {% endfor %}
                       </ul>
+                      </ul>
+                      {% endfor %}
                     </li>
                     {% endif %}
                     {% endfor %}

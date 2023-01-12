@@ -1,6 +1,5 @@
 
 
-from multiprocessing import context
 from team.models import Team
 from django.views.generic import ListView
 

@@ -15,7 +15,7 @@ class Profile(TimeStampedMixin):
     avatar = models.ImageField(upload_to="avatar/%Y/%m/%d", verbose_name = _('آپلود فایل'), null=True, blank=True)
     birthday = models.DateField(_('تاریخ تولد'), null=True, blank=True)
     code = models.CharField(_('کد ملی'),validators=[validate_national_code], blank=True, null = True, max_length= 20)
-    phone = models.CharField(_(' تلفن ثابت'),max_length=12, null=True, blank=True)
+    phone = models.IntegerField(_(' تلفن ثابت'), null=True, blank=True)
     address = models.CharField(_(' آدرس'),max_length=255, null=True, blank=True)
     zip = models.CharField(_('کد پستی'),max_length=30, null=True, blank=True,validators=[validate_postal_code])
     instagram = models.URLField(_("اینستاگرام"), blank = True, null = True)

@@ -14,7 +14,7 @@ User = get_user_model()
 
 def posts_view_context_processor(request):
     setting = About.objects.filter(status = 1)
-    users = User.objects.filter(email = "test@gmail.com", is_active = True, is_superuser = True)
+    users = User.objects.filter(email = "siyamak1981@gmail.com", is_active = True, is_superuser = True)
     sliders = Slider.condition.filter(status = 1)
     members= Member.objects.select_related('team').filter(status = 1).order_by('published_at')
     teams = Team.objects.filter(status = 1).order_by('published_at')

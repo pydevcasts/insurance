@@ -43,7 +43,6 @@ def post_category_list(request, slug=None):
                                                         "posts": posts,
                                                         'news':news
                                                         })
-
 def all_post_view(request):
     title = "همه پست ها"
     all_post = Post.objects.all().filter(status= 1).select_related('category').order_by('category_id').distinct('category')

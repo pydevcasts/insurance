@@ -18,7 +18,9 @@ sudo service docker start
 sudo service --status-all | grep '+'
 sudo docker login
 docker run -it ubuntu /bin/bash
-
+sudo docker-compose run --rm app sh -c "python mana....."
+or
+docker-compose exec app or web  bash
 ##Docker postgres database
 docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
 sudo lsof -i :5432 #kill use posrt 5432

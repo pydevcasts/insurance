@@ -4,7 +4,6 @@ import os, socket
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -15,6 +14,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,8 +63,9 @@ INSTALLED_APPS = [
     'news',
     'feedback',
     'comment',
-    'tickets'
-
+    'tickets',
+    'notifications',
+    'channels_redis',
     ]
 
 
@@ -99,14 +102,26 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'settings.context_processors.context_processors.posts_view_context_processor',
-             
             ],
+           
         },
     },
 ]
 
-WSGI_APPLICATION = 'insurance.wsgi.application'
 
+
+WSGI_APPLICATION = 'insurance.wsgi.application'
+ASGI_APPLICATION = 'insurance.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+       
+        
+    },
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -134,8 +149,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 
 DATABASES = {
-  
-
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('DB_NAME'),
@@ -208,8 +221,6 @@ INTERNAL_IPS = [
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
-
-
 DEBUG_TOOLBAR_CONFIG = {
     'RESULTS_CACHE_SIZE': 3,
     'SHOW_COLLAPSED': True,
@@ -243,7 +254,6 @@ LOGIN_REDIRECT_URL = "blog:post_and_category"
 LOGOUT_REDIRECT_URL = 'login'
 
 
-
 # CELERY STUFF
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
@@ -261,8 +271,6 @@ ELASTICSEARCH_DSL = {
 }
 
 GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY')
-
-
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',

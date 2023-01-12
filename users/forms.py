@@ -4,7 +4,14 @@ from django.utils.translation import gettext_lazy as _
 from users.models import Profile
 from django import forms
 import string
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
+
+
+class UserForm(forms.ModelForm):
+    model = User
+    fields = ['first_name', 'last_name', 'email', 'mobile']
 
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(label="نام", max_length=16)

@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from django.urls import re_path, include
+from django.urls import re_path, include,path
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -14,9 +14,11 @@ from insurance import views
 
 urlpatterns = [
     re_path(r'^i18n/', include('django.conf.urls.i18n')),
+    re_path(r'^', include('notifications.urls')),
     re_path(r'^', include('accounts.urls',namespace='accounts')),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^', include('blog.urls')),
+    re_path(r'^', include('notifications.urls')),
     re_path(r'^new/', include('news.urls')),
     re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
