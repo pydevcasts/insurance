@@ -30,5 +30,5 @@ def posts_view_context_processor(request):
    
     else:
         searchs = ""    
-    return ({'archives':archives,'notifications': allnotifications, 'room_name': "broadcast",'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
+    return ({'archives':archives,'notifications': allnotifications, 'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
 

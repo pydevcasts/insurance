@@ -12,7 +12,8 @@ from django.utils.html import format_html
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
     def thumbnail(self, object):
-        return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))
+        if object.banner:
+            return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))
     thumbnail.short_description = 'درباره ما'
     list_display = ['thumbnail','title', 'status', 'is_published', 'published']
     list_filter = ['status', 'published_at']

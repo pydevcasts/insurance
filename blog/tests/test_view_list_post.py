@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.urls import resolve, reverse
 from blog.views import PostListView
-import urllib.parse
 from django.contrib.auth import get_user_model
 User = get_user_model()
 

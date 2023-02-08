@@ -1,7 +1,6 @@
 
-import urllib.parse
 from django.urls import reverse,resolve
-from django.test import TestCase, testcases
+from django.test import TestCase
 from blog.models import Post
 from tag.models import Tag
 from category.models import SubCategory, Category

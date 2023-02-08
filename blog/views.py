@@ -46,7 +46,7 @@ def post_category_list(request, slug=None):
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
                                                         'news':news,
-                                                        
+                                                        'room_name': "broadcast"
                                                         })
 def all_post_view(request):
     title = "همه پست ها"

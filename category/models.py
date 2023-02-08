@@ -25,8 +25,8 @@ class Category(OrganizedMixin):
         return self.title
 
     def children(self):
-       
         return Category.objects.filter(parent=self)
+
 
     @property
     def is_parent(self):
