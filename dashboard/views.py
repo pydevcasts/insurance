@@ -12,6 +12,8 @@ from blog.models import Post
 from blog.forms import PostForm
 from news.models import New
 from news.forms import NewForm
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 User = get_user_model()
 from django.contrib.auth.views import PasswordChangeView
 
@@ -24,11 +26,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return {'segment':'داشبورد بیمه'}
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name='dashboard/accounts/password_change.html'
     success_message = "پسوردتان با موفقیت تغیرر یافت"
     success_url = reverse_lazy('dashboard:password_change')
+   
 
 
 class PostListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
@@ -64,7 +67,7 @@ class PostListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
         context['segment'] = "لیست پست"
         return context
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -86,7 +89,7 @@ class PostCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequired
     
   
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Post
     permission_required = "post.delete_post"
@@ -110,6 +113,7 @@ class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequired
         return redirect('dashboard/blog/list.html')
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PostUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
 
     form_class = PostForm
@@ -173,6 +177,7 @@ class NewListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
         return context
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class NewCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = New
     form_class = NewForm
@@ -194,7 +199,7 @@ class NewCreateView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredM
     
   
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class NewDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = New
     permission_required = "new.delete_post"
@@ -218,6 +223,8 @@ class NewDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
         return redirect('dashboard/new/list.html')
 
 
+
+@method_decorator(csrf_exempt, name='dispatch')
 class NewUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
 
     form_class = NewForm

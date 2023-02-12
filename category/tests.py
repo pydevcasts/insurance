@@ -8,6 +8,8 @@ from blog.models import Post
 from django.utils.text import slugify
 from django.utils import timezone
 
+
+
 class MyAccountTest(TestCase):
     def setUp(self):
         self.email = "admin@gmail.com"
@@ -25,7 +27,7 @@ class CategoryModelTest(MyAccountTest):
     def setUp(self):
         super().setUp()
         self.cat = Category.objects.create(title = "secound cat", slug = "secound-cat", status = 1)
-        self.cat_1 = Category.objects.create(title = "third cat", slug = "third-cat", status = 1)
+        self.cat_1 = Category.objects.create(title = "third cat", slug = "third-cat", status = 0)
         self.client.login(email = self.email, password = self.password)
         self.response = self.client.get(reverse('category:cat-list'))
         self.post = Post.objects.create(title = "third post", author = self.user, status = 1, category = self.cat)
@@ -65,7 +67,6 @@ class CategoryModelTest(MyAccountTest):
         self.response = self.client.get(self.url)
         self.assertTemplateUsed(self.response, 'dashboard/category/list.html')
       
-
     
     def test_page_templatecreate_view(self):
         self.url = reverse('category:cat-create')
@@ -89,7 +90,6 @@ class CategoryModelTest(MyAccountTest):
         self.assertEqual(qs.count(), 1)
 
 
-    
     def test_slug_field_category(self):
         self.title = self.cat.title
         self.slug = slugify(self.title)
@@ -111,7 +111,6 @@ class CategoryModelTest(MyAccountTest):
 
     
     def test_get_absolute_url(self):
-        Category.objects.filter(published_at__lte = timezone.now())
         self.slug = "secound-cat"
         self.view = resolve(f'/insurance/{self.slug}/')
         self.assertEqual(self.view.url_name,'detail_by_category_slug')
@@ -123,3 +122,24 @@ class CategoryModelTest(MyAccountTest):
         url = cat.get_absolute_url()
         self.assertIsNotNone(url)
     
+
+    def test_cat_by_draft_status(self):
+        cat = Category.objects.filter(status = 0)
+        self.assertTrue(cat.exists())
+    
+
+    def test_publish_case(self):
+        cat = Category.objects.filter(status = 1).first()
+        self.assertTrue(cat.is_published)
+    
+    def test_draft_case(self):
+        cat = Category.objects.last()
+        self.assertTrue(cat.is_published)
+    
+
+    def test_publish_manager(self):
+        published_qs = Category.objects.all().filter(status = 1)
+        published_qs_2 = Category.objects.filter(status = 0)
+        self.assertTrue(published_qs.exists())
+        self.assertEqual(published_qs.count(), published_qs_2.count())
+        

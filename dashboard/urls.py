@@ -1,6 +1,5 @@
 from django.urls import re_path
 from .import views
-from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap 
 from dashboard.sitemaps import StaticViewSitemap,PostSitemap
 

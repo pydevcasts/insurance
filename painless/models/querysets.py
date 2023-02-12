@@ -10,7 +10,7 @@ class PostStatusQuerySet(models.QuerySet):
         return self.filter(status = 0)
 
     def published(self):
-        return self.filter(status = 1)
+        return self.filter(status = 1,published_at__lte= timezone.now() )
 
 
 class NewQuerySet(models.QuerySet):

@@ -54,8 +54,8 @@ sudo systemctl start kibana
 https://coderthemes.com/minton/layouts/default/icons-boxicons.html
 
 
-
-
+#unittest
+docker-compose run app sh -c "python manage.py test -r --debug-mode blog"
 
 
 
