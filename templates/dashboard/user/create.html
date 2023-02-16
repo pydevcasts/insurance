@@ -22,7 +22,7 @@
                     <div class="col-md-6 mb-3">
                         <div>
                             <label for="first_name">نام </label>
-                            <input name="first_name" class="form-control  {% if form.user.errors.first_name %} border-danger
+                            <input name="first_name" class="form-control {% if form.user.errors.first_name %} border-danger
                                     {% endif %}" id="first_name" type="text" name="first_name"
                                 placeholder="Enter your first name" value="{{ profile.user.first_name }}">
                             {% for error in form.user.errors.first_name %}

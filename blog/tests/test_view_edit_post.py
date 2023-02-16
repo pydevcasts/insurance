@@ -1,30 +1,27 @@
-import urllib.parse
-from django.test import TestCase
 from django.urls import resolve, reverse
 from blog.models import Post
-from tag.models import Tag
-from category.models import SubCategory, Category
-from blog.views import PostUpdateView
+from blog.tests import MyAccountTest
+from category.models import  Category
 from django.utils import timezone
+from dashboard.views import PostUpdateView
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
 
-class PostUpdateViewTestCase(TestCase):
+class PostUpdateViewTestCase(MyAccountTest):
     def setUp(self):
-        author = User.objects.create_user(email='admin@gmail.com', password='admin')
+        super().setUp()
+        user = User.objects.create_superuser(password="super", email="super@gmail.com")
+        self.client.login(email = "super@gmail.com", password = "super")
         category = Category.objects.create(title = "test category", content = 'this is test content category')
-        subcategory = SubCategory.objects.create(title='Django subcat', content='Django subcat.', category = category)
         published_at = timezone.now()
-        self.post = Post.objects.create(title='Django Edit', summary = "Django summary test blog post is Editedt Test", author = author, banner="https://static.vecteezy.com/system/resources/previews/002/375/042/non_2x/abstract-background-wave-radial-ellipse-free-vector.jpg",subcategory = subcategory, content='edited message', published_at = published_at)
-        self.post.tag.create(title = "test tag", status = 1)
-        self.client.login(email='admin@gmail.com', password="admin")
-        self.url = reverse('dashboard:update', kwargs={
+        self.post = Post.objects.create(title='Django', summary = "Django summary test blog post", author= user, category = category, content='Django board.', published_at = published_at)
+        self.post.tags.create(title = "test tag", status = 1)
+        self.url = reverse('dashboard:post-update', kwargs={
             'pk': self.post.pk,
         })
         self.response = self.client.get(self.url)
-
 
 
     def test_csrf(self):
@@ -32,11 +29,11 @@ class PostUpdateViewTestCase(TestCase):
 
 
     def test_status_code(self):
-        self.assertEquals(self.response.status_code, 200)
+        self.assertEqual(self.response.status_code, 200)
 
 
     def test_view_class(self):
-        view = resolve('/blog/d89f155e-1059-4fe7-a275-a2a318277774/edit/')
+        view = resolve('/dashboard/d89f155e-1059-4fe7-a275-a2a318277774/edit-post/')
         self.assertEquals(view.func.view_class, PostUpdateView)
 
 
@@ -49,22 +46,22 @@ class PostUpdateViewTestCase(TestCase):
 
 
     def test_update_view_contains_link_to_post_list_page(self):
-        url = reverse('dashboard:update', kwargs={'pk':self.post.pk})
-        x = reverse('dashboard:list')
-        response = self.client.get(url)
+        x = reverse('dashboard:post-list')
+        response = self.client.get(self.url)
         self.assertContains(response, 'href="{}"'.format(x))
 
 
     def test_new_post_valid_data(self):
 
         data = {
-            "title":"test update",
+            "title": "test update",
             'summary': 'Test title',
             'content': 'Lorem ipsum dolor sit amet'
         }
         response = self.client.post(self.url, data)
         self.assertTrue(Post.objects.exists())
-        self.assertTrue(SubCategory.objects.exists())
+        self.assertTrue(Category.objects.exists())
+        self.assertEqual(response.status_code, 200)
 
     
     def test_new_post_invalid_data(self):
@@ -78,7 +75,7 @@ class PostUpdateViewTestCase(TestCase):
 
     def test_post_changed(self):
         self.post.refresh_from_db()
-        self.assertEquals(self.post.content, 'edited message')
+        self.assertEquals(self.post.title, 'Django')
 
 
 

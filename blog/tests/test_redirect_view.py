@@ -1,26 +1,26 @@
-
-from django.urls import reverse,resolve
+from django.urls import reverse
 from django.test import TestCase
 from blog.models import Post
-from tag.models import Tag
-from category.models import SubCategory, Category
+from category.models import  Category
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 User = get_user_model()
 import urllib
 
+
+
+
+
+
 class BlogPostTests(TestCase):
-    def setUp(self):
-        category = Category.objects.create(title = "test category", content = 'this is test content category')
-        author = User.objects.create_user(first_name='siyamak',last_name = "abasnezhad" , email='jamal@doe.com', password='123')
-        published_at = timezone.now()
-        self.post = Post.objects.create(title='Django', summary = "Django summary test blog post", author = author, banner="https://static.vecteezy.com/system/resources/previews/002/375/042/non_2x/abstract-background-wave-radial-ellipse-free-vector.jpg",category = category, content='Django board.', published_at = published_at)
-
-
     def test_redirection_post_list_view(self):
-        response = self.client.get(reverse('dashboard:list'), follow=True)
-        expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('dashboard:list'), "")
+        response = self.client.get(reverse('dashboard:post-list'), follow=True)
+        expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('dashboard:home'), "")
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
 
 
     
+    def test_redirect_post_create_view_dashboard(self):
+        response = self.client.get(reverse('dashboard:post-create'), follow=True)
+        expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('dashboard:home'), "")
+        self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)

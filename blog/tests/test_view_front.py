@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import resolve, reverse
-from frontend.views import post_category_list
+from blog.views import post_category_list
 
 
 class FrontPageTests(TestCase):
