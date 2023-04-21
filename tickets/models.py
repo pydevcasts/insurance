@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import reverse,render
-from django.db import models
 import os
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.shortcuts import render, reverse
 from django.utils.translation import gettext_lazy as _
-from painless.models.mixins import TimeStampedMixin
-from painless.models.validations import validate_charachters, validate_file_extension, validate_file_size
-User = get_user_model()
-from django.conf import settings
-from ckeditor.fields import RichTextField
 
+from painless.models.mixins import TimeStampedMixin
+from painless.models.validations import (validate_charachters,
+                                         validate_file_extension,
+                                         validate_file_size)
+
+User = get_user_model()
+from ckeditor.fields import RichTextField
+from django.conf import settings
 
 
 def user_unicode(self):

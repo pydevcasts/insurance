@@ -1,7 +1,9 @@
-from django.urls import re_path
-from .import views
-from insurance import settings
 from django.conf.urls.static import static
+from django.urls import re_path
+
+from insurance import settings
+
+from . import views
 
 app_name = 'contact'
 

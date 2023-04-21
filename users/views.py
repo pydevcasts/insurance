@@ -1,17 +1,20 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy
-from django.views.generic import ListView,UpdateView
-from django.views.generic.edit import  DeleteView
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, UpdateView
+from django.views.generic.edit import DeleteView
+
 from users.forms import ProfileForm
 from users.models import Profile
-from django.shortcuts import render, redirect
-from django.views import View
-from django.contrib import messages
-from django.contrib.auth.views import PasswordChangeView
+
 User = get_user_model()
 
 

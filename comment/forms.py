@@ -1,8 +1,8 @@
 
 from django import forms
-from blog.models import Comment
 from django.utils.translation import gettext_lazy as _
 
+from blog.models import Comment
 
 
 class CommentForm(forms.ModelForm):

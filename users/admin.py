@@ -1,14 +1,13 @@
+import admin_thumbnails
 from django.contrib import admin
+from django.contrib.admin.widgets import AdminFileWidget
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from django.utils.translation import gettext_lazy as _
-from .actions import make_active
-from .actions import make_deactive
-from .models import User
-from .models import Profile
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.contrib.admin.widgets import AdminFileWidget
-import admin_thumbnails
+from django.utils.translation import gettext_lazy as _
+
+from .actions import make_active, make_deactive
+from .models import Profile, User
 
 
 class AdminImageWidget(AdminFileWidget):

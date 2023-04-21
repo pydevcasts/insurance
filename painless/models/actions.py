@@ -1,6 +1,7 @@
+import csv
+
 from django.core import serializers
 from django.http import HttpResponse
-import csv
 
 
 class ExportMixin:

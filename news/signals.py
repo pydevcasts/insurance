@@ -1,8 +1,10 @@
 import os
-from django.db.models.signals import pre_save,post_delete
+
+from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
-from .models import New
 from django.utils.text import slugify
+
+from .models import New
 
 
 @receiver(post_delete, sender=New)

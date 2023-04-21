@@ -1,13 +1,16 @@
 
-from django.urls import reverse,resolve
-from django.test import TestCase
-from blog.models import Post
-from tag.models import Tag
-from category.models import  Category
-from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+from django.urls import resolve, reverse
+from django.utils import timezone
+
+from blog.models import Post
+from category.models import Category
+from tag.models import Tag
+
 User = get_user_model()
 import urllib
+
 from dashboard.views import PostListView
 
 

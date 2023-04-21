@@ -1,10 +1,10 @@
-from django.urls import re_path, include
-from rest_framework import routers 
+from django.urls import include, re_path
+from rest_framework import routers
+
+from api.views import (APICategoryViewSet, APIPostViewSet, APIProfileViewSet,
+                       APISubCategoryViewSet, APITagViewSet, NewsLetterView,
+                       UserViewSet)
 from blog.models import Post
-from api.views import NewsLetterView, UserViewSet,\
-APITagViewSet,APIPostViewSet, APICategoryViewSet, APISubCategoryViewSet,APIProfileViewSet
-
-
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)

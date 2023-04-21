@@ -1,12 +1,16 @@
 
 import uuid
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from painless.models.mixins import OrganizedMixin, TimeStampedMixin
+
 from ckeditor.fields import RichTextField
 from django.core.validators import validate_email
-from painless.models.validations import validate_charachters, validate_file_extension, validate_file_size,validate_phone_number
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 
+from painless.models.mixins import OrganizedMixin, TimeStampedMixin
+from painless.models.validations import (validate_charachters,
+                                         validate_file_extension,
+                                         validate_file_size,
+                                         validate_phone_number)
 
 
 class FAQ(TimeStampedMixin):

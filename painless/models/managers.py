@@ -1,7 +1,7 @@
-from django.db import models
-from .querysets import NewQuerySet, PostStatusQuerySet
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
+from .querysets import NewQuerySet, PostStatusQuerySet
 
 
 class PostPublishedManager(models.Manager):

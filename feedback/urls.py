@@ -1,9 +1,8 @@
-from .import views
-from django.urls import re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import re_path
 
-
+from . import views
 
 app_name = 'customer-feedback'
 

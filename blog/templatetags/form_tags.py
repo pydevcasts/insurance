@@ -1,6 +1,9 @@
-from django import template
-import datetime, time
+import datetime
+import time
+
 import khayyam
+from django import template
+
 register = template.Library()
 
 

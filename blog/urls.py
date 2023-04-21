@@ -1,8 +1,8 @@
-from .import views
-from django.urls import re_path, path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path, re_path
 
+from . import views
 
 app_name = 'blog'
 

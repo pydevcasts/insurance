@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.urls import resolve, reverse
+from django.utils import timezone
+
 from blog.models import Post
 from blog.tests import MyAccountTest
-from category.models import  Category
-from django.utils import timezone
+from category.models import Category
 from dashboard.views import PostUpdateView
-from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 

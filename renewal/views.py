@@ -1,11 +1,11 @@
 
-from django.http import  HttpResponseRedirect
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView
-from renewal.forms import RenewalForm
 
+from renewal.forms import RenewalForm
 
 
 class RenewalView(LoginRequiredMixin, CreateView):

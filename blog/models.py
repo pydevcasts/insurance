@@ -1,19 +1,18 @@
 import uuid
-from django.db import models
-from django.conf import settings
-from django.urls.base import reverse
-from comment.models import Comment
-from painless.models.mixins import OrganizedMixin
-from painless.models.managers import PostPublishedManager
-from tag.models import Tag
-from category.models import Category
+
 from ckeditor.fields import RichTextField
-from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.urls.base import reverse
+from django.utils.translation import gettext_lazy as _
 
-
-
+from category.models import Category
+from comment.models import Comment
+from painless.models.managers import PostPublishedManager
+from painless.models.mixins import OrganizedMixin
+from tag.models import Tag
 
 
 class Post(OrganizedMixin):

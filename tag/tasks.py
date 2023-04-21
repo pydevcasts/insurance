@@ -1,9 +1,11 @@
-from celery.app import shared_task
-from tag.models import Tag
 import string
-from django.utils.crypto import get_random_string
 
 from celery import shared_task
+from celery.app import shared_task
+from django.utils.crypto import get_random_string
+
+from tag.models import Tag
+
 
 @shared_task
 def create_random_tag(total):

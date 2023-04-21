@@ -1,13 +1,11 @@
 
 from celery.app import shared_task
-from django.core.mail import send_mail
-from django.conf import settings
-from newsletters.models import NewsLetter, ScheduleMail
-from insurance.celery import app
 from celery.schedules import crontab
+from django.conf import settings
+from django.core.mail import send_mail
 
-
-
+from insurance.celery import app
+from newsletters.models import NewsLetter, ScheduleMail
 
 
 @shared_task(name='Send_Mail')

@@ -1,13 +1,12 @@
 from django.contrib import admin
-from faq.models import FAQ, Answer, Question
-from painless.models.actions import PostableMixin,ExportMixin
-from khayyam import JalaliDate as jd
-from django.utils.translation import gettext_lazy as _
+from django.contrib.admin.widgets import AdminFileWidget
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.contrib.admin.widgets import AdminFileWidget
+from django.utils.translation import gettext_lazy as _
+from khayyam import JalaliDate as jd
 
-
+from faq.models import FAQ, Answer, Question
+from painless.models.actions import ExportMixin, PostableMixin
 
 
 @admin.register(FAQ)

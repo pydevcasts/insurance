@@ -1,18 +1,19 @@
 
 
 from django.contrib import messages
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from blog.models import Post
-from category.models import Category
-from category.forms import CategoryForm
-from django.db.models import Q
-from django.shortcuts import get_object_or_404, render,redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from blog.models import Post
+from category.forms import CategoryForm
+from category.models import Category
 
 
 class CategoryListView(LoginRequiredMixin, ListView):

@@ -1,7 +1,7 @@
 from django import forms
-from blog.models import Post
 from django.utils.translation import gettext_lazy as _
 
+from blog.models import Post
 
 
 class PostForm(forms.ModelForm):

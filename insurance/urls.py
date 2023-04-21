@@ -1,16 +1,13 @@
 
-from django.contrib import admin
-from django.urls import re_path, include,path
-from django.contrib.auth import views as auth_views
-from django.conf.urls.static import static
-from django.conf import settings
+from dj_rest_auth.registration.views import ConfirmEmailView, VerifyEmailView
 from dj_rest_auth.views import PasswordResetConfirmView
-from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from django.urls import include, path, re_path
+
 from insurance import views
-
-
-
-
 
 urlpatterns = [
     re_path(r'^i18n/', include('django.conf.urls.i18n')),
@@ -32,6 +29,7 @@ urlpatterns = [
     re_path(r'^frontend/', include('renewal.urls')),
     re_path(r'^ticket/', include('tickets.urls')),
     re_path(r'^social-auth/', include('social_django.urls', namespace='social')),
+    re_path(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
     re_path(r'^', include('django.contrib.auth.urls')),
     re_path(r'^__debug__/', include('debug_toolbar.urls')),
     re_path(r'^accounts/login/$', auth_views.LoginView.as_view(template_name='frontend/accounts/login.html'), name='login'),

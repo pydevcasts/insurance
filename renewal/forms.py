@@ -1,6 +1,8 @@
 from django import forms
-from renewal.models import Renewal
 from django.utils.translation import gettext_lazy as _
+
+from renewal.models import Renewal
+
 
 class RenewalForm(forms.ModelForm):
 

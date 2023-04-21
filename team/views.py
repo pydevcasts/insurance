@@ -1,7 +1,8 @@
 
 
-from team.models import Team
 from django.views.generic import ListView
+
+from team.models import Team
 
 
 class TeamView(ListView):

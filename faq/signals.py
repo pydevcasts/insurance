@@ -1,10 +1,10 @@
 import os
+
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+
 from faq.models import Answer
-
-
 
 
 @receiver(models.signals.post_delete, sender=Answer)

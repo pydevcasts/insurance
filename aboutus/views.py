@@ -1,8 +1,9 @@
 
-from django.views.generic import ListView
-from aboutus.models import About
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.views.generic import ListView
+
+from aboutus.models import About
 
 
 @method_decorator(cache_page(60 * 60 * 24), name='dispatch')

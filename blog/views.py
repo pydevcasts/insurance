@@ -1,24 +1,24 @@
 
 import json
-from django.shortcuts import get_object_or_404, render
-from comment.forms import CommentForm
-from blog.models import Comment, Post
-from category.models import Category
+
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
-from django.contrib import messages
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin
+
+from blog.models import Comment, Post
+from category.models import Category
+from comment.forms import CommentForm
 from news.models import New
 from newsletters.forms import NewsLettersForm
-from django.shortcuts import redirect, render
-from django.views.generic.detail import DetailView
 from newsletters.models import NewsLetter, decrypt_email
-from django.views.generic.edit import FormMixin
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-
-
+from notifications.tasks import broadcast_notification
 
 
 def post_category_list(request, slug=None):
@@ -181,14 +181,21 @@ def unsubscrib_redirect_view(request, token, *args, **kwargs):
 
 
 
-
 def notification_broadcast(request):
     channel_layer = get_channel_layer()
+    message = request.GET.get("message")
+    # broadcast_notification.delay(),
     async_to_sync(channel_layer.group_send)(
         "notification_broadcast",
+        
+
         {
-            'type': 'send.notification',
-            'message': json.dumps("Notification")
+            'type': 'send_notification',
+             'notification':
+        {
+      
+            'message': message
         }
-    )
+        }
+    ),
     return HttpResponse("Done")

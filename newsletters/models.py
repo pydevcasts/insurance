@@ -1,14 +1,15 @@
-from logging import exception
 import uuid
-import markdown2
+from logging import exception
+
 import jwt
+import markdown2
 from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.validators import validate_email
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from painless.models.mixins import  OrganizedMixin, TimeStampedMixin
-from django.core.validators import validate_email
-from django.contrib.sites.models import Site
 
+from painless.models.mixins import OrganizedMixin, TimeStampedMixin
 
 
 class NewsLetter(OrganizedMixin):

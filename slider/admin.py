@@ -1,12 +1,10 @@
 from django.contrib import admin
-from slider.models import  Slider
-from painless.models.actions import PostableMixin,ExportMixin
-from khayyam import JalaliDate as jd
 from django.utils.translation import gettext_lazy as _
+from khayyam import JalaliDate as jd
 
-  
+from painless.models.actions import ExportMixin, PostableMixin
+from slider.models import Slider
 
- 
 
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):

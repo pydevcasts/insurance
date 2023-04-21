@@ -1,8 +1,9 @@
 import os
+
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
-from . models import Attachment, Ticket
 
+from .models import Attachment, Ticket
 
 
 @receiver(post_delete, sender=Attachment)

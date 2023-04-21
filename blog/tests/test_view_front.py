@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import resolve, reverse
+
 from blog.views import post_category_list
 
 

@@ -1,12 +1,14 @@
-from django.test import TestCase
-from django.urls import reverse,resolve
-from category.models import  Category
-from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+from django.urls import resolve, reverse
+from django.utils import timezone
 
+from category.models import Category
 from news.views import NewListView
+
 User = get_user_model()
-from . models import New
+from .models import New
+
 
 class MyAccountTestCase(TestCase):
     def setUp(self):

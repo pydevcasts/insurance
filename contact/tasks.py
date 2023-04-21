@@ -1,9 +1,11 @@
 from logging import Logger
-from celery.app import shared_task
-from insurance.settings import EMAIL_HOST_USER
-from .mail import send_mail_to
 from time import sleep
 
+from celery.app import shared_task
+
+from insurance.settings import EMAIL_HOST_USER
+
+from .mail import send_mail_to
 
 
 @shared_task(name='my_first_task')

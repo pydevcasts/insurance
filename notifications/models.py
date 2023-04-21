@@ -1,12 +1,12 @@
+import json
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django_celery_beat.models import MINUTES, PeriodicTask, CrontabSchedule, PeriodicTasks
-import json
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
 from khayyam import JalaliDate as jd
-
 
 
 class BroadcastNotification(models.Model):
@@ -30,8 +30,19 @@ class BroadcastNotification(models.Model):
 def notification_handler(sender, instance, created, **kwargs):
     # call group_send function directly to send notificatoions or you can create a dynamic task in celery beat
     if created:
-        schedule, created = CrontabSchedule.objects.get_or_create(hour = instance.published_at.hour, minute = instance.published_at.minute, day_of_month = instance.published_at.day, month_of_year = instance.published_at.month)
-        task = PeriodicTask.objects.create(crontab=schedule, name="broadcast-notification-"+str(instance.id), task="notifications.tasks.broadcast_notification", args=json.dumps((instance.id,)))
+        schedule, created = CrontabSchedule.objects.get_or_create(
+            minute=instance.published_at.minute,
+            hour=instance.published_at.hour,
+            day_of_week="*",
+            day_of_month=instance.published_at.day,
+            month_of_year=instance.published_at.month,
+        )
 
-    #if not created:
+        task = PeriodicTask.objects.create(
+            crontab=schedule,
+            name="broadcast-notification-" + str(instance.id),
+            task="notifications.tasks.broadcast_notification",
+            args=json.dumps((instance.id,)),
+        )
 
+    # if not created:

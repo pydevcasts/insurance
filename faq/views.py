@@ -1,13 +1,13 @@
 
-from django.shortcuts import render
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView
-from django.shortcuts import  render
-from faq.forms import FaqForm
-from faq.models import  Answer, Question
 from django.contrib import messages
-from django.shortcuts import render
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.views.generic.edit import CreateView
+
+from faq.forms import FaqForm
+from faq.models import Answer, Question
+
 
 class CreateFAQView(SuccessMessageMixin, CreateView):
 

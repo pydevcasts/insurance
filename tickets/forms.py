@@ -1,8 +1,7 @@
 from django import forms
-from . models import Ticket, FollowUp, Attachment
 from django.forms import inlineformset_factory
 
-
+from .models import Attachment, FollowUp, Ticket
 
 
 class TicketCreateForm(forms.ModelForm):

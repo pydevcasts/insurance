@@ -1,12 +1,13 @@
 from django.contrib import admin
+
+from painless.models.actions import ExportMixin, PostableMixin
+from jalali_date.admin import ModelAdminJalaliMixin  
+
 from . import models
-from painless.models.actions import PostableMixin,ExportMixin
-
-
 
 
 @admin.register(models.BroadcastNotification)
-class BroadcastNotificationAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
+class BroadcastNotificationAdmin(ModelAdminJalaliMixin,admin.ModelAdmin, PostableMixin, ExportMixin):
     list_display = ['message','sent', 'published',]
     list_filter = ['published_at']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']

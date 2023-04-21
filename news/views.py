@@ -1,12 +1,13 @@
 
-from django.views.generic import ListView
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
-from blog.models import Comment
-from news.models import New
-from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
+
+from blog.models import Comment
 from comment.forms import CommentForm
+from news.models import New
 
 
 class NewListView(ListView):

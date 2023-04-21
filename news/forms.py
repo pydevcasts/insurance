@@ -1,7 +1,7 @@
 from django import forms
-from news.models import New
 from django.utils.translation import gettext_lazy as _
 
+from news.models import New
 
 
 class NewForm(forms.ModelForm):

@@ -1,11 +1,13 @@
 from tabnanny import verbose
+
+from ckeditor.fields import RichTextField
 from django.db import models
-from painless.models.mixins import OrganizedMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from ckeditor.fields import RichTextField
-from painless.models.validations import validate_file_extension, validate_file_size
 
+from painless.models.mixins import OrganizedMixin
+from painless.models.validations import (validate_file_extension,
+                                         validate_file_size)
 
 
 class Category(OrganizedMixin):

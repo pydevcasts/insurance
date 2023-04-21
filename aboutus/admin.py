@@ -1,13 +1,11 @@
 from django.contrib import admin
-from aboutus.models import  About
-from painless.models.actions import PostableMixin,ExportMixin
-from khayyam import JalaliDate as jd
-from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
+from khayyam import JalaliDate as jd
 
-  
+from aboutus.models import About
+from painless.models.actions import ExportMixin, PostableMixin
 
- 
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):

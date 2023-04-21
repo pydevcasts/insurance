@@ -1,19 +1,23 @@
-from blog.models import Post
-import newsletters
-from rest_framework import viewsets
 from django.contrib.auth import get_user_model
-from api.serializers import UserSerializer,PostSerializer,TagSerializer,CategorySerializer, SubCategorySerializer,ProfileSerializer
-from tag.models import Tag
-from category.models import Category, SubCategory
-from users.models import Profile
+from rest_framework import viewsets
 from rest_framework.response import Response
-from api.serializers import NewsLetterSerializer
-from newsletters.models import NewsLetter, decrypt_email
 from rest_framework.views import APIView
 
-from .permissions import (
-	IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly,UserIsOwnerOrReadOnly,IsActiveOrReadOnly
-)
+import newsletters
+from api.serializers import (CategorySerializer, NewsLetterSerializer,
+                             PostSerializer, ProfileSerializer,
+                             SubCategorySerializer, TagSerializer,
+                             UserSerializer)
+from blog.models import Post
+from category.models import Category, SubCategory
+from newsletters.models import NewsLetter, decrypt_email
+from tag.models import Tag
+from users.models import Profile
+
+from .permissions import (IsActiveOrReadOnly, IsAuthorOrReadOnly,
+                          IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly,
+                          UserIsOwnerOrReadOnly)
+
 User = get_user_model()
 
 

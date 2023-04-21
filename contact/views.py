@@ -1,16 +1,17 @@
 import folium
 import geocoder
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.urls.base import  reverse_lazy
-from django.views.generic import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView, DeleteView,UpdateView
-from contact.models import Contact, Location
-from contact.forms import ContactForm
-from contact.tasks import my_first_task
+from django.shortcuts import redirect, render
+from django.urls.base import reverse_lazy
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from contact.forms import ContactForm
+from contact.models import Contact, Location
+from contact.tasks import my_first_task
 
 
 class ListContactView(LoginRequiredMixin, PermissionRequiredMixin, ListView):

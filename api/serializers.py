@@ -1,20 +1,20 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from newsletters.models import NewsLetter
+
 from blog.models import Post
-from tag.models import Tag
 from category.models import Category
-from django.contrib.auth import get_user_model
+from newsletters.models import NewsLetter
+from tag.models import Tag
 
 User = get_user_model()
-from users.models import Profile
-from category.models import Category
-
 from allauth.account import app_settings as allauth_settings
-from allauth.utils import email_address_exists
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
+from allauth.utils import email_address_exists
 
+from category.models import Category
+from users.models import Profile
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

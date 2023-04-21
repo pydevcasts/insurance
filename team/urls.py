@@ -1,9 +1,8 @@
 
 
 from django.urls import re_path
-from team.views import  TeamView
 
-
+from team.views import TeamView
 
 app_name = "team"
 

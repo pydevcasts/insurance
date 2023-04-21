@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
@@ -7,7 +8,7 @@ from django.test import TestCase
 from django.urls import resolve, reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 

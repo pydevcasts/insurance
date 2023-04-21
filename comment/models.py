@@ -1,14 +1,13 @@
-from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from painless.models.managers import CommentManager
-from painless.models.mixins import TimeStampedMixin
 from django.conf import settings
+from django.contrib.contenttypes.fields import (GenericForeignKey,
+                                                GenericRelation)
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from painless.models.managers import CommentManager
+from painless.models.mixins import TimeStampedMixin
 
-    
 
 class Comment(TimeStampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE)

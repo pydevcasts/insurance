@@ -1,9 +1,11 @@
+import urllib.parse
+
+from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordChangeForm
 from django.test import TestCase
 from django.urls import resolve, reverse
-import urllib.parse
-from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 

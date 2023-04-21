@@ -1,8 +1,9 @@
 from django.db import models
-from painless.models.choices import PostStatus
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from khayyam import JalaliDate as jd
+
+from painless.models.choices import PostStatus
 
 status = PostStatus(is_charfield=False)
 

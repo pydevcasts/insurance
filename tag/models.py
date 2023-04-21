@@ -1,5 +1,6 @@
-from painless.models.mixins import OrganizedMixin
 from django.utils.translation import gettext as _
+
+from painless.models.mixins import OrganizedMixin
 
 
 class Tag(OrganizedMixin):

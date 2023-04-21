@@ -5,7 +5,6 @@ from django.template import loader
 from django.urls import reverse
 
 
-
 @login_required(login_url="/accounts/login/")
 def pages(request):
     context = {}

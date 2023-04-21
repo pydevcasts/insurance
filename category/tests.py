@@ -1,13 +1,16 @@
-from django.test import TestCase
-from . models import Category
-from django.urls import resolve, reverse
 from django.contrib.auth import get_user_model
-User = get_user_model()
-from .views import CategoryListView, CreateCategoryView
-from blog.models import Post
-from django.utils.text import slugify
-from django.utils import timezone
+from django.test import TestCase
+from django.urls import resolve, reverse
 
+from .models import Category
+
+User = get_user_model()
+from django.utils import timezone
+from django.utils.text import slugify
+
+from blog.models import Post
+
+from .views import CategoryListView, CreateCategoryView
 
 
 class MyAccountTest(TestCase):

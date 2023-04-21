@@ -1,10 +1,11 @@
 import datetime
-from django import forms
-from django.utils.translation import gettext_lazy as _
-from users.models import Profile
-from django import forms
 import string
+
+from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+
+from users.models import Profile
 
 User = get_user_model()
 

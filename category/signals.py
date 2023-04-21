@@ -1,12 +1,13 @@
 
 
 import os
+
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from category.models import Category
 from django.utils.text import slugify
 
+from category.models import Category
 
 
 @receiver(pre_save,sender=Category)

@@ -1,9 +1,9 @@
-from django.db import models
-from painless.models.mixins import OrganizedMixin
-from painless.models.managers import PostPublishedManager
 from ckeditor.fields import RichTextField
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from painless.models.managers import PostPublishedManager
+from painless.models.mixins import OrganizedMixin
 
 
 class Slider(OrganizedMixin):

@@ -49,6 +49,7 @@ services:
     depends_on:
       - db 
       - es
+
   #channels
   worker_channels:
     build: .
@@ -81,6 +82,15 @@ services:
       - db
       - redis
       - app
-      
 
 
+  celerybeat:
+    build:
+      context: .
+    command: celery -A insurance beat -l INFO
+    volumes: 
+      - .:/django
+    depends_on:
+      - db
+      - redis
+      - app

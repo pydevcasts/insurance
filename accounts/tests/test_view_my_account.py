@@ -1,11 +1,11 @@
-from django.forms import ModelForm
 from django.contrib.auth import get_user_model
+from django.forms import ModelForm
+
 User = get_user_model()
 from django.test import TestCase
 from django.urls import resolve, reverse
 
-from users.views import ProfileView
-from users.views import ProfileForm
+from users.views import ProfileForm, ProfileView
 
 
 class MyAccountTestCase(TestCase):

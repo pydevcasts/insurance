@@ -1,10 +1,9 @@
 from django.contrib import admin
-from newsletters.models import NewsLetter, ScheduleMail
-from painless.models.actions import PostableMixin,ExportMixin
-from khayyam import JalaliDate as jd
 from django.utils.translation import gettext_lazy as _
+from khayyam import JalaliDate as jd
 
-
+from newsletters.models import NewsLetter, ScheduleMail
+from painless.models.actions import ExportMixin, PostableMixin
 
 
 @admin.register(NewsLetter)

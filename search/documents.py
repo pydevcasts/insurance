@@ -1,10 +1,11 @@
+from django.contrib.auth import get_user_model
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from blog.models import  Post
-from tag.models import Tag
-from category.models import  Category
 
-from django.contrib.auth import get_user_model
+from blog.models import Post
+from category.models import Category
+from tag.models import Tag
+
 User = get_user_model()
 
 

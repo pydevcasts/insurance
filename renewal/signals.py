@@ -1,10 +1,12 @@
 
 
 
-from django.dispatch import receiver
 from django.db.models.signals import post_save
-from renewal.tasks import my_renewal_task_insurance
+from django.dispatch import receiver
+
 from renewal.models import Renewal
+from renewal.tasks import my_renewal_task_insurance
+
 
 @receiver(post_save, sender=Renewal)
 def send_new_renewal_notification_email(sender, instance, created, **kwargs):

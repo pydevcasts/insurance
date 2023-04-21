@@ -6,18 +6,18 @@
 
 
 
-# def send_notification(request, user_id):
-#     user = get_object_or_404(User, pk = user_id)
-#     title = request.GET.get('title')
-#     content = request.GET.get('content')
-
+# def send_notification(request):
 #     channel_layer = get_channel_layer()
-#     async_to_sync(channel_layer.group_send)(f'user_{user.id}_notification',
-#     {
-#         'type':'user.notify',
-#         'notification':{
-#             'title':title,
-#             'content':content
+#     message = request.GET.get("message")
+#     async_to_sync(channel_layer.group_send)(
+#         "notification_broadcast",
+#         {
+#             'type': 'send_notification',
+#              'notification':
+#         {
+      
+#             'message': message
 #         }
-#     })
-#     return HttpResponse(f'notification send to {user.email}')
+#         }
+#     )
+#     return HttpResponse("Done")

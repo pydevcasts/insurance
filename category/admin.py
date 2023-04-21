@@ -1,8 +1,8 @@
 from django.contrib import admin
-from . import models
-from khayyam import JalaliDate as jd
 from django.utils.html import format_html
+from khayyam import JalaliDate as jd
 
+from . import models
 
 
 @admin.register(models.Category)

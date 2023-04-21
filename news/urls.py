@@ -1,11 +1,10 @@
-from .import views
-from django.urls import re_path,path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.sitemaps.views import sitemap 
-from .sitemaps import StaticViewSitemap, NewSitemap
+from django.contrib.sitemaps.views import sitemap
+from django.urls import path, re_path
 
-
+from . import views
+from .sitemaps import NewSitemap, StaticViewSitemap
 
 sitemaps = {
     'static': StaticViewSitemap,

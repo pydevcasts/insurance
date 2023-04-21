@@ -18,7 +18,8 @@
 		<script src="{% static 'assets/frontend/js/contact-form-script.js' %}"></script>
 		<script src="{% static 'assets/frontend/js/custom.js' %}"></script>
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	
 		    <script>
 				const roomName = JSON.parse(document.getElementById('room-name').textContent);
 		
@@ -33,8 +34,9 @@
 				console.log("CONECTED")
 			}
 				notificationSocket.onmessage = function(e) {
+					console.log(e);
 					const data = JSON.parse(e.data);
-					alert(data);
+					
 					document.getElementById("notifications-dropdown").innerHTML = "<li class='dropdown-item'>" + data + "</li><hr class='dropdown-divider'>" + document.getElementById("notifications-dropdown").innerHTML;
 					document.getElementById("notification-badge").innerHTML = parseInt(document.getElementById("notification-badge").innerHTML) + 1;
 				};
@@ -42,9 +44,7 @@
 				notificationSocket.onclose = function(e) {
 					console.error('Chat socket closed unexpectedly');
 				};
-		
-			  
-		
+
 			   
 			</script>
 {% endblock %}

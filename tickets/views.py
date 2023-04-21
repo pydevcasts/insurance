@@ -1,17 +1,17 @@
 
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from . models import Ticket, Attachment, FollowUp
-from django.shortcuts import redirect, render
-from . forms import TicketCreateForm, FollowupForm, AttachmentFormSet
 from django.contrib import messages
-from django.core.mail import send_mail
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.db.models.query_utils import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView
+
 from contact.tasks import my_first_task
 
+from .forms import AttachmentFormSet, FollowupForm, TicketCreateForm
+from .models import Attachment, FollowUp, Ticket
 
 
 class TicketListView(LoginRequiredMixin, ListView):

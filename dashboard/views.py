@@ -1,22 +1,23 @@
-from django.views.generic import TemplateView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models.query_utils import Q
 from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
-from django.views.generic import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from blog.models import Post
-from blog.forms import PostForm
-from news.models import New
-from news.forms import NewForm
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from blog.forms import PostForm
+from blog.models import Post
+from news.forms import NewForm
+from news.models import New
+
 User = get_user_model()
 from django.contrib.auth.views import PasswordChangeView
-
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

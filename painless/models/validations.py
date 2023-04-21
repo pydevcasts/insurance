@@ -1,7 +1,9 @@
 import os
 import re
 import string
+
 from django import forms
+
 
 def validate_charachters(value):
     letters = set(string.punctuation)

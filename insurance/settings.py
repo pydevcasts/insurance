@@ -1,9 +1,12 @@
 
 
-import os, socket
+import os
+import socket
 from pathlib import Path
+
 from decouple import config
 from django.contrib.messages import constants as messages
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -12,13 +15,10 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-
+DJANGO_SETTINGS_MODULE=insurance.settings
 INSTALLED_APPS = [
     'daphne',
-    'channels',
-    'django_celery_beat',
-    'django_celery_results',
-
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,8 +66,13 @@ INSTALLED_APPS = [
     'feedback',
     'comment',
     'tickets',
-    'notifications',
     # 'channels_redis',
+    'star_ratings',
+    'channels',
+    'django_celery_beat',
+    'django_celery_results',
+    'notifications',
+    'jalali_date',
     ]
 
 
@@ -184,12 +189,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'fa-ir'
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'Asia/Kabul'
 USE_I18N = True
 USE_L10N = True
 USE_I18N = True
 USE_TZ = True
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 
@@ -264,7 +268,8 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = "Asia/Tehran"
+CELERY_TIMEZONE = "Asia/Kabul"
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 
@@ -285,3 +290,65 @@ MESSAGE_TAGS = {
  }
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'extraPlugins': 'wordcount', 
+        
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe',]},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+
+
+        ]),
+    }
+}

@@ -1,19 +1,21 @@
 
 import uuid
-from django.db import models
-from django.conf import settings
-from django.urls.base import reverse
-from blog.models import Comment
-from painless.models.managers import NewManager
-from painless.models.mixins import OrganizedMixin
-from painless.models.validations import validate_file_extension, validate_file_size
-from tag.models import Tag
-from category.models import Category
+
 from ckeditor.fields import RichTextField
-from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.urls.base import reverse
+from django.utils.translation import gettext_lazy as _
 
+from blog.models import Comment
+from category.models import Category
+from painless.models.managers import NewManager
+from painless.models.mixins import OrganizedMixin
+from painless.models.validations import (validate_file_extension,
+                                         validate_file_size)
+from tag.models import Tag
 
 
 class New(OrganizedMixin):
