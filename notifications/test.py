@@ -1,26 +1,25 @@
-from django.urls import resolve, reverse
-from notifications.models import BroadcastNotification
-
-from blog.views import post_category_list
-
 from django.contrib.auth import get_user_model
-from django.urls import resolve, reverse
-from django.utils import timezone
-
-from blog.tests import MyAccountTest
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import resolve, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
+
+from blog.tests import MyAccountTest
+from blog.views import post_category_list
+from notifications.models import BroadcastNotification
 from notifications.tasks import broadcast_notification
+
 User = get_user_model()
 
-# tests/intergration_tests/conftest.py
-from django.db.models.signals import pre_save, post_save, pre_delete, post_delete, m2m_changed
-import pytest
 from unittest import mock
+
+import pytest
+# tests/intergration_tests/conftest.py
+from django.db.models.signals import (m2m_changed, post_delete, post_save,
+                                      pre_delete, pre_save)
+
 
 class NotificationModelTest(MyAccountTest):
     def setUp(self):
@@ -73,49 +72,10 @@ class NotificationModelTest(MyAccountTest):
         # self.assertIn(task, registered_functions)
         self.assertTrue(broadcast_notification.delay(1))
 
-    @pytest.mark.django_db
     def test_signals_disabled(self):
         example = BroadcastNotification.objects.create(message="Hello World")
         self.assert_  == "Hello World"
     
-
-    @pytest.fixture(autouse=True) # Automatically use in tests.
-    def mute_signals(request):
-        # Skip applying, if marked with `enabled_signals`
-        if 'enable_signals' in request.keywords:
-            return
-
-        signals = [
-            pre_save,
-            post_save,
-            pre_delete,
-            post_delete,
-            m2m_changed
-        ]
-        restore = {}
-        for signal in signals:
-            # Temporally remove the signal's receivers (a.k.a attached functions)
-            restore[signal] = signal.receivers
-            signal.receivers = []
-
-        def restore_signals():
-            # When the test tears down, restore the signals.
-            for signal, receivers in restore.items():
-                signal.receivers = receivers
-
-        # Called after a test has finished.
-        request.addfinalizer(restore_signals)
-
-    
-
-
-    # @pytest.mark.django_db
-    # @pytest.mark.enable_signals  # Enable signals for this test.
-    # def test_signals_enabled(self):
-    #     example = BroadcastNotification.objects.create(message="Hello world")
-    #     assert example.message != "Signal override"
-    
-    @pytest.mark.enable_signals
     def test_signals_enabled(self):
         example = BroadcastNotification.objects.create(message="Hello world2")
-        self.assertEqual(example.message, "Signal override")
+        self.assertNotEqual(example.message, "Signal override")

@@ -41,6 +41,21 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
+
+class IPAddress(models.Model):
+    ip_address = models.GenericIPAddressField(verbose_name='آدرس IP')
+    create = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ بازدید')
+ 
+    def __str__(self):
+        return self.ip_address
+ 
+    class Meta:
+        verbose_name = 'بازدید'
+        verbose_name_plural = 'بازدیدها'
+
+
+
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('ایمیل'),unique=True, validators = [validate_email])

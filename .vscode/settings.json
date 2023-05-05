@@ -1,6 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "python.analysis.extraPaths": [
-        "./insurance"
-    ]
+    "git.ignoreLimitWarning": true
 }

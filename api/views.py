@@ -84,7 +84,6 @@ class APITagViewSet(viewsets.ModelViewSet):
 class NewsLetterView(APIView):
     def post(self, request):
         serializer = NewsLetterSerializer(data = request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = 201)

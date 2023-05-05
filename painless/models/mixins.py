@@ -35,3 +35,4 @@ class OrganizedMixin(TimeStampedMixin):
     def is_published(self):
         return self.status 
     is_published.boolean = True
+

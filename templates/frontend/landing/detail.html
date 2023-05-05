@@ -21,7 +21,7 @@
                                                         <ul>
                                                                 <li><span>ارسال در:</span> <a href="#">{{ post.published_at|jalali_date }}</a></li>
                                                                 <li><span>توسط:</span> <a href="#">{{post.author.first_name }}</a></li>
-                                                                <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>        
+                                                                <i class ="bx bx-show"></i> :  <span>{{ post.get_view_count }}</span>        
                                                         </ul>
                                                 </div>
                                                 <h3>{{ post.title }}</h3>
@@ -64,8 +64,8 @@
 
 
                                         <div class="comments-area">
-                                                <h3 class="comments-title">{{ post.comments.count }} نظر:</h3>
-                                                {% for comment in post.comments.all %}
+                                                <h3 class="comments-title">{{ comments.count }} نظر:</h3>
+                                                {% for comment in comments.all %}
                                                 <ol class="comment-list">
                                                         <li class="comment">
                                                                 <div class="comment-body">

@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
@@ -6,9 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from painless.models.mixins import TimeStampedMixin
 from painless.models.validations import (validate_national_code,
                                          validate_postal_code)
-
+from django.contrib.auth import get_user_model
 User = get_user_model()
-
 
 
 

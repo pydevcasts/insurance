@@ -28,7 +28,6 @@
                         {% endif %}
                         <div class="service-content">
                             <i class="icon-style {{ post.category.icon }}"></i>
-                            <i class ="bx bx-show"></i> :  <span>{{ post.views }}</span>
                             <h3>{{ post.title }}</h3>
                             <p>{{ post.summary| striptags |safe| truncatewords:10 }}</p>
                             <a href="{{ post.get_absolute_url }}">

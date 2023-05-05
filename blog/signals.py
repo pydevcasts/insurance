@@ -1,6 +1,5 @@
 import os
 
-from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
@@ -32,8 +31,6 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
 
 
 
-
-
 @receiver(pre_save,sender=Post)
 def create_post(sender,instance,*args,**kwargs):
     if not instance.slug:
@@ -50,7 +47,7 @@ def create_uniqe_slug(instance,newslug=None):
     qs=instanClass.objects.filter(slug=slug)
 
     if qs.exists():
-        newslug=f"{slug}-{qs.first().id}"
+        newslug=f"{slug}-{qs.first().pk}"
         return create_uniqe_slug(instance,newslug)
 
     return slug

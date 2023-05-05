@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-DJANGO_SETTINGS_MODULE=insurance.settings
+
 INSTALLED_APPS = [
     'daphne',
     
@@ -73,6 +73,8 @@ INSTALLED_APPS = [
     'django_celery_results',
     'notifications',
     'jalali_date',
+    'clearcache',
+    
     ]
 
 
@@ -92,6 +94,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'accounts.middleware.SaveIPAddressMiddleware'
 ]
 
 ROOT_URLCONF = 'insurance.urls'
@@ -129,6 +132,7 @@ CHANNEL_LAYERS = {
         
     },
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -242,6 +246,24 @@ CACHES = {
    }
 }
 
+CELERY_IMPORTS = [
+    'notifications.tasks',
+]
+
+
+#redis viewers
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": 'redis://redis:6379/2',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+CACHE_TTL = 60 * 60 * 24 # 1 day
+
+
 RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY",default="")
 RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY",default="")
 
@@ -270,6 +292,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = "Asia/Kabul"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
 
 
 

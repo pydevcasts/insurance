@@ -1,5 +1,4 @@
 
-import json
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -18,7 +17,6 @@ from comment.forms import CommentForm
 from news.models import New
 from newsletters.forms import NewsLettersForm
 from newsletters.models import NewsLetter, decrypt_email
-from notifications.tasks import broadcast_notification
 
 
 def post_category_list(request, slug=None):
@@ -63,7 +61,6 @@ def all_post_view(request):
     return render(request, "frontend/posts/index.html", {"all_post":all_post, "title":title, 'page_obj': page_obj})
 
 
-
 class PostDetailView(FormMixin, DetailView):
     template_name = 'frontend/landing/detail.html'
     model = Post
@@ -87,28 +84,28 @@ class PostDetailView(FormMixin, DetailView):
                              self.slug])
   
 
+    def get(self, request,year, month,day,slug):
+        post = get_object_or_404(Post, 
+                                published_at__year=year,
+                                published_at__month=month,
+                                published_at__day=day,
+                                slug=slug
+                                )
+        post.increase_view_count() # Increase view count
+        return render(request, self.template_name, {"post": post})
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         post = get_object_or_404(Post, slug = self.kwargs['slug'])
-        comments = Comment.objects.filter_by_instance(post)
-        context['comments'] = comments
+       
+        context['comments'] = Comment.objects.filter_by_instance(post)
         context['title'] = post.title
         context['segment'] = post.title
         context['form'] = self.get_form_class()
         context['favorites'] = New.objects.most_views_by_users()[:5]
-   
-        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = self.request.META.get('REMOTE_ADDR')
-        self.list_ip.append(ip)
-        if ip in self.list_ip:
-            post.view = ""
-        else:
-            post.views += 1
-        post.save()
+        # context['viewers'] = post.increase_view_count() # Increase view count
         return context
+
 
 
     def post(self, request, *args, **kwargs):

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from jalali_date.admin import ModelAdminJalaliMixin
 from khayyam import JalaliDate as jd
 
 from aboutus.models import About
@@ -8,7 +9,7 @@ from painless.models.actions import ExportMixin, PostableMixin
 
 
 @admin.register(About)
-class AboutAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
+class AboutAdmin(admin.ModelAdmin,ModelAdminJalaliMixin, PostableMixin, ExportMixin):
     def thumbnail(self, object):
         if object.banner:
             return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))

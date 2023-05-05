@@ -1,11 +1,13 @@
-from celery import shared_task
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-from .models import BroadcastNotification
-import json
-from celery import Celery, states
-from celery.exceptions import Ignore
 import asyncio
+import json
+
+from celery import shared_task
+from celery.exceptions import Ignore
+from channels.layers import get_channel_layer
+
+from .models import BroadcastNotification
+
+
 @shared_task(bind = True)
 def broadcast_notification(self, data):
     print(data)
