@@ -1,0 +1,20 @@
+name: deploy-chabokan
+on:
+  push:
+    branches: [master]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+      - name: update-chabokan
+        env:
+          CHABOKAN_TOKEN: ${{ secrets.CHABOKAN_TOKEN }}
+        run: |
+          npm install -g @chabokan.net/cli
+          chabok login -t $CHABOKAN_TOKEN
+          chabok deploy -s academybime

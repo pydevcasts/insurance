@@ -4,7 +4,7 @@ from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.core.cache import cache
+
 from django.db import models
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -55,7 +55,7 @@ class Post(OrganizedMixin):
         content_type = ContentType.objects.get_for_model(instance.__class__)
         return content_type
         
-    
+    @property
     def get_view_count(self):
         # Get Redis connection
         r = get_redis_connection()
@@ -65,15 +65,12 @@ class Post(OrganizedMixin):
         if r.exists(key):
             # If yes, return view count from cache
             viewers = int(r.get(key))
-            print(viewers,'cache view ............')
         else:
             # If not, get view count from database
             viewers = self.viewers
-            print(viewers, 'db view...........')
 
             # Set view count in cache
             r.setex(key, CACHE_TTL, viewers)
-            print(r, 'chache db................')
 
         return viewers
 
