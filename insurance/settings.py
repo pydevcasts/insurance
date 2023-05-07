@@ -10,7 +10,8 @@ from django.contrib.messages import constants as messages
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6"
+
 
 DEBUG = os.environ.get('DEBUG')
 
