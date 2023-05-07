@@ -163,11 +163,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': '',
+        'NAME': "roger",
+        'USER': "postgres",
+        'PASSWORD': "jqWfqd88nmZsbteJ",
+        'HOST': "services.irn2.chabokan.net",
+        'PORT': 43508,
     },
 }
 
