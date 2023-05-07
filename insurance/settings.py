@@ -15,7 +15,7 @@ SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['https://academybime.chbk.run/, academybime.chbk.run/, *']
 
 INSTALLED_APPS = [
     'daphne',
