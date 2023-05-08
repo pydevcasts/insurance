@@ -8,11 +8,6 @@ from pathlib import Path
 from django.contrib.messages import constants as messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_file = os.path.join(BASE_DIR, ".env")
-
-if os.path.isfile(env_file):
-   # Use a local secret file, if provided
-   os.environ.read_env(env_file)
 
 
 SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6"
