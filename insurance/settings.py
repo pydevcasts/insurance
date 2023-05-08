@@ -126,7 +126,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("redis", 6379)],
+            "hosts": [("services.irn2.chabokan.net", 14890)],
         },
        
         
@@ -255,7 +255,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://redis:6379/2',
+        "LOCATION": 'services.irn2.chabokan.net:14890/2',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -285,8 +285,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_BROKER_URL = "services.irn2.chabokan.net:14890"
+CELERY_RESULT_BACKEND = "services.irn2.chabokan.net:14890"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
