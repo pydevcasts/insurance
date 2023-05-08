@@ -4,13 +4,14 @@ import os
 import socket
 from pathlib import Path
 
-# from decouple import config
+#from decouple import config
 from django.contrib.messages import constants as messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6"
+
 
 DEBUG = os.environ.get('DEBUG')
 
@@ -126,7 +127,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("services.irn2.chabokan.net", 14890)],
+            "hosts": [("redis", 14890)],
         },
        
         
@@ -162,11 +163,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "roger",
-        'USER': "postgres",
-        'PASSWORD': "jqWfqd88nmZsbteJ",
-        'HOST': "services.irn2.chabokan.net",
-        'PORT': '43508',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     },
 }
 
@@ -255,7 +256,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'services.irn2.chabokan.net:14890/2',
+        "LOCATION": 'redis://services.irn2.chabokan.net:14890/2',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -285,14 +286,13 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "services.irn2.chabokan.net:14890"
-CELERY_RESULT_BACKEND = "services.irn2.chabokan.net:14890"
+CELERY_BROKER_URL = "redis://services.irn2.chabokan.net:14890"
+CELERY_RESULT_BACKEND = "redis://services.irn2.chabokan.net:14890"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = "Asia/Kabul"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
 
 
 
