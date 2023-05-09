@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 
 import newsletters
 from api.serializers import (CategorySerializer, NewsLetterSerializer,
@@ -21,12 +22,13 @@ from .permissions import (IsActiveOrReadOnly, IsAuthorOrReadOnly,
 User = get_user_model()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSuperUserOrStaffReadOnly,)
     
-
+@method_decorator(csrf_exempt, name='dispatch')
 class APIProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -38,7 +40,7 @@ class APIProfileViewSet(viewsets.ModelViewSet):
             permission_classes = [IsActiveOrReadOnly, UserIsOwnerOrReadOnly,]
         return [permission() for permission in permission_classes]
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class APIPostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -55,7 +57,7 @@ class APIPostViewSet(viewsets.ModelViewSet):
             permission_classes = [IsStaffOrReadOnly, IsAuthorOrReadOnly]
         return [permission() for permission in permission_classes]
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class APICategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -63,7 +65,7 @@ class APICategoryViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = "pk"  
     permission_classes = (IsSuperUserOrStaffReadOnly,)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class APISubCategoryViewSet(viewsets.ModelViewSet):
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
@@ -71,7 +73,7 @@ class APISubCategoryViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = "pk"  
     permission_classes = (IsSuperUserOrStaffReadOnly,)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class APITagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -80,7 +82,7 @@ class APITagViewSet(viewsets.ModelViewSet):
     permission_classes = (IsSuperUserOrStaffReadOnly,)
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class NewsLetterView(APIView):
     def post(self, request):
         serializer = NewsLetterSerializer(data = request.data)
@@ -89,7 +91,7 @@ class NewsLetterView(APIView):
             return Response(serializer.data, status = 201)
         return Response(serializer.errors, status = 401)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class UnsubscribeView(APIView):
     def get(self, request, unsubscribe_token, *args, **kwargs):
         email = decrypt_email(unsubscribe_token)

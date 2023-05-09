@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import SignUpForm
 
 
+@csrf_exempt
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)

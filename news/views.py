@@ -4,6 +4,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
+from django.views.decorators.csrf import csrf_exempt
 
 from blog.models import Comment
 from comment.forms import CommentForm
@@ -27,7 +28,7 @@ class NewListView(ListView):
         print(page_obj)
         return render(request, 'frontend/news/index.html', {'page_obj': page_obj,'title':'خبر ها','summary':'خبر های روز بیمه' })
 
-
+@csrf_exempt
 def new_detail(request, year, month, day, slug):
     list_ip =[]
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

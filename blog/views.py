@@ -10,6 +10,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
+from django.views.decorators.csrf import csrf_exempt
 
 from blog.models import Comment, Post
 from category.models import Category
@@ -19,6 +20,7 @@ from newsletters.forms import NewsLettersForm
 from newsletters.models import NewsLetter, decrypt_email
 
 
+@csrf_exempt
 def post_category_list(request, slug=None):
     posts = Post.objects.published().select_related('category').order_by('category_id').distinct('category')[:6]
     news = New.objects.filter(status = 1).order_by('-published_at')
@@ -45,7 +47,7 @@ def post_category_list(request, slug=None):
                                                         "posts": posts,
                                                         'news':news,
                                                         'room_name': "broadcast"
-                                                        })
+@csrf_exempt                                                      })
 def all_post_view(request):
     title = "همه پست ها"
     all_post = Post.objects.all().filter(status= 1).select_related('category').order_by('category_id').distinct('category')
@@ -107,7 +109,7 @@ class PostDetailView(FormMixin, DetailView):
         return context
 
 
-
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
             self.object = self.get_object()
@@ -158,7 +160,7 @@ class PostDetailView(FormMixin, DetailView):
 
 
 
-
+@csrf_exempt
 def unsubscrib_redirect_view(request, token, *args, **kwargs):
         print("token:", token)
         email = decrypt_email(token)

@@ -8,7 +8,8 @@ from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from contact.forms import ContactForm
 from contact.models import Contact, Location
 from contact.tasks import my_first_task
@@ -45,7 +46,7 @@ class ListContactView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context["segment"] = "لیست تماس"
         return context
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class CreateContactView(SuccessMessageMixin , CreateView):
     def post(self, request, *args, **kwargs):
             if request.method == 'POST':
@@ -80,7 +81,7 @@ class CreateContactView(SuccessMessageMixin , CreateView):
 
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class DeleteContactView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Contact
     permission_required = "contact.delete_contact"

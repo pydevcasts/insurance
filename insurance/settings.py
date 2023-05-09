@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6"
 
-
+CSRF_TRUSTED_ORIGINS = ['https://academybime.chbk.run/']
 DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['https://academybime.chbk.run/', 'academybime.chbk.run/', '*']

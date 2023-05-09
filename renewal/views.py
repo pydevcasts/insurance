@@ -4,17 +4,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView
+from django.views.decorators.csrf import csrf_exempt
 
 from renewal.forms import RenewalForm
 
 
 class RenewalView(LoginRequiredMixin, CreateView):
+    form_class = RenewalForm
+    template_name = 'frontend/includes/_renewal.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
         return context
 
-
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.info(request,"لطفا ثبت نام نمایید!")

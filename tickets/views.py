@@ -7,6 +7,8 @@ from django.db.models.query_utils import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from contact.tasks import my_first_task
 
@@ -73,7 +75,7 @@ class AttachmentInline():
             attachmet.save()
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class TicketCreate(AttachmentInline, LoginRequiredMixin, CreateView):
     form_class = TicketCreateForm
     model = Ticket
@@ -119,7 +121,7 @@ class TicketCreate(AttachmentInline, LoginRequiredMixin, CreateView):
         return redirect('tickets:ticket-list')
           
 
-   
+@method_decorator(csrf_exempt, name='dispatch')
 class TicketUpdate(AttachmentInline, LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -132,7 +134,7 @@ class TicketUpdate(AttachmentInline, LoginRequiredMixin, UpdateView):
         }
     
 
-
+@csrf_exempt
 def delete_attachments(request, pk):
     attachment =get_object_or_404(Attachment, pk = pk)
     attachment.delete()
@@ -156,7 +158,7 @@ def ticket_detail_view(request, pk):
                    'segment':'جزییات تیکت'})
 
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class  FollowupReplyView(LoginRequiredMixin, CreateView):
     form_class =FollowupForm
     template_name='dashboard/ticket/followup_reply.html'

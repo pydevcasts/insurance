@@ -4,11 +4,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from faq.forms import FaqForm
 from faq.models import Answer, Question
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class CreateFAQView(SuccessMessageMixin, CreateView):
 
     form_class = FaqForm

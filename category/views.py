@@ -10,6 +10,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from blog.models import Post
 from category.forms import CategoryForm
@@ -43,6 +45,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CreateCategoryView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, CreateView):
     model = Category
     permission_required = "category.create_category"
@@ -61,6 +64,7 @@ class CreateCategoryView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequi
         return context
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequiredMixin,DeleteView):
     model = Category
     permission_required = "category.delete_category"
@@ -82,7 +86,7 @@ class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequ
                 return redirect('category:cat-list')
         return redirect('dashboard/category/list.html')
        
-
+@method_decorator(csrf_exempt, name='dispatch')
 class CategoryUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     model = Category
     template_name = 'dashboard/category/edit.html'
@@ -98,7 +102,7 @@ class CategoryUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequi
         return redirect("dashboard:home")
 
 
-
+@csrf_exempt
 def posts_list_by_category(request, slug=None, *args, **kwargs):
 
     category = None
