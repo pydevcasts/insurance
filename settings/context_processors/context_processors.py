@@ -9,7 +9,7 @@ from news.models import New
 from search.documents import PostDocument
 from slider.models import Slider
 from team.models import Member, Team
-
+from blog.models import Post
 User = get_user_model()
 from notifications.models import BroadcastNotification
 
@@ -26,10 +26,8 @@ def posts_view_context_processor(request):
    
     q = request.GET.get("q")
     if q:
-        searchs = PostDocument.search().query((Q("multi_match", query=q, fields=['title', 'summary', 'content'])))
-        searchs = searchs.exclude('match', draft=True) 
-   
+        searchs = Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q) | Q(summary__icontains = q))
     else:
-        searchs = ""    
+        searchs = ""     
     return ({'archives':archives,'notifications': allnotifications, 'setting':setting, 'users':users, 'sliders':sliders, 'members': members, 'teams':teams, "categories":categories, "searchs":searchs, 'title':"جستجو"  })
 

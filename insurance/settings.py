@@ -12,10 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6"
 
-CSRF_TRUSTED_ORIGINS = ['https://academybime.chbk.run/']
+CSRF_TRUSTED_ORIGINS = ['https://academybime.com','https://www.academybime.com', ]
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['https://academybime.chbk.run/', 'academybime.chbk.run/', '*']
+ALLOWED_HOSTS = ['https://academybime.com/', 'academybime.com', '*']
 
 INSTALLED_APPS = [
     'daphne',
@@ -286,21 +286,21 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "redis://services.irn2.chabokan.net:14890"
-CELERY_RESULT_BACKEND = "redis://services.irn2.chabokan.net:14890"
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = "Asia/Kabul"
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+CELERY_ACCEPT_CONTENT = os.environ.get("CELERY_ACCEPT_CONTENT")
+CELERY_TASK_SERIALIZER =os.environ.get("CELERY_TASK_SERIALIZER")
+CELERY_RESULT_SERIALIZER = os.environ.get("CELERY_RESULT_SERIALIZER")
+CELERY_TIMEZONE = os.environ.get("CELERY_TIMEZONE")
+
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200')
-    },
-}
+# ELASTICSEARCH_DSL = {
+#     'default': {
+#         'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200')
+#     },
+# }
 
 GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 
@@ -314,7 +314,12 @@ MESSAGE_TAGS = {
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
-
+# RATINGS
+STAR_RATINGS_STAR_WIDTH = 15
+STAR_RATINGS_STAR_HEIGHT = 15
+# # editable =
+STAR_RATINGS_RERATE = False
+STAR_RATINGS_ANONYMOUS = True
 
 
 CKEDITOR_CONFIGS = {

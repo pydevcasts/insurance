@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils.decorators import method_decorator
 from blog.models import Comment, Post
 from category.models import Category
 from comment.forms import CommentForm
@@ -46,8 +46,11 @@ def post_category_list(request, slug=None):
     return render(request, "frontend/landing/home.html", {
                                                         "posts": posts,
                                                         'news':news,
-                                                        'room_name': "broadcast"
-@csrf_exempt                                                      })
+                                                        'room_name': "broadcast" 
+                                                        })
+
+
+@csrf_exempt                                                     
 def all_post_view(request):
     title = "همه پست ها"
     all_post = Post.objects.all().filter(status= 1).select_related('category').order_by('category_id').distinct('category')
@@ -63,6 +66,7 @@ def all_post_view(request):
     return render(request, "frontend/posts/index.html", {"all_post":all_post, "title":title, 'page_obj': page_obj})
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PostDetailView(FormMixin, DetailView):
     template_name = 'frontend/landing/detail.html'
     model = Post
@@ -96,6 +100,7 @@ class PostDetailView(FormMixin, DetailView):
         post.increase_view_count() # Increase view count
         return render(request, self.template_name, {"post": post})
 
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         post = get_object_or_404(Post, slug = self.kwargs['slug'])
@@ -105,7 +110,6 @@ class PostDetailView(FormMixin, DetailView):
         context['segment'] = post.title
         context['form'] = self.get_form_class()
         context['favorites'] = New.objects.most_views_by_users()[:5]
-        # context['viewers'] = post.increase_view_count() # Increase view count
         return context
 
 

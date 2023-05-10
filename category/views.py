@@ -86,6 +86,7 @@ class DeleteCategoryView(SuccessMessageMixin, PermissionRequiredMixin, LoginRequ
                 return redirect('category:cat-list')
         return redirect('dashboard/category/list.html')
        
+       
 @method_decorator(csrf_exempt, name='dispatch')
 class CategoryUpdateView(SuccessMessageMixin, PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     model = Category
