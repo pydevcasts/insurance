@@ -314,7 +314,12 @@ MESSAGE_TAGS = {
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
-
+# RATINGS
+STAR_RATINGS_STAR_WIDTH = 15
+STAR_RATINGS_STAR_HEIGHT = 15
+# # editable =
+STAR_RATINGS_RERATE = False
+STAR_RATINGS_ANONYMOUS = True
 
 
 CKEDITOR_CONFIGS = {
