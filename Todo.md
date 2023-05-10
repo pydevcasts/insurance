@@ -64,3 +64,10 @@ docker-compose run app sh -c "celery -A channels_celery_project beat -l INFO"
 celery -A channels_celery_project worker -l INFO
 ## After Run Your Celery Beat
 celery -A channels_celery_project beat -l INFO
+
+
+
+
+
+
+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
