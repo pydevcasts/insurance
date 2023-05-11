@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django_filters',
     
     'search.apps.SearchConfig',
-    'django_elasticsearch_dsl',
+    # 'django_elasticsearch_dsl',
 
     'aboutus',
     'team',
@@ -256,7 +256,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://services.irn2.chabokan.net:14890/2',
+        "LOCATION": 'redis://:b40VxDWEfs9Db2Wz@services.irn2.chabokan.net:11372/2',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -297,10 +297,13 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 # ELASTICSEARCH_DSL = {
-#     'default': {
-#         'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200')
-#     },
-# }
+#      'default': {
+#          'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200'),
+#          'http_auth': ("elastic", "RhwLc4GWsnXE3ER6"),
+#      },
+#  }
+# from elasticsearch_dsl import connections
+# connections.create_connection(hosts=os.getenv("ELASTICSEARCH_DSL_HOST"),timeout=20)
 
 GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 
