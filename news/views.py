@@ -29,23 +29,23 @@ class NewListView(ListView):
 
 
 def new_detail(request, year, month, day, slug):
-    list_ip =[]
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
+    # list_ip =[]
+    # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    # if x_forwarded_for:
+    #     ip = x_forwarded_for.split(',')[0]
+    # else:
+    #     ip = request.META.get('REMOTE_ADDR')
 
     new = get_object_or_404(New,
                                 status = 1,
                                 published_at__year=year,
                                 published_at__month=month,
                                 published_at__day=day,slug=slug)
-    list_ip.append(ip)
-    if ip in list_ip:
-        new.views += 0
-    else:
-        new.views += 1
+    # list_ip.append(ip)
+    # if ip in list_ip:
+    #     new.views += 0
+    # else:
+    new.views += 1
     new.save()
     favorites = New.objects.most_views_by_users().exclude(slug = new.slug)[:5]
     comments = Comment.objects.filter_by_instance(new)
