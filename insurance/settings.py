@@ -299,9 +299,9 @@ CELERY_REDIS_PASSWORD="GbltkncW1RuQQgKx"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-REDIS_HOST = os.environ.get("REDIS_HOST")
-REDIS_PORT =os.environ.get("REDIS_PORT")
-REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
+REDIS_HOST = "services.irn2.chabokan.net"
+REDIS_PORT =14890
+REDIS_PASSWORD ="GbltkncW1RuQQgKx"
 
 REDIS_URL = 'redis://:{}@{}:{}/1'.format(
     REDIS_PASSWORD,  
