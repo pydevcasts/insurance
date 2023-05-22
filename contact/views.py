@@ -45,6 +45,7 @@ class ListContactView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context["all_table_fields"] = Contact._meta.get_fields()
         context["segment"] = "لیست تماس"
         return context
+        
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CreateContactView(SuccessMessageMixin , CreateView):

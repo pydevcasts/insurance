@@ -127,13 +127,15 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("redis", 14890)],
+            #"hosts": [("redis", 14890)],
+            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn2.chabokan.net:14890")],
+            "hosts": [("redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1")],
         },
        
         
     },
-}
 
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -194,7 +196,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'fa-ir'
-TIME_ZONE = 'Asia/Kabul'
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_L10N = True
 USE_I18N = True
@@ -256,7 +258,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://:b40VxDWEfs9Db2Wz@services.irn2.chabokan.net:11372/2',
+        "LOCATION": 'redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/5',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -286,15 +288,26 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
-CELERY_ACCEPT_CONTENT = os.environ.get("CELERY_ACCEPT_CONTENT")
-CELERY_TASK_SERIALIZER =os.environ.get("CELERY_TASK_SERIALIZER")
-CELERY_RESULT_SERIALIZER = os.environ.get("CELERY_RESULT_SERIALIZER")
-CELERY_TIMEZONE = os.environ.get("CELERY_TIMEZONE")
-
+CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1 "
+CELERY_RESULT_BACKEND = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER =['json']
+CELERY_RESULT_SERIALIZER =['json']
+CELERY_TIMEZONE = "Asia/Tehran"
+CELERY_REDIS_PORT = 14890
+CELERY_REDIS_PASSWORD="GbltkncW1RuQQgKx"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
+
+REDIS_HOST = os.environ.get("REDIS_HOST")
+REDIS_PORT =os.environ.get("REDIS_PORT")
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
+
+REDIS_URL = 'redis://:{}@{}:{}/1'.format(
+    REDIS_PASSWORD,  
+    REDIS_HOST,  
+    REDIS_PORT
+)
 
 # ELASTICSEARCH_DSL = {
 #      'default': {
