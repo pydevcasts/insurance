@@ -165,11 +165,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': 'roger',
+        'USER': 'postgres',
+        'PASSWORD':'jqWfqd88nmZsbteJ',
+        'HOST':'services.irn2.chabokan.net',
+        'PORT':43508,
     },
 }
 
@@ -217,12 +217,12 @@ STATICFILES_DIRS = (
 )
 
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', default=True)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT =587
+EMAIL_HOST_USER = "siyamak1981@gmail.com"
+EMAIL_HOST_PASSWORD = "hkgttjourdfnhwcm"
+EMAIL_USE_TLS = True
 
 
 
@@ -288,11 +288,11 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1 "
+CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1"
 CELERY_RESULT_BACKEND = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1"
 CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER =['json']
-CELERY_RESULT_SERIALIZER =['json']
+CELERY_TASK_SERIALIZER ='json'
+CELERY_RESULT_SERIALIZER ='json'
 CELERY_TIMEZONE = "Asia/Tehran"
 CELERY_REDIS_PORT = 14890
 CELERY_REDIS_PASSWORD="GbltkncW1RuQQgKx"
