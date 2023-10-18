@@ -128,10 +128,10 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             #"hosts": [("redis", 17084)],
-            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn4.chabokan.net:17084")],
+            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn2.chabokan.net:17084")],
             "hosts": [("redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1")],
         },
-                                                  
+                  
         
     },
 
@@ -168,7 +168,7 @@ DATABASES = {
         'NAME': 'roger',
         'USER': 'postgres',
         'PASSWORD':'jqWfqd88nmZsbteJ',
-        'HOST':'services.irn4.chabokan.net',
+        'HOST':'services.irn2.chabokan.net',
         'PORT':43508,
     },
 }

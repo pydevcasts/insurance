@@ -68,7 +68,7 @@ celery -A channels_celery_project beat -l INFO
 
 
 siyamak1981@gmail.com
-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
+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
 
 
 
