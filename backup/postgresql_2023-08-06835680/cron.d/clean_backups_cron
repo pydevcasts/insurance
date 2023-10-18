@@ -1,0 +1,1 @@
+0 0 */7 * * postgres /etc/clean_backups.sh
