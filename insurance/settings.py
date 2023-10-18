@@ -127,11 +127,11 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            #"hosts": [("redis", 14890)],
-            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn2.chabokan.net:14890")],
-            "hosts": [("redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1")],
+            #"hosts": [("redis", 17084)],
+            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn4.chabokan.net:17084")],
+            "hosts": [("redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1")],
         },
-       
+                                                  
         
     },
 
@@ -168,7 +168,7 @@ DATABASES = {
         'NAME': 'roger',
         'USER': 'postgres',
         'PASSWORD':'jqWfqd88nmZsbteJ',
-        'HOST':'services.irn2.chabokan.net',
+        'HOST':'services.irn4.chabokan.net',
         'PORT':43508,
     },
 }
@@ -258,7 +258,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/5',
+        "LOCATION": 'redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/5',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -288,19 +288,19 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1"
-CELERY_RESULT_BACKEND = "redis://:GbltkncW1RuQQgKx@services.irn2.chabokan.net:14890/1"
+CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1"
+CELERY_RESULT_BACKEND = "redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER ='json'
 CELERY_RESULT_SERIALIZER ='json'
 CELERY_TIMEZONE = "Asia/Tehran"
-CELERY_REDIS_PORT = 14890
-CELERY_REDIS_PASSWORD="GbltkncW1RuQQgKx"
+CELERY_REDIS_PORT = 17084
+CELERY_REDIS_PASSWORD="kWC8hWtQtK0T9kvu"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-REDIS_HOST = "services.irn2.chabokan.net"
-REDIS_PORT =14890
+REDIS_HOST = "services.irn4.chabokan.net"
+REDIS_PORT =17084
 REDIS_PASSWORD ="GbltkncW1RuQQgKx"
 
 REDIS_URL = 'redis://:{}@{}:{}/1'.format(
