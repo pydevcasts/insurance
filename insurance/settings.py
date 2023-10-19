@@ -233,8 +233,8 @@ INTERNAL_IPS = [
  
 ]
 
-hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
+# hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+# INTERNAL_IPS += [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
 DEBUG_TOOLBAR_CONFIG = {
     'RESULTS_CACHE_SIZE': 3,
