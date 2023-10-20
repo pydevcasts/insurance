@@ -288,8 +288,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = "redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1"
-CELERY_RESULT_BACKEND = "redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1"
+CELERY_BROKER_URL = "redis://:kWC8hWtQtK0T9kvu@services.irn4.chabokan.net:17084/1"
+CELERY_RESULT_BACKEND = "redis://:kWC8hWtQtK0T9kvu@services.irn4.chabokan.net:17084/1"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER ='json'
 CELERY_RESULT_SERIALIZER ='json'
