@@ -70,4 +70,4 @@ celery -A channels_celery_project beat -l INFO
 
 
 
-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
+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
