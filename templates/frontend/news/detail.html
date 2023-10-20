@@ -11,7 +11,11 @@
                         <div class="col-lg-8 col-md-12">
                                 <div class="blog-details-desc">
                                         <div class="article-image">
-                                                <img src="{{ new.banner.url }}" alt="image">
+                                                <img src="{{ new.banner.url }}" alt="Image">
+                                                {% else %}
+                                                <img src="https://www.bimehasia.com/getattachment/9387d4a0-b293-4c55-90b3-d3bb8fb3d44b/sait?height=530"
+                                                    alt="Image">
+                                                {% endif %}
                                         </div>
                                         <div class="article-content">
                                                 <div class="entry-meta">
