@@ -13,7 +13,7 @@ class PostAdmin(admin.ModelAdmin, PostableMixin, ExportMixin):
             return format_html('<img src="{}" width="40" style="border-radius:50%;">'.format(object.banner.url))
     thumbnail.short_description = 'Post Picture'
     list_display = ['thumbnail', 'title', 'slug', 'is_published', 'published', 'category', 'viewers', 'get_tags']
-    list_editable = ['category']
+    list_editable = ['category','viewers']
     filter_horizontal = ['tags']
     list_filter = ['status', 'published_at', 'category__title']
     actions = ['make_published', 'make_draft', 'export_as_json', 'export_as_csv']
