@@ -128,7 +128,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             #"hosts": [("redis", 17084)],
-            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn2.chabokan.net:17084")],
+            #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn4.chabokan.net:17084")],
             "hosts": [("redis://:kWC8hWtQtK0T9kvu@services.irn4.chabokan.net:17084/1")],
         },
                   
