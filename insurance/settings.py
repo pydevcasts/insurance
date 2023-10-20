@@ -129,7 +129,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             #"hosts": [("redis", 17084)],
             #"hosts": [os.environ.get('REDIS_URL',"redis://services.irn2.chabokan.net:17084")],
-            "hosts": [("redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/1")],
+            "hosts": [("redis://:kWC8hWtQtK0T9kvu@services.irn4.chabokan.net:17084/1")],
         },
                   
         
@@ -258,7 +258,7 @@ CELERY_IMPORTS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://:GbltkncW1RuQQgKx@services.irn4.chabokan.net:17084/5',
+        "LOCATION": 'redis://:kWC8hWtQtK0T9kvu@services.irn4.chabokan.net:17084/5',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
