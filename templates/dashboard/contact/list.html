@@ -49,9 +49,9 @@
             </td>
             {% if request.user.is_authenticated %}
             <td>
-              <a href="{% url " contact:show" contact.pk %}"><img
+              <a href="{% url 'contact:show' contact.pk %}"><img
                   src="https://img.icons8.com/bubbles/30/000000/edit.png" /></a>
-              <form method="POST" action="{% url " contact:list" %}">
+              <form method="POST" action="{% url 'contact:list' %}">
                 {% csrf_token %}
                 <a href="{% url " contact:delete" contact.pk %}"><img
                     src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/30/F25081/external-trash-office-flatart-icons-solid-flatarticons.png" /></a>
