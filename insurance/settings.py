@@ -95,7 +95,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    'accounts.middleware.SaveIPAddressMiddleware'
+    'accounts.middleware.SaveIPAddressMiddleware',
+    'allauth.account.middleware.AccountMiddleware '
 ]
 
 ROOT_URLCONF = 'insurance.urls'
