@@ -97,6 +97,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'accounts.middleware.SaveIPAddressMiddleware',
     'allauth.account.middleware.AccountMiddleware '
+
 ]
 
 ROOT_URLCONF = 'insurance.urls'
