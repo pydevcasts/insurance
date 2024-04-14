@@ -58,7 +58,7 @@ MarkupSafe==2.1.1
 ratelim==0.1.6
 markdown2==2.4.3
 django-admin-thumbnails==0.2.6
-django_jinja
+django-jinja
 channels==4.0.0
 channels-redis==4.0.0
 daphne
