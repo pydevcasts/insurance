@@ -40,8 +40,8 @@ wcwidth==0.2.5
 wrapt==1.13.3
 djangorestframework
 django-filter
-dj_rest_auth
-django-allauth
+dj-rest-auth==5.1.0
+django-allauth==0.61.1
 djangorestframework-simplejwt
 django-decouple==2.0
 django-ckeditor
